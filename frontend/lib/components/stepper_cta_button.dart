@@ -51,6 +51,8 @@ class _StepperCtaButtonState extends State<StepperCtaButton> with TickerProvider
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
     return AnimatedBuilder(
       animation: Listenable.merge([_shimmerController, _pressController]),
       builder: (context, _) {
@@ -68,25 +70,28 @@ class _StepperCtaButtonState extends State<StepperCtaButton> with TickerProvider
             scale: _pressController.value,
             child: Container(
               width: double.infinity,
-              height: 58,
+              height: 56,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(16),
                 gradient: widget.isEnabled
                     ? const LinearGradient(
                         colors: [Color(0xFFEC4899), Color(0xFFF43F5E), Color(0xFFE11D48)],
                       )
-                    : LinearGradient(
-                        colors: [
-                          const Color(0xFF1E293B),
-                          const Color(0xFF1E293B).withValues(alpha: 0.8),
-                        ],
+                    : null,
+                color: widget.isEnabled
+                    ? null
+                    : (isDark ? const Color(0xFF1B0C24) : const Color(0xFFF1F5F9)),
+                border: widget.isEnabled
+                    ? null
+                    : Border.all(
+                        color: isDark ? Colors.white.withValues(alpha: 0.06) : const Color(0xFFE2E8F0),
                       ),
                 boxShadow: widget.isEnabled && !widget.isProcessing
                     ? [
                         BoxShadow(
-                          color: const Color(0xFFEC4899).withValues(alpha: 0.4),
-                          blurRadius: 20,
-                          offset: const Offset(0, 8),
+                          color: const Color(0xFFEC4899).withValues(alpha: 0.35),
+                          blurRadius: 18,
+                          offset: const Offset(0, 6),
                         ),
                       ]
                     : [],
@@ -106,9 +111,9 @@ class _StepperCtaButtonState extends State<StepperCtaButton> with TickerProvider
                           decoration: BoxDecoration(
                             gradient: LinearGradient(
                               colors: [
-                                Colors.white.withOpacity(0.0),
-                                Colors.white.withOpacity(0.12),
-                                Colors.white.withOpacity(0.0),
+                                Colors.white.withValues(alpha: 0.0),
+                                Colors.white.withValues(alpha: 0.15),
+                                Colors.white.withValues(alpha: 0.0),
                               ],
                             ),
                           ),
@@ -120,12 +125,12 @@ class _StepperCtaButtonState extends State<StepperCtaButton> with TickerProvider
                           ? Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-                                SizedBox(
-                                  width: 22,
-                                  height: 22,
+                                const SizedBox(
+                                  width: 20,
+                                  height: 20,
                                   child: CircularProgressIndicator(
                                     strokeWidth: 2.5,
-                                    color: Colors.white.withOpacity(0.9),
+                                    color: Colors.white,
                                   ),
                                 ),
                                 const SizedBox(width: 14),
@@ -140,7 +145,7 @@ class _StepperCtaButtonState extends State<StepperCtaButton> with TickerProvider
                                         key: ValueKey(widget.statusText),
                                         style: const TextStyle(
                                           color: Colors.white,
-                                          fontWeight: FontWeight.w700,
+                                          fontWeight: FontWeight.w800,
                                           fontSize: 14,
                                         ),
                                       ),
@@ -152,9 +157,10 @@ class _StepperCtaButtonState extends State<StepperCtaButton> with TickerProvider
                                         widget.progressText,
                                         key: ValueKey(widget.progressText),
                                         style: TextStyle(
-                                          color: Colors.white.withOpacity(0.6),
+                                          color: Colors.white.withValues(alpha: 0.8),
                                           fontSize: 11,
                                           fontFamily: 'monospace',
+                                          fontWeight: FontWeight.w600,
                                         ),
                                       ),
                                     ),
@@ -165,15 +171,22 @@ class _StepperCtaButtonState extends State<StepperCtaButton> with TickerProvider
                           : Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-                                Icon(Icons.auto_fix_high_rounded,
-                                    color: widget.isEnabled ? Colors.white : Colors.white38, size: 20),
+                                Icon(
+                                  Icons.auto_fix_high_rounded,
+                                  color: widget.isEnabled
+                                      ? Colors.white
+                                      : (isDark ? Colors.white38 : const Color(0xFF94A3B8)),
+                                  size: 20,
+                                ),
                                 const SizedBox(width: 10),
                                 Text(
                                   'Erase Watermark',
                                   style: TextStyle(
-                                    color: widget.isEnabled ? Colors.white : Colors.white38,
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.w700,
+                                    color: widget.isEnabled
+                                        ? Colors.white
+                                        : (isDark ? Colors.white38 : const Color(0xFF94A3B8)),
+                                    fontSize: 15,
+                                    fontWeight: FontWeight.w800,
                                     letterSpacing: -0.2,
                                   ),
                                 ),
@@ -181,21 +194,30 @@ class _StepperCtaButtonState extends State<StepperCtaButton> with TickerProvider
                                 Container(
                                   padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
                                   decoration: BoxDecoration(
-                                    color: Colors.white.withOpacity(widget.isEnabled ? 0.15 : 0.05),
+                                    color: widget.isEnabled
+                                        ? Colors.white.withValues(alpha: 0.18)
+                                        : (isDark ? Colors.white.withValues(alpha: 0.05) : const Color(0xFFE2E8F0)),
                                     borderRadius: BorderRadius.circular(8),
                                   ),
                                   child: Row(
                                     mainAxisSize: MainAxisSize.min,
                                     children: [
-                                      Icon(Icons.bolt_rounded, size: 14,
-                                          color: widget.isEnabled ? const Color(0xFF7DD3FC) : Colors.white24),
+                                      Icon(
+                                        Icons.bolt_rounded,
+                                        size: 14,
+                                        color: widget.isEnabled
+                                            ? const Color(0xFFFDF2F8)
+                                            : (isDark ? Colors.white24 : const Color(0xFF64748B)),
+                                      ),
                                       const SizedBox(width: 2),
                                       Text(
                                         '1 Credit',
                                         style: TextStyle(
-                                          color: widget.isEnabled ? const Color(0xFF7DD3FC) : Colors.white24,
-                                          fontSize: 12,
-                                          fontWeight: FontWeight.w700,
+                                          color: widget.isEnabled
+                                              ? const Color(0xFFFDF2F8)
+                                              : (isDark ? Colors.white24 : const Color(0xFF64748B)),
+                                          fontSize: 11,
+                                          fontWeight: FontWeight.w800,
                                         ),
                                       ),
                                     ],

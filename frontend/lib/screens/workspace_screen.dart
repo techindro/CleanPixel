@@ -1108,6 +1108,8 @@ class _WorkspaceScreenState extends State<WorkspaceScreen> with TickerProviderSt
   }
 
   Widget _buildVideoTrackingView() {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
     return Center(
       child: Padding(
         padding: const EdgeInsets.all(24.0),
@@ -1118,35 +1120,53 @@ class _WorkspaceScreenState extends State<WorkspaceScreen> with TickerProviderSt
               padding: const EdgeInsets.all(20),
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
-                gradient: const LinearGradient(colors: [Color(0xFF8B5CF6), Color(0xFFEC4899)]),
+                gradient: const LinearGradient(colors: [Color(0xFFEC4899), Color(0xFF8B5CF6)]),
                 boxShadow: [
-                  BoxShadow(color: const Color(0xFFEC4899).withValues(alpha: 0.3), blurRadius: 24),
+                  BoxShadow(color: const Color(0xFFEC4899).withValues(alpha: 0.35), blurRadius: 24),
                 ],
               ),
               child: const Icon(Icons.videocam_rounded, size: 40, color: Colors.white),
             ),
             const SizedBox(height: 18),
-            const Text(
+            Text(
               'Deep Diffusion Video Tracking',
-              style: TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.w800),
+              style: TextStyle(
+                color: isDark ? Colors.white : const Color(0xFF1E293B),
+                fontSize: 18,
+                fontWeight: FontWeight.w800,
+              ),
             ),
             const SizedBox(height: 8),
-            const Text(
+            Text(
               'Erase moving watermarks, stamps, and logos across 60 FPS video streams automatically with temporal keyframe propagation.',
               textAlign: TextAlign.center,
-              style: TextStyle(color: Color(0xFF94A3B8), fontSize: 13, height: 1.4),
+              style: TextStyle(
+                color: isDark ? const Color(0xFF94A3B8) : const Color(0xFF64748B),
+                fontSize: 13,
+                height: 1.4,
+              ),
             ),
             const SizedBox(height: 20),
-            ElevatedButton(
-              style: ElevatedButton.styleFrom(
-                backgroundColor: const Color(0xFF2563EB),
-                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-                padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+            Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(14),
+                gradient: const LinearGradient(colors: [Color(0xFFEC4899), Color(0xFFF43F5E)]),
+                boxShadow: [
+                  BoxShadow(color: const Color(0xFFEC4899).withValues(alpha: 0.35), blurRadius: 12, offset: const Offset(0, 4)),
+                ],
               ),
-              onPressed: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context) => const PremiumScreen()));
-              },
-              child: const Text('Upgrade to Unlock Video Studio', style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
+              child: ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.transparent,
+                  shadowColor: Colors.transparent,
+                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
+                  padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+                ),
+                onPressed: () {
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => const PremiumScreen()));
+                },
+                child: const Text('Upgrade to Unlock Video Studio', style: TextStyle(color: Colors.white, fontWeight: FontWeight.w800)),
+              ),
             ),
           ],
         ),
@@ -1155,6 +1175,8 @@ class _WorkspaceScreenState extends State<WorkspaceScreen> with TickerProviderSt
   }
 
   Widget _buildBatchView() {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
     return Center(
       child: Padding(
         padding: const EdgeInsets.all(24.0),
@@ -1165,21 +1187,29 @@ class _WorkspaceScreenState extends State<WorkspaceScreen> with TickerProviderSt
               padding: const EdgeInsets.all(20),
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
-                color: const Color(0xFF10B981).withValues(alpha: 0.15),
+                color: const Color(0xFF10B981).withValues(alpha: isDark ? 0.15 : 0.12),
                 border: Border.all(color: const Color(0xFF10B981).withValues(alpha: 0.3)),
               ),
               child: const Icon(Icons.layers_rounded, size: 40, color: Color(0xFF10B981)),
             ),
             const SizedBox(height: 18),
-            const Text(
+            Text(
               'Bulk Image Batch Inpainter',
-              style: TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.w800),
+              style: TextStyle(
+                color: isDark ? Colors.white : const Color(0xFF1E293B),
+                fontSize: 18,
+                fontWeight: FontWeight.w800,
+              ),
             ),
             const SizedBox(height: 8),
-            const Text(
+            Text(
               'Clean watermarks from up to 50 photos simultaneously using distributed GPU queue workers.',
               textAlign: TextAlign.center,
-              style: TextStyle(color: Color(0xFF94A3B8), fontSize: 13, height: 1.4),
+              style: TextStyle(
+                color: isDark ? const Color(0xFF94A3B8) : const Color(0xFF64748B),
+                fontSize: 13,
+                height: 1.4,
+              ),
             ),
           ],
         ),
@@ -1188,6 +1218,8 @@ class _WorkspaceScreenState extends State<WorkspaceScreen> with TickerProviderSt
   }
 
   Widget _buildProcessingView(ImageProvider imageProvider) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
     return AnimatedBuilder(
       animation: _processingController,
       builder: (context, _) {
@@ -1218,15 +1250,15 @@ class _WorkspaceScreenState extends State<WorkspaceScreen> with TickerProviderSt
                   gradient: LinearGradient(
                     colors: [
                       Colors.transparent,
-                      const Color(0xFF38BDF8).withValues(alpha: 0.7),
-                      const Color(0xFF38BDF8),
-                      const Color(0xFF38BDF8).withValues(alpha: 0.7),
+                      const Color(0xFFEC4899).withValues(alpha: 0.7),
+                      const Color(0xFFEC4899),
+                      const Color(0xFFEC4899).withValues(alpha: 0.7),
                       Colors.transparent,
                     ],
                   ),
                   boxShadow: [
                     BoxShadow(
-                      color: const Color(0xFF38BDF8).withValues(alpha: 0.5),
+                      color: const Color(0xFFEC4899).withValues(alpha: 0.5),
                       blurRadius: 16,
                       spreadRadius: 4,
                     ),
@@ -1246,7 +1278,7 @@ class _WorkspaceScreenState extends State<WorkspaceScreen> with TickerProviderSt
                       children: [
                         ShaderMask(
                           shaderCallback: (bounds) => const SweepGradient(
-                            colors: [Color(0xFF38BDF8), Color(0xFF2563EB), Color(0xFF8B5CF6), Color(0xFF38BDF8)],
+                            colors: [Color(0xFFEC4899), Color(0xFFF43F5E), Color(0xFF38BDF8), Color(0xFFEC4899)],
                           ).createShader(bounds),
                           child: SizedBox(
                             width: 56,
@@ -1259,7 +1291,7 @@ class _WorkspaceScreenState extends State<WorkspaceScreen> with TickerProviderSt
                             ),
                           ),
                         ),
-                        const Icon(Icons.auto_fix_high_rounded, color: Color(0xFF38BDF8), size: 22),
+                        const Icon(Icons.auto_fix_high_rounded, color: Color(0xFFEC4899), size: 22),
                       ],
                     ),
                   ),
@@ -1269,8 +1301,12 @@ class _WorkspaceScreenState extends State<WorkspaceScreen> with TickerProviderSt
                     child: Text(
                       _stepperStatus,
                       key: ValueKey(_stepperStatus),
-                      style: const TextStyle(
-                          color: Colors.white, fontWeight: FontWeight.w700, fontSize: 15, letterSpacing: -0.2),
+                      style: TextStyle(
+                        color: isDark ? Colors.white : const Color(0xFF1E293B),
+                        fontWeight: FontWeight.w800,
+                        fontSize: 15,
+                        letterSpacing: -0.2,
+                      ),
                     ),
                   ),
                   const SizedBox(height: 6),
@@ -1279,8 +1315,12 @@ class _WorkspaceScreenState extends State<WorkspaceScreen> with TickerProviderSt
                     child: Text(
                       _stepperProgress,
                       key: ValueKey(_stepperProgress),
-                      style: TextStyle(
-                          color: const Color(0xFF38BDF8).withValues(alpha: 0.8), fontSize: 12, fontFamily: 'monospace'),
+                      style: const TextStyle(
+                        color: Color(0xFFEC4899),
+                        fontSize: 12,
+                        fontFamily: 'monospace',
+                        fontWeight: FontWeight.w700,
+                      ),
                     ),
                   ),
                 ],

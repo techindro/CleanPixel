@@ -36,11 +36,12 @@ class _PaywallBadgeState extends State<PaywallBadge> with SingleTickerProviderSt
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
     return AnimatedBuilder(
       animation: _sparkleController,
       builder: (context, _) {
-        // Rotating gradient angle
-        final angle = _sparkleController.value * 6.28; // 2*pi
+        final angle = _sparkleController.value * 6.28;
 
         return GestureDetector(
           onTap: widget.onTap,
@@ -69,7 +70,7 @@ class _PaywallBadgeState extends State<PaywallBadge> with SingleTickerProviderSt
             child: Container(
               padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
               decoration: BoxDecoration(
-                color: const Color(0xFF0B0F19),
+                color: isDark ? const Color(0xFF1B0C24) : Colors.white,
                 borderRadius: BorderRadius.circular(999),
               ),
               child: Row(
@@ -79,28 +80,32 @@ class _PaywallBadgeState extends State<PaywallBadge> with SingleTickerProviderSt
                   const SizedBox(width: 5),
                   ShaderMask(
                     shaderCallback: (bounds) => const LinearGradient(
-                      colors: [Color(0xFFFBBF24), Color(0xFFF472B6)],
+                      colors: [Color(0xFFF59E0B), Color(0xFFEC4899)],
                     ).createShader(bounds),
                     child: const Text(
                       'PRO',
                       style: TextStyle(
                         color: Colors.white,
-                        fontWeight: FontWeight.w800,
+                        fontWeight: FontWeight.w900,
                         fontSize: 11,
                         letterSpacing: 0.8,
                       ),
                     ),
                   ),
                   const SizedBox(width: 5),
-                  Container(width: 1, height: 12, color: Colors.white12),
+                  Container(
+                    width: 1,
+                    height: 12,
+                    color: isDark ? Colors.white24 : const Color(0xFFE2E8F0),
+                  ),
                   const SizedBox(width: 5),
                   Text(
                     '${widget.currentCredits}/${widget.maxCredits}',
-                    style: const TextStyle(
-                      color: Colors.white54,
+                    style: TextStyle(
+                      color: isDark ? Colors.white54 : const Color(0xFF64748B),
                       fontSize: 10,
                       fontFamily: 'monospace',
-                      fontWeight: FontWeight.w600,
+                      fontWeight: FontWeight.w700,
                     ),
                   ),
                 ],
