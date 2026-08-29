@@ -44,6 +44,7 @@ class _WorkspaceScreenState extends State<WorkspaceScreen> with TickerProviderSt
   final List<List<DrawingPoint?>> _redoHistory = [];
   bool _isBrush = true;
   double _strokeWidth = 32.0;
+  Size _viewportSize = const Size(360, 480);
 
   // Stepper state
   String _stepperStatus = "Segmenting watermark contours...";
@@ -559,6 +560,7 @@ class _WorkspaceScreenState extends State<WorkspaceScreen> with TickerProviderSt
               Expanded(
                 child: LayoutBuilder(
                   builder: (context, constraints) {
+                    _viewportSize = Size(constraints.maxWidth, constraints.maxHeight);
                     return Container(
                       decoration: BoxDecoration(
                         color: isDark ? const Color(0xFF131C2E) : Colors.white,
@@ -785,16 +787,12 @@ class _WorkspaceScreenState extends State<WorkspaceScreen> with TickerProviderSt
                     ),
                   )
                 else
-                  LayoutBuilder(
-                    builder: (context, constraints) {
-                      return StepperCtaButton(
-                        isProcessing: _state == StudioState.processing,
-                        isEnabled: _state == StudioState.drawing && _points.isNotEmpty,
-                        statusText: _stepperStatus,
-                        progressText: _stepperProgress,
-                        onPressed: () => _runInpaint(Size(constraints.maxWidth, 400)),
-                      );
-                    },
+                  StepperCtaButton(
+                    isProcessing: _state == StudioState.processing,
+                    isEnabled: _state == StudioState.drawing && _points.isNotEmpty,
+                    statusText: _stepperStatus,
+                    progressText: _stepperProgress,
+                    onPressed: () => _runInpaint(_viewportSize),
                   )
               else
                 SizedBox(
