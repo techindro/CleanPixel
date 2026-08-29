@@ -44,6 +44,7 @@ class CleanPixelApp extends StatelessWidget {
             pageTransitionsTheme: const PageTransitionsTheme(
               builders: {
                 TargetPlatform.android: _CleanPixelPageTransition(),
+                TargetPlatform.iOS: _CleanPixelPageTransition(),
               },
             ),
           ),
