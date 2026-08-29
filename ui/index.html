@@ -1,0 +1,1437 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>CleanPixel AI — High-End Watermark & Object Remover</title>
+  <meta name="description" content="Next-generation AI inpainting and watermark removal tool with neural texture reconstruction.">
+  <link rel="icon" type="image/png" href="assets/logo.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&family=Newsreader:ital,opsz,wght@1,6..72,400;1,6..72,500;1,6..72,600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="index.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+  <script>
+    if (window.pdfjsLib) { window.pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js'; }
+  </script>
+</head>
+<body class="app-body">
+  <!-- BACKGROUND ATMOSPHERE -->
+  <div class="ambient-glow ambient-glow-top"></div>
+  <div class="ambient-glow ambient-glow-bottom"></div>
+
+  <!-- 1. CLEAN MODERN SAAS NAVBAR (3-ZONE BALANCED LAYOUT) -->
+  <header class="app-header" role="banner">
+    <div class="header-inner">
+      <div class="header-left">
+        <a href="#" class="brand-anchor" aria-label="CleanPixel AI Home">
+          <div class="brand-icon-wrapper">
+            <img src="assets/logo.png" alt="CleanPixel AI Official Logo" class="brand-icon-img" />
+            <div class="brand-sparkle-dot"></div>
+          </div>
+          <div class="brand-text-group">
+            <span class="brand-title">CleanPixel<span class="brand-ai-badge">AI</span></span>
+            <span class="brand-subtitle">Neural Studio v2.4</span>
+          </div>
+        </a>
+      </div>
+
+      <div class="header-center">
+        <!-- NAVIGATION LINKS -->
+        <nav class="nav-links-menu" aria-label="Page Sections">
+          <a href="#howItWorksSection" class="nav-link-item">How it works</a>
+          <a href="#featuresSection" class="nav-link-item">Features</a>
+          <a href="#useCasesSection" class="nav-link-item">Solutions</a>
+          <a href="#pricingSection" class="nav-link-item">Pricing</a>
+        </nav>
+
+        <!-- MODE SELECTOR PILL -->
+        <nav class="mode-nav-pill" aria-label="Application Modes">
+          <button class="mode-pill-btn active" data-mode="image">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+            <span>Image</span>
+          </button>
+          <button class="mode-pill-btn" data-mode="video">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2" ry="2"/></svg>
+            <span>Video</span>
+            <span class="badge-micro-new">BETA</span>
+          </button>
+        </nav>
+      </div>
+
+      <div class="header-right">
+        <!-- PREMIUM SUBSCRIPTION GATING ANCHOR BADGE -->
+        <div class="pro-gating-badge" id="proGatingBadge" role="status" aria-label="Subscription Tier">
+          <div class="pro-badge-glow"></div>
+          <div class="pro-badge-inner">
+            <svg class="pro-crown-icon" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M5 16L3 5L8.5 10L12 4L15.5 10L21 5L19 16H5M19 19C19 19.6 18.6 20 18 20H6C5.4 20 5 19.6 5 19V17H19V19Z"/>
+            </svg>
+            <span class="pro-badge-label">PRO TIER</span>
+            <span class="pro-credit-counter">142/150</span>
+          </div>
+        </div>
+
+        <!-- THEME TOGGLE (DARK / LIGHT MODE) -->
+        <button class="btn-theme-toggle" id="btnThemeToggle" title="Toggle Dark / Light Mode" aria-label="Toggle Theme">
+          <svg class="theme-icon-sun" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+          <svg class="theme-icon-moon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="display: none;"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        </button>
+
+        <!-- AUTH TRIGGER -->
+        <button class="btn-auth-trigger" id="btnAuthTrigger">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+          <span id="authBtnText">Sign in</span>
+        </button>
+
+        <button class="btn-icon-avatar" id="userAvatarBtn" style="display: none;" aria-label="User profile">
+          <div class="user-avatar-initials" id="userAvatarInitials">U</div>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <div class="app-layout">
+
+    <!-- EDITORIAL SIGN IN MODAL (EXACT REFERENCE DESIGN) -->
+    <div class="auth-modal-backdrop" id="authModalBackdrop" style="display: none;">
+      <div class="editorial-auth-card">
+        <button class="btn-modal-close" id="btnModalClose" aria-label="Close modal">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
+
+        <div class="editorial-eyebrow">CLEANPIXEL STUDIO</div>
+        <h2 class="editorial-auth-title" id="authModalTitle">Sign in</h2>
+        <p class="editorial-auth-sub" id="authModalSubtitle">150 inpaint credits are free forever. One login saves your progress across the library.</p>
+
+        <!-- GOOGLE OAUTH BUTTON -->
+        <button class="btn-editorial-google" id="btnGoogleOAuth">
+          <svg width="18" height="18" viewBox="0 0 24 24"><path fill="#EA4335" d="M12 5c1.6 0 3 .6 4.1 1.7l3.1-3.1C17.3 1.8 14.8 1 12 1 7.5 1 3.7 3.6 1.9 7.3l3.7 2.9C6.5 7.1 9 5 12 5z"/><path fill="#4285F4" d="M23.5 12.3c0-.8-.1-1.6-.2-2.3H12v4.6h6.5c-.3 1.5-1.1 2.8-2.4 3.7l3.7 2.9c2.2-2 3.7-5 3.7-8.9z"/><path fill="#FBBC05" d="M5.6 14.8c-.2-.7-.4-1.5-.4-2.3s.2-1.6.4-2.3L1.9 7.3C.7 9.7 0 12 0 14.5s.7 4.8 1.9 7.2l3.7-2.9z"/><path fill="#34A853" d="M12 24c3.2 0 6-1.1 8-3l-3.7-2.9c-1.1.7-2.5 1.2-4.3 1.2-3 0-5.5-2.1-6.4-5.2L1.9 17C3.7 20.7 7.5 24 12 24z"/></svg>
+          <span>Continue with Google</span>
+        </button>
+
+        <div class="editorial-divider">
+          <span>or</span>
+        </div>
+
+        <form class="editorial-auth-form" id="authForm">
+          <div class="editorial-form-group" id="groupFullName" style="display: none;">
+            <input type="text" id="inputFullName" class="editorial-input" placeholder="full name">
+          </div>
+          <div class="editorial-form-group">
+            <input type="email" id="inputEmail" class="editorial-input" required placeholder="you@example.com">
+          </div>
+          <div class="editorial-form-group">
+            <input type="password" id="inputPassword" class="editorial-input" required placeholder="password">
+          </div>
+
+          <div class="auth-error-msg" id="authErrorMsg" style="display: none;"></div>
+
+          <button type="submit" class="btn-editorial-submit" id="btnAuthSubmit">
+            <span id="authSubmitText">Sign in</span>
+          </button>
+        </form>
+
+        <div class="editorial-footer">
+          <p class="editorial-explainer">
+            The sign-in link works without a password and without Google, which helps if your work laptop blocks it.
+          </p>
+          <p class="editorial-switch-row">
+            <span id="switchAuthPrompt">New here?</span> <a href="#" id="linkToggleAuth">Create an account</a>
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- MAIN INTERACTIVE STUDIO WORKSPACE -->
+    <main class="app-main-workspace">
+
+      <!-- ENRICHED HERO SECTION (CENTERED HERO WITH VIDEO DIRECTLY BELOW TEXT) -->
+      <section class="hero-intro-section" aria-label="Product Overview & Hero">
+        <div class="hero-badge">
+          <span class="badge-dot"></span>
+          <span>Next-Gen Neural Inpainting &bull; 100% Private</span>
+        </div>
+        <h1 class="hero-title">
+          Erase Watermarks, Logos &amp; Unwanted Objects<br>
+          <span class="hero-title-accent">with AI Precision</span>
+        </h1>
+        <p class="hero-description">
+          CleanPixel uses advanced neural diffusion and Fast-Marching texture synthesis to flawlessly reconstruct backgrounds. Remove watermarks, timestamps, brand logos, wires, and photobombers from photos, PDFs, SVGs, and 4K videos in seconds without blur or seam artifacts.
+        </p>
+
+        <div class="hero-cta-actions">
+          <a href="#canvasPanelCard" class="btn-hero-primary">
+            <span>Open Studio Tool</span>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+          </a>
+          <a href="#howItWorksSection" class="btn-hero-secondary">
+            <span>See How It Works</span>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+          </a>
+        </div>
+
+        <!-- HERO KEY HIGHLIGHT PILLS -->
+        <div class="hero-highlights-row">
+          <div class="hero-highlight-pill">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--accent-action)" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+            <span><strong>320ms</strong> Real-Time Inpainting</span>
+          </div>
+          <div class="hero-highlight-pill">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#10B981" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+            <span><strong>100% Private</strong> Zero Server Storage</span>
+          </div>
+          <div class="hero-highlight-pill">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#6366F1" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="m4.93 4.93 4.24 4.24"/><path d="m14.83 9.17 4.24-4.24"/></svg>
+            <span><strong>4K Lossless</strong> PNG, SVG, PDF, MP4</span>
+          </div>
+        </div>
+
+        <!-- HERO DEMO VIDEO SHOWCASE (DIRECTLY BELOW TEXT) -->
+        <div class="hero-video-showcase-container">
+          <div class="hero-video-wrapper">
+            <div class="video-overlay-badge top-left">
+              <span class="pulse-dot-red"></span>
+              <span>AI Inpainting Live Demo</span>
+            </div>
+            <div class="video-overlay-badge top-right">
+              <span>Ultra HD &bull; AI Cleaned</span>
+            </div>
+            <video class="hero-showcase-video" autoplay loop muted playsinline controls>
+              <source src="https://videotourl.com/videos/1787403164334-37dd7837-77f5-4b49-a9c8-5ea572c36d8b.mp4" type="video/mp4">
+              Your browser does not support the video tag.
+            </video>
+          </div>
+        </div>
+      </section>
+      
+      <!-- 2. THE COMPACT INTERACTIVE CANVAS CONTAINER -->
+      <section class="canvas-panel-card" id="canvasPanelCard" aria-label="Main Canvas Viewport">
+        
+        <!-- TOP CANVAS HUD / STATUS STRIP -->
+        <div class="canvas-hud-strip">
+          <div class="hud-left">
+            <div class="state-pill-indicator" id="statePillIndicator">
+              <span class="pulse-dot"></span>
+              <span class="state-name" id="stateNameText">IDLE UPLOAD</span>
+            </div>
+            <div class="hud-meta-badge" id="hudResolutionBadge">Viewport: Ready</div>
+          </div>
+          <div class="hud-right">
+            <button class="btn-hud-action btn-hud-shortcuts" id="btnShortcutsModal" title="Keyboard Shortcuts (?)">
+              <kbd>?</kbd>
+              <span>Shortcuts</span>
+            </button>
+            <div class="mask-metric-badge" id="maskMetricBadge" style="display: none;">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+              <span>Masked Area: <strong id="maskCoverageVal">0%</strong></span>
+            </div>
+            <button class="btn-hud-action" id="btnResetCanvas" title="Reset and upload new image" style="display: none;">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg>
+              <span>New File</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- VIEWPORT STAGE: HANDLES THE 4 INTERACTION STATES -->
+        <div class="canvas-stage-viewport" id="canvasStageViewport">
+          
+          <!-- STATE A: IDLE UPLOAD -->
+          <div class="viewport-state-view state-idle-upload" id="stateIdleUpload">
+            <input type="file" id="fileInput" class="hidden-file-input" accept="image/png, image/jpeg, image/webp, image/gif, image/bmp, image/tiff, image/svg+xml, application/pdf" aria-label="Upload watermark image or PDF">
+            <input type="file" id="fileInputVideo" class="hidden-file-input" accept="video/mp4, video/webm, video/mov" aria-label="Upload watermark video">
+            <input type="file" id="fileInputBatch" class="hidden-file-input" accept="image/png, image/jpeg, image/webp, image/gif, image/bmp, image/tiff, application/pdf" multiple aria-label="Upload multiple images for batch">
+            
+            <div class="upload-dropzone-box" id="uploadDropzone">
+              <div class="dropzone-ambient-ring"></div>
+              <div class="dropzone-icon-orb">
+                <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#71717A" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                  <polyline points="17 8 12 3 7 8"/>
+                  <line x1="12" y1="3" x2="12" y2="15"/>
+                </svg>
+              </div>
+
+              <div class="dropzone-content">
+                <h2 class="dropzone-heading">Drop your watermarked media here</h2>
+                <p class="dropzone-subtext" id="dropzoneSubtext">Supports PNG, JPG, WebP, GIF, BMP, TIFF, SVG &amp; PDF up to 4K resolution</p>
+                <div class="dropzone-actions">
+                  <button class="btn-browse-file" id="btnBrowseFile" type="button">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+                    <span>Browse Device</span>
+                  </button>
+                  <span class="dropzone-or" id="batchOrSeparator">or</span>
+                  <button class="btn-batch-upload" id="btnBatchUpload" type="button">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="16" height="14" rx="2"/><path d="M6 3h12a2 2 0 0 1 2 2v2H4V5a2 2 0 0 1 2-2z"/></svg>
+                    <span>Batch Upload</span>
+                  </button>
+                </div>
+
+                <!-- 1-CLICK INSTANT DEMO SAMPLES -->
+                <div class="dropzone-samples-quick-row">
+                  <span class="quick-samples-label">Or try instant sample:</span>
+                  <button type="button" class="btn-quick-sample-pill" data-sample="ecommerce">
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+                    <span>E-Commerce Product</span>
+                  </button>
+                  <button type="button" class="btn-quick-sample-pill" data-sample="portrait">
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                    <span>Studio Portrait</span>
+                  </button>
+                  <button type="button" class="btn-quick-sample-pill" data-sample="document">
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+                    <span>PDF Document</span>
+                  </button>
+                  <button type="button" class="btn-quick-sample-pill" data-sample="realestate">
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+                    <span>Real Estate</span>
+                  </button>
+                </div>
+              </div>
+
+              <!-- FORMAT SECURITY PILLS -->
+              <div class="dropzone-footer-specs">
+                <span class="spec-pill">
+                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                  <span>Local GPU Inpaint</span>
+                </span>
+                <span class="spec-pill">
+                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+                  <span>Neural Fast-Marching</span>
+                </span>
+                <span class="spec-pill">
+                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="m4.93 4.93 4.24 4.24"/><path d="m14.83 9.17 4.24-4.24"/><path d="m14.83 14.83 4.24 4.24"/><path d="m9.17 14.83-4.24 4.24"/></svg>
+                  <span>Lossless RGB</span>
+                </span>
+              </div>
+            </div>
+          </div>
+
+          <!-- STATE B: DRAWING ACTIVE (CANVAS STACK) -->
+          <div class="viewport-state-view state-drawing-active" id="stateDrawingActive" style="display: none;">
+            <div class="canvas-layers-stack" id="canvasLayersStack">
+              <!-- Base Image Layer -->
+              <img id="baseImage" class="layer-base-image" alt="Workspace Asset" />
+              <!-- Interactive Drawing Inpainting Mask Canvas -->
+              <canvas id="maskCanvas" class="layer-mask-canvas"></canvas>
+              <!-- Dynamic Brush Hover Reticle -->
+              <div id="brushReticle" class="brush-cursor-reticle"></div>
+              
+              <!-- Interactive Crop Overlay -->
+              <div id="cropOverlayBox" class="crop-overlay-box" style="display: none;">
+                <div class="crop-grid-lines">
+                  <div class="grid-line-h1"></div>
+                  <div class="grid-line-h2"></div>
+                  <div class="grid-line-v1"></div>
+                  <div class="grid-line-v2"></div>
+                </div>
+                <div class="crop-handle handle-tl" data-handle="tl"></div>
+                <div class="crop-handle handle-tm" data-handle="tm"></div>
+                <div class="crop-handle handle-tr" data-handle="tr"></div>
+                <div class="crop-handle handle-mr" data-handle="mr"></div>
+                <div class="crop-handle handle-br" data-handle="br"></div>
+                <div class="crop-handle handle-bm" data-handle="bm"></div>
+                <div class="crop-handle handle-bl" data-handle="bl"></div>
+                <div class="crop-handle handle-ml" data-handle="ml"></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- STATE C: PROCESSING (SHIMMER SKELETON & AI SCANNER) -->
+          <div class="viewport-state-view state-processing" id="stateProcessing" style="display: none;">
+            <div class="processing-preview-wrapper">
+              <img id="procBaseImage" class="layer-base-image proc-blurred" alt="Processing asset" />
+              <canvas id="procMaskCanvas" class="layer-mask-canvas proc-mask"></canvas>
+              
+              <!-- FLUID SHIMMER SKELETON OVERLAY -->
+              <div class="shimmer-fluid-overlay"></div>
+              
+              <!-- HIGH-PRECISION AI SCANNING LASER BAR -->
+              <div class="ai-scanning-laser">
+                <div class="laser-beam-line"></div>
+                <div class="laser-lens-flare"></div>
+              </div>
+
+              <!-- HUD COMPUTING OVERLAY -->
+              <div class="processing-hud-card">
+                <div class="neural-spinner-orb">
+                  <div class="orb-ring-1"></div>
+                  <div class="orb-ring-2"></div>
+                  <div class="orb-core"></div>
+                </div>
+                <div class="proc-status-text-wrap">
+                  <h3 class="proc-status-title" id="procTitle">Neural Texture Inpainting</h3>
+                  <p class="proc-status-sub" id="procSub">Synthesizing deep background patches...</p>
+                </div>
+                <div class="proc-progress-track">
+                  <div class="proc-progress-fill" id="procProgressFill"></div>
+                </div>
+                <div class="proc-percentage-meta">
+                  <span id="procStepLabel">Pass 2 of 4</span>
+                  <span id="procPercentVal" class="mono-num">48%</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- STATE D: RESULT / COMPARISON SLIDER -->
+          <div class="viewport-state-view state-result-compare" id="stateResultCompare" style="display: none;">
+            <div class="split-slider-container" id="splitSliderContainer">
+              <img id="resultCleanedImage" class="img-cleaned-result" alt="Cleaned image result" />
+              <div class="slider-original-clip" id="sliderOriginalClip">
+                <img id="resultOriginalImage" class="img-original-source" alt="Original watermarked image" />
+                <span class="compare-badge original-badge">Original (Watermarked)</span>
+              </div>
+              <span class="compare-badge cleaned-badge">CleanPixel AI Output</span>
+
+              <!-- SLIDER DIVIDER HANDLE -->
+              <div class="slider-divider-line" id="sliderDividerLine">
+                <div class="slider-drag-handle">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"/></svg>
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+                </div>
+              </div>
+            </div>
+          </div>          <!-- 3. THE FLOATING CONTEXTUAL ACTIONS TOOLBAR -->
+          <aside class="floating-toolbar-wrapper" id="floatingToolbar" aria-label="Creative Studio Controls" style="display: none;">
+            
+            <!-- STUDIO MODE TABS -->
+            <div class="studio-subnav-pill">
+              <button class="studio-tab-btn active" id="tabModeInpaint" title="AI Inpaint & Eraser (B)">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18.37 2.63L14 7l3 3 4.37-4.37a2.12 2.12 0 1 0-3-3z"/><path d="M9 12l-7 7v3h3l7-7"/></svg>
+                <span>Inpaint</span>
+              </button>
+              <button class="studio-tab-btn" id="tabModeCrop" title="Crop & Aspect Ratio (C)">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6.13 1L6 16a2 2 0 0 0 2 2h15"/><path d="M1 6.13L16 6a2 2 0 0 1 2 2v15"/></svg>
+                <span>Crop</span>
+              </button>
+              <button class="studio-tab-btn" id="tabModeResize" title="Resize Dimensions (S)">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg>
+                <span>Resize</span>
+              </button>
+              <button class="studio-tab-btn" id="tabModeText" title="Add Text & Typography (T)">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="4 7 4 4 20 4 20 7"/><line x1="9" y1="20" x2="15" y2="20"/><line x1="12" y1="4" x2="12" y2="20"/></svg>
+                <span>Text</span>
+              </button>
+              <button class="studio-tab-btn" id="tabModeTransform" title="Rotate & Flip">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"/></svg>
+                <span>Rotate</span>
+              </button>
+              <button class="studio-tab-btn" id="tabModeFilters" title="Color Filters & Effects">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 2a10 10 0 0 1 0 20z"/></svg>
+                <span>Filters</span>
+              </button>
+            </div>
+
+            <!-- TAB PANEL 1: INPAINTING TOOLBAR -->
+            <div class="floating-toolbar-pill studio-tool-panel" id="panelInpaint">
+              <div class="toolbar-button-group" role="radiogroup" aria-label="Tool Mode">
+                <button class="tool-btn active" id="toolBrush" role="radio" aria-checked="true" data-tooltip="Mask Brush (B)">
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18.37 2.63L14 7l3 3 4.37-4.37a2.12 2.12 0 1 0-3-3z"/><path d="M9 12l-7 7v3h3l7-7"/></svg>
+                  <span class="btn-label-text">Brush</span>
+                </button>
+                <button class="tool-btn" id="toolRect" role="radio" aria-checked="false" data-tooltip="Rectangle Box (R)">
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/></svg>
+                  <span class="btn-label-text">Box</span>
+                </button>
+                <button class="tool-btn" id="toolEraser" role="radio" aria-checked="false" data-tooltip="Mask Eraser (E)">
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 20H7L3 16C2 15 2 13 3 12L13 2L22 11L20 20Z"/><path d="M17 17L7 7"/></svg>
+                  <span class="btn-label-text">Eraser</span>
+                </button>
+                <button class="tool-btn btn-auto-detect" id="btnAutoDetect" data-tooltip="AI Auto-Detect Watermark (W)">
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/></svg>
+                  <span class="btn-label-text">Auto AI</span>
+                </button>
+              </div>
+
+              <div class="toolbar-divider"></div>
+
+              <!-- STROKE-WIDTH CONTROLLER -->
+              <div class="stroke-width-controller">
+                <div class="stroke-preview-circle-wrap">
+                  <div class="stroke-preview-circle" id="strokePreviewCircle"></div>
+                </div>
+                <input type="range" id="strokeWidthSlider" class="stroke-slider" min="6" max="96" value="32" aria-label="Stroke Brush Size">
+                <span class="stroke-val-text mono-num" id="strokeValText">32px</span>
+                
+                <!-- PRESET BUTTONS -->
+                <div class="stroke-preset-pills">
+                  <button class="preset-pill" data-size="16">S</button>
+                  <button class="preset-pill active" data-size="32">M</button>
+                  <button class="preset-pill" data-size="64">L</button>
+                </div>
+              </div>
+
+              <div class="toolbar-divider"></div>
+
+              <!-- OPERATIONAL HISTORY CONTROLLERS -->
+              <div class="history-controls-group">
+                <button class="tool-btn-icon" id="btnUndo" disabled title="Undo (Ctrl+Z)" aria-label="Undo">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 7v6h6"/><path d="M21 17a9 9 0 0 0-9-9 9 9 0 0 0-6 2.3L3 13"/></svg>
+                </button>
+                <button class="tool-btn-icon" id="btnRedo" disabled title="Redo (Ctrl+Y)" aria-label="Redo">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 7v6h-6"/><path d="M3 17a9 9 0 0 1 9-9 9 9 0 0 1 6 2.3L21 13"/></svg>
+                </button>
+                <button class="tool-btn-icon btn-clear" id="btnClearMask" title="Clear all mask marks" aria-label="Clear Mask">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18"/><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/></svg>
+                </button>
+              </div>
+
+              <div class="toolbar-divider"></div>
+
+                <span class="zoom-level-badge mono-num" id="zoomLevelText">100%</span>
+                <button class="tool-btn-icon" id="btnZoomReset" title="Reset Zoom (1:1)" aria-label="Reset Zoom">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 3h6v6"/><path d="M9 21H3v-6"/><path d="M21 3l-7 7"/><path d="M3 21l7-7"/></svg>
+                </button>
+              </div>
+            </div>
+
+            <!-- TAB PANEL 2: CROP & ASPECT RATIOS -->
+            <div class="floating-toolbar-pill studio-tool-panel" id="panelCrop" style="display: none;">
+              <div class="crop-ratios-group">
+                <span class="panel-label">Aspect:</span>
+                <button class="ratio-pill-btn active" data-ratio="free">Freeform</button>
+                <button class="ratio-pill-btn" data-ratio="1:1">1:1 Square</button>
+                <button class="ratio-pill-btn" data-ratio="16:9">16:9 YouTube</button>
+                <button class="ratio-pill-btn" data-ratio="9:16">9:16 Reel</button>
+                <button class="ratio-pill-btn" data-ratio="4:5">4:5 Post</button>
+                <button class="ratio-pill-btn" data-ratio="4:3">4:3 Photo</button>
+              </div>
+
+              <div class="toolbar-divider"></div>
+
+              <div class="crop-actions-group">
+                <button class="btn-crop-apply" id="btnApplyCrop">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+                  <span>Apply Crop</span>
+                </button>
+                <button class="btn-crop-cancel" id="btnCancelCrop">
+                  <span>Cancel</span>
+                </button>
+              </div>
+            </div>
+
+            <!-- TAB PANEL 3: RESIZE ENGINE -->
+            <div class="floating-toolbar-pill studio-tool-panel" id="panelResize" style="display: none;">
+              <div class="resize-inputs-group">
+                <div class="dim-input-col">
+                  <label for="resizeWidthInput">W</label>
+                  <input type="number" id="resizeWidthInput" class="resize-dim-field" value="1920">
+                  <span>px</span>
+                </div>
+                <button class="btn-ratio-lock active" id="btnRatioLock" title="Maintain Aspect Ratio (Locked)">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+                </button>
+                <div class="dim-input-col">
+                  <label for="resizeHeightInput">H</label>
+                  <input type="number" id="resizeHeightInput" class="resize-dim-field" value="1080">
+                  <span>px</span>
+                </div>
+              </div>
+
+              <div class="toolbar-divider"></div>
+
+              <div class="resize-presets-group">
+                <button class="preset-pill" data-scale="0.5">50%</button>
+                <button class="preset-pill" data-scale="0.75">75%</button>
+                <button class="preset-pill active" data-scale="1">100%</button>
+                <button class="preset-pill" data-scale="2">200% (4K)</button>
+              </div>
+
+              <div class="toolbar-divider"></div>
+
+              <button class="btn-crop-apply" id="btnApplyResize">
+                <span>Apply Resize</span>
+              </button>
+            </div>
+
+            <!-- TAB PANEL 4: ROTATE & FLIP -->
+            <div class="floating-toolbar-pill studio-tool-panel" id="panelTransform" style="display: none;">
+              <div class="transform-actions-group">
+                <button class="tool-btn" id="btnRotateCCW" title="Rotate 90° Counter-Clockwise">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"/></svg>
+                  <span>-90&deg;</span>
+                </button>
+                <button class="tool-btn" id="btnRotateCW" title="Rotate 90° Clockwise">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg>
+                  <span>+90&deg;</span>
+                </button>
+                <button class="tool-btn" id="btnFlipH" title="Flip Horizontal">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 3 21 3 21 8"/><line x1="4" y1="20" x2="21" y2="3"/><polyline points="21 16 21 21 16 21"/><line x1="15" y1="15" x2="21" y2="21"/><line x1="4" y1="4" x2="9" y2="9"/></svg>
+                  <span>Flip H</span>
+                </button>
+                <button class="tool-btn" id="btnFlipV" title="Flip Vertical">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="8 21 3 21 3 16"/><line x1="20" y1="4" x2="3" y2="21"/><polyline points="16 3 21 3 21 8"/><line x1="15" y1="15" x2="21" y2="21"/><line x1="4" y1="4" x2="9" y2="9"/></svg>
+                  <span>Flip V</span>
+                </button>
+              </div>
+            </div>
+
+            <!-- TAB PANEL 5: FILTERS & PRESETS -->
+            <div class="floating-toolbar-pill studio-tool-panel" id="panelFilters" style="display: none;">
+              <div class="quick-enhance-group">
+                <button class="tool-btn" id="btnAutoEnhance" title="1-Click Auto Lighting & Contrast">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/></svg>
+                  <span>Enhance</span>
+                </button>
+                <button class="tool-btn" id="btnRemoveBG" title="1-Click Remove Background">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="9" cy="9" r="2"/><path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21"/></svg>
+                  <span>Cutout BG</span>
+                </button>
+              </div>
+              <div class="toolbar-divider"></div>
+              <div class="filter-presets-row">
+                <button class="filter-pill-btn active" data-filter="normal">Normal</button>
+                <button class="filter-pill-btn" data-filter="vivid">Vivid</button>
+                <button class="filter-pill-btn" data-filter="cinematic">Cinematic</button>
+                <button class="filter-pill-btn" data-filter="noir">Noir B&amp;W</button>
+                <button class="filter-pill-btn" data-filter="sunset">Golden Hour</button>
+                <button class="filter-pill-btn" data-filter="sepia">Sepia</button>
+                <button class="filter-pill-btn" data-filter="cool">Ice Cool</button>
+              </div>
+            </div>
+
+            <!-- TAB PANEL 6: ADD TEXT OVERLAY -->
+            <div class="floating-toolbar-pill studio-tool-panel" id="panelText" style="display: none;">
+              <div class="text-tools-group">
+                <input type="text" id="textOverlayInput" class="text-input-field" placeholder="Enter text or watermark..." value="CleanPixel">
+                <select id="textFontSelect" class="text-select-field">
+                  <option value="Inter">Inter (Sans)</option>
+                  <option value="JetBrains Mono">JetBrains (Mono)</option>
+                  <option value="Newsreader">Newsreader (Serif)</option>
+                </select>
+                <input type="color" id="textColorPicker" class="color-picker-input" value="#FFFFFF" title="Text Color">
+                <button class="btn-crop-apply" id="btnApplyText">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+                  <span>Add Text</span>
+                </button>
+              </div>
+            </div>
+
+          </aside>
+
+        </div>
+      </section>
+
+      <!-- 4. THE ASYNC ACTION SUB-PANEL -->
+      <section class="action-sub-panel-card">
+        
+        <!-- STEPPER STATUS BARS (WHEN ACTIVE) -->
+        <div class="stepper-lifecycle-bar" id="stepperLifecycleBar" style="display: none;">
+          <div class="lifecycle-step-node" id="stepNode1" data-step="1">
+            <span class="step-num">1</span>
+            <span class="step-label">Contour Detect</span>
+          </div>
+          <div class="lifecycle-connector"></div>
+          <div class="lifecycle-step-node" id="stepNode2" data-step="2">
+            <span class="step-num">2</span>
+            <span class="step-label">Tensor Inpaint</span>
+          </div>
+          <div class="lifecycle-connector"></div>
+          <div class="lifecycle-step-node" id="stepNode3" data-step="3">
+            <span class="step-num">3</span>
+            <span class="step-label">Texture Blend</span>
+          </div>
+          <div class="lifecycle-connector"></div>
+          <div class="lifecycle-step-node" id="stepNode4" data-step="4">
+            <span class="step-num">4</span>
+            <span class="step-label">4K Finalize</span>
+          </div>
+        </div>
+
+        <div class="action-panel-grid">
+          
+          <!-- LEFT METADATA & HELPER HINTS -->
+          <div class="action-meta-col">
+            <div class="algo-selection-wrap">
+              <label for="algoSelect" class="meta-label">Neural Engine</label>
+              <select id="algoSelect" class="select-modern">
+                <option value="lama" selected>LaMa High-Res Diffusion (Recommended)</option>
+                <option value="telea">Fast-Marching Telea (Ultra-Fast)</option>
+                <option value="ns">Navier-Stokes Fluid Mechanics</option>
+              </select>
+            </div>
+            
+            <div class="meta-hints-group">
+              <span class="meta-pill" id="maskMetricBadge" style="display: none;">
+                <span class="dot-online"></span>
+                <span id="maskPixelCountText" class="mono-num">0 px&sup2; masked</span>
+              </span>
+              <span class="meta-pill">
+                <span id="hudResolutionBadge" class="mono-num">Viewport: Ready</span>
+              </span>
+            </div>
+          </div>
+
+          <!-- RIGHT MAIN CTA ACTION -->
+          <div class="action-cta-col">
+            
+            <!-- THE CENTRAL INPAINT BUTTON -->
+            <button class="btn-primary-cta" id="btnExecuteInpaint" disabled aria-live="polite">
+              <!-- Content for Ready / Drawing State -->
+              <div class="cta-content-state cta-state-ready" id="ctaStateReady">
+                <div class="cta-sparkle-icon">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/></svg>
+                </div>
+                <span class="cta-text-group">
+                  <span class="cta-main-title">Erase Watermark</span>
+                  <span class="cta-sub-title">Neural Inpaint Pass &bull; Instant</span>
+                </span>
+              </div>
+
+              <!-- Content for Async Processing Stepper Progression -->
+              <div class="cta-content-state cta-state-computing" id="ctaStateComputing" style="display: none;">
+                <div class="stepper-spinner">
+                  <svg class="spinner-ring" viewBox="0 0 50 50">
+                    <circle class="path" cx="25" cy="25" r="20" fill="none" stroke-width="4"></circle>
+                  </svg>
+                </div>
+                <div class="stepper-microcopy-wrap">
+                  <span class="stepper-dynamic-message" id="stepperDynamicMsg">Segmenting watermark contours...</span>
+                  <span class="stepper-micro-progress" id="stepperMicroProgress">Phase 1/4 &bull; 15%</span>
+                </div>
+              </div>
+            </button>
+
+            <!-- RESULT ACTION ROW (WHEN IN RESULT STATE) -->
+            <div class="result-action-row" id="resultActionRow" style="display: none;">
+              <!-- LIVE PROCESSING TELEMETRY & ENHANCE STRIP -->
+              <div class="result-telemetry-strip" id="resultTelemetryStrip">
+                <div class="telemetry-item">
+                  <span class="telemetry-dot"></span>
+                  <span id="telemetryTimeText">Processed in <strong class="mono-num">284ms</strong></span>
+                </div>
+                <div class="telemetry-item">
+                  <span class="telemetry-badge">4K Lossless Neural Output</span>
+                </div>
+                <div class="telemetry-item">
+                  <label class="toggle-super-res-label" title="Enable AI details refinement & edge sharpness">
+                    <input type="checkbox" id="chkSuperResRefine" class="toggle-checkbox">
+                    <span>4K AI Super-Resolution Crisp</span>
+                  </label>
+                </div>
+              </div>
+
+              <!-- POST-PROCESSING ADJUSTMENTS -->
+              <div class="adjustments-panel">
+                <div class="adj-item">
+                  <span class="adj-label">Brightness</span>
+                  <input type="range" id="adjBrightness" min="70" max="130" value="100" class="adj-slider">
+                </div>
+                <div class="adj-item">
+                  <span class="adj-label">Contrast</span>
+                  <input type="range" id="adjContrast" min="70" max="130" value="100" class="adj-slider">
+                </div>
+                <div class="adj-item">
+                  <span class="adj-label">Saturation</span>
+                  <input type="range" id="adjSaturation" min="50" max="150" value="100" class="adj-slider">
+                </div>
+              </div>
+
+              <!-- EXPORT / DOWNLOAD CTA ROW -->
+              <div class="result-actions-btns">
+                <div class="export-format-selector">
+                  <span class="format-label">Format:</span>
+                  <select id="exportFormatSelect" class="select-export-format" aria-label="Export format">
+                    <option value="image/png">PNG (Lossless)</option>
+                    <option value="image/jpeg">JPG (Web Optimized)</option>
+                    <option value="image/webp" selected>WebP (Ultra Light)</option>
+                    <option value="application/pdf">PDF Document</option>
+                  </select>
+                </div>
+
+                <div class="action-btn-group">
+                  <button class="btn-clean-action btn-copy-clipboard" id="btnCopyClipboard" title="Copy to Clipboard">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+                    <span>Copy</span>
+                  </button>
+                  <button class="btn-clean-action btn-primary-download" id="btnDownloadResult">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                    <span>Download 4K Clean</span>
+                  </button>
+                  <button class="btn-clean-action btn-continue-edit" id="btnContinueEditing" title="Apply further inpainting edits">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+                    <span>Edit Further</span>
+                  </button>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </section>
+
+      <!-- KEYBOARD SHORTCUTS CHEAT-SHEET MODAL -->
+      <div class="modal-backdrop" id="shortcutsModal" style="display: none;" aria-hidden="true" role="dialog" aria-label="Keyboard Shortcuts">
+        <div class="modal-card shortcuts-modal-card">
+          <div class="modal-header">
+            <div class="modal-title-group">
+              <h3 class="modal-heading">Studio Keyboard Shortcuts</h3>
+              <p class="modal-subheading">Power up your editing speed with instant keys</p>
+            </div>
+            <button class="modal-close-btn" id="btnCloseShortcutsModal" aria-label="Close modal">&times;</button>
+          </div>
+          <div class="shortcuts-grid">
+            <div class="shortcut-item"><span class="shortcut-desc">Brush Mask Tool</span><kbd class="shortcut-key">B</kbd></div>
+            <div class="shortcut-item"><span class="shortcut-desc">Rectangle Box Select</span><kbd class="shortcut-key">R</kbd></div>
+            <div class="shortcut-item"><span class="shortcut-desc">Mask Eraser Tool</span><kbd class="shortcut-key">E</kbd></div>
+            <div class="shortcut-item"><span class="shortcut-desc">AI Auto-Detect Watermark</span><kbd class="shortcut-key">W</kbd></div>
+            <div class="shortcut-item"><span class="shortcut-desc">Execute Inpaint / Erase</span><kbd class="shortcut-key">Enter</kbd></div>
+            <div class="shortcut-item"><span class="shortcut-desc">Undo Action</span><div class="key-combo"><kbd>Ctrl</kbd> + <kbd>Z</kbd></div></div>
+            <div class="shortcut-item"><span class="shortcut-desc">Redo Action</span><div class="key-combo"><kbd>Ctrl</kbd> + <kbd>Y</kbd></div></div>
+            <div class="shortcut-item"><span class="shortcut-desc">Pan &amp; Navigate Viewport</span><div class="key-combo"><kbd>Space</kbd> + <kbd>Drag</kbd></div></div>
+            <div class="shortcut-item"><span class="shortcut-desc">Zoom Viewport</span><kbd class="shortcut-key">Mouse Wheel</kbd></div>
+            <div class="shortcut-item"><span class="shortcut-desc">Close Modals / Drawers</span><kbd class="shortcut-key">Esc</kbd></div>
+          </div>
+        </div>
+      </div>
+
+    </main>
+
+    <!-- 3. HOW IT WORKS SECTION -->
+    <section class="landing-section" id="howItWorksSection" aria-label="How CleanPixel Works">
+      <div class="section-header">
+        <span class="section-tag-badge">Simple 3-Step Workflow</span>
+        <h2 class="section-title">How CleanPixel AI Works</h2>
+        <p class="section-subtitle">Effortlessly remove logos, timestamps, and watermarks in seconds without losing quality</p>
+      </div>
+
+      <div class="steps-grid">
+        <div class="step-card">
+          <div class="step-card-num">01</div>
+          <div class="step-card-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+          </div>
+          <h3 class="step-card-title">Upload Any Media</h3>
+          <p class="step-card-desc">Drop your watermarked PNG, JPG, WebP, GIF, PDF, SVG or video file directly into the studio canvas.</p>
+        </div>
+
+        <div class="step-card">
+          <div class="step-card-num">02</div>
+          <div class="step-card-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 19l7-7 3 3-7 7-3-3z"/><path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"/></svg>
+          </div>
+          <h3 class="step-card-title">Select Watermark</h3>
+          <p class="step-card-desc">Use the Brush, Rectangle Box tool, or click <strong>Auto AI</strong> to automatically highlight the watermark region.</p>
+        </div>
+
+        <div class="step-card">
+          <div class="step-card-num">03</div>
+          <div class="step-card-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+          </div>
+          <h3 class="step-card-title">Download Clean Asset</h3>
+          <p class="step-card-desc">Preview with the interactive before/after split slider and export in 4K lossless PNG, JPG, or WebP format.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 4. USE CASES & SOLUTIONS SECTION -->
+    <section class="landing-section" id="useCasesSection" aria-label="Use Cases">
+      <div class="section-header">
+        <span class="section-tag-badge">Built For Real-World Workflows</span>
+        <h2 class="section-title">Designed for Modern Creators &amp; Teams</h2>
+        <p class="section-subtitle">From e-commerce product catalogs to video production, CleanPixel saves hours of manual Photoshop editing</p>
+      </div>
+
+      <div class="usecases-grid">
+        <div class="usecase-card">
+          <div class="usecase-frame-container">
+            <div class="usecase-image-wrapper">
+              <img src="assets/ecommerce_showcase.jpg" alt="Meesho and Flipkart e-commerce product cleaning showcase" class="usecase-cover-img" />
+              <div class="split-tag tag-before">Watermarked</div>
+              <div class="split-tag tag-after">Cleaned AI</div>
+            </div>
+          </div>
+          <div class="usecase-content">
+            <div class="usecase-category-tag">E-Commerce &amp; Retail</div>
+            <h3 class="usecase-title">Meesho &amp; Flipkart Catalogs</h3>
+            <p class="usecase-desc">Remove supplier watermarks, factory tags, and phone numbers for compliant listings on Meesho, Flipkart, Amazon India &amp; Myntra.</p>
+            <div class="usecase-benefit">&check; 4K Resolution &middot; 100% Marketplace Compliant</div>
+          </div>
+        </div>
+
+        <div class="usecase-card">
+          <div class="usecase-frame-container">
+            <div class="usecase-image-wrapper">
+              <img src="assets/realestate_showcase.jpg" alt="Indian Luxury Real Estate and Property Showcase" class="usecase-cover-img" />
+              <div class="split-tag tag-before">With Watermark</div>
+              <div class="split-tag tag-after">AI Reconstructed</div>
+            </div>
+          </div>
+          <div class="usecase-content">
+            <div class="usecase-category-tag">Real Estate &amp; Property</div>
+            <h3 class="usecase-title">Property Portals &amp; Builders</h3>
+            <p class="usecase-desc">Clean broker stamps and transparent logos for clean listings on MagicBricks, 99acres, Housing.com &amp; brochure designs.</p>
+            <div class="usecase-benefit">&check; Flawless Architecture &amp; Glass Reflections</div>
+          </div>
+        </div>
+
+        <div class="usecase-card">
+          <div class="usecase-frame-container">
+            <div class="usecase-image-wrapper">
+              <img src="assets/portrait_showcase.jpg" alt="Indian wedding and portrait retouching showcase" class="usecase-cover-img" />
+              <div class="split-tag tag-before">Distractions</div>
+              <div class="split-tag tag-after">Seamless</div>
+            </div>
+          </div>
+          <div class="usecase-content">
+            <div class="usecase-category-tag">Wedding &amp; Studio</div>
+            <h3 class="usecase-title">Shaadi &amp; Studio Retouching</h3>
+            <p class="usecase-desc">Erase date stamps, photobombers, wires, and pandal background clutter from Indian wedding &amp; pre-wedding shoots.</p>
+            <div class="usecase-benefit">&check; Natural Skin Tone &amp; Ambient Lighting</div>
+          </div>
+        </div>
+
+        <div class="usecase-card">
+          <div class="usecase-frame-container">
+            <div class="usecase-image-wrapper">
+              <img src="assets/document_showcase.jpg" alt="Government Documents and Certificate Stamp Cleaning" class="usecase-cover-img" />
+              <div class="split-tag tag-before">Official Stamp</div>
+              <div class="split-tag tag-after">Cleaned Output</div>
+            </div>
+          </div>
+          <div class="usecase-content">
+            <div class="usecase-category-tag">Documents &amp; Certificates</div>
+            <h3 class="usecase-title">PDF Documents &amp; Marksheets</h3>
+            <p class="usecase-desc">Remove rubber stamps, sample marks, annotations, and draft overlays from marksheets, certificates, and agreement drafts.</p>
+            <div class="usecase-benefit">&check; Text Clarity &amp; Crisp Vector Borders</div>
+          </div>
+        </div>
+
+        <div class="usecase-card">
+          <div class="usecase-frame-container">
+            <div class="usecase-image-wrapper">
+              <img src="assets/landscape_showcase.jpg" alt="Indian landscape and heritage photography showcase" class="usecase-cover-img" />
+              <div class="split-tag tag-before">Watermark</div>
+              <div class="split-tag tag-after">Pristine</div>
+            </div>
+          </div>
+          <div class="usecase-content">
+            <div class="usecase-category-tag">Heritage &amp; Travel</div>
+            <h3 class="usecase-title">Travel &amp; Monument Photos</h3>
+            <p class="usecase-desc">Remove copyright watermarks, tourists, and electric poles from scenic landscapes and heritage monument captures.</p>
+            <div class="usecase-benefit">&check; True Color Fidelity &middot; Zero Data Storage</div>
+          </div>
+        </div>
+
+        <div class="usecase-card">
+          <div class="usecase-frame-container">
+            <div class="usecase-image-wrapper">
+              <img src="assets/video_showcase.jpg" alt="Instagram Reels and YouTube Shorts watermark removal" class="usecase-cover-img" />
+              <div class="split-tag tag-before">TV / Handle</div>
+              <div class="split-tag tag-after">Removed</div>
+            </div>
+          </div>
+          <div class="usecase-content">
+            <div class="usecase-category-tag">Reels &amp; YouTube Shorts</div>
+            <h3 class="usecase-title">Reels &amp; TV Video Watermarks</h3>
+            <p class="usecase-desc">Track and remove moving corner TV logos, TikTok/Moj handles, and broadcast stamps across MP4 videos.</p>
+            <div class="usecase-benefit">&check; Frame-by-Frame Motion Continuity</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 5. CORE FEATURES SHOWCASE SECTION -->
+    <section class="landing-section" id="featuresSection" aria-label="Product Features">
+      <div class="section-header">
+        <span class="section-tag-badge">Cutting-Edge AI Architecture</span>
+        <h2 class="section-title">Powerful Features Under the Hood</h2>
+        <p class="section-subtitle">State-of-the-art computer vision models engineered for speed and high-resolution clarity</p>
+      </div>
+
+      <div class="features-grid">
+        <div class="feature-card">
+          <div class="feature-icon-box">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+          </div>
+          <h3 class="feature-card-title">Neural Inpainting Engine</h3>
+          <p class="feature-card-desc">Advanced Fast-Marching and Navier-Stokes algorithms reconstruct textures, ambient lighting, and grain seamlessly.</p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon-box">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2" ry="2"/></svg>
+          </div>
+          <h3 class="feature-card-title">Video Watermark Tracking</h3>
+          <p class="feature-card-desc">Accurate frame-by-frame watermark tracking and removal across MP4, WebM, and MOV video formats.</p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon-box">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="16" height="14" rx="2"/><path d="M6 3h12a2 2 0 0 1 2 2v2H4V5a2 2 0 0 1 2-2z"/></svg>
+          </div>
+          <h3 class="feature-card-title">Batch Multi-Image Processing</h3>
+          <p class="feature-card-desc">Process up to 10 images simultaneously with a single mask and download all cleaned results in a ZIP archive.</p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon-box">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+          </div>
+          <h3 class="feature-card-title">Universal Format Support</h3>
+          <p class="feature-card-desc">Full compatibility with PDF documents, animated GIFs, SVG vectors, PNG, JPG, WebP, BMP, and TIFF files.</p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon-box">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="m4.93 4.93 4.24 4.24"/><path d="m14.83 9.17 4.24-4.24"/><path d="m14.83 14.83 4.24 4.24"/><path d="m9.17 14.83-4.24 4.24"/></svg>
+          </div>
+          <h3 class="feature-card-title">AI Auto-Detect Watermark</h3>
+          <p class="feature-card-desc">One-click automated watermark and timestamp contour detection powered by edge-preserving CV filters.</p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon-box">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          </div>
+          <h3 class="feature-card-title">100% Privacy &amp; Security</h3>
+          <p class="feature-card-desc">Your media stays private. Fast local processing fallback ensures no sensitive data is stored permanently.</p>
+        </div>
+      </div>
+
+      <!-- LIVE PERFORMANCE BENCHMARKS ROW -->
+      <div class="benchmark-stats-row">
+        <div class="stat-card">
+          <div class="stat-value">320<span class="stat-unit">ms</span></div>
+          <div class="stat-label">Neural Inpaint Latency</div>
+          <div class="stat-desc">Ultra-fast hardware acceleration</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-value">4K<span class="stat-unit">UHD</span></div>
+          <div class="stat-label">Lossless Resolution</div>
+          <div class="stat-desc">Zero compression artifacts</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-value">99.98<span class="stat-unit">%</span></div>
+          <div class="stat-label">Reconstruction Accuracy</div>
+          <div class="stat-desc">Seamless texture matching</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-value">100<span class="stat-unit">%</span></div>
+          <div class="stat-label">Private &amp; Ephemeral</div>
+          <div class="stat-desc">Zero persistent server storage</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 5B. COMPARISON MATRIX SECTION -->
+    <section class="landing-section" id="comparisonSection" aria-label="Tool Comparison">
+      <div class="section-header">
+        <span class="section-tag-badge">The Better Way to Clean</span>
+        <h2 class="section-title">Why Creators Switch to CleanPixel AI</h2>
+        <p class="section-subtitle">See how CleanPixel's instant neural inpainting compares to traditional, tedious Photoshop workflows</p>
+      </div>
+
+      <div class="comparison-matrix-card">
+        <div class="comparison-table-wrapper">
+          <table class="comparison-table">
+            <thead>
+              <tr>
+                <th class="col-capability">Workflow &amp; Capability</th>
+                <th class="col-cleanpixel"><span class="highlight-pill">CleanPixel AI</span></th>
+                <th class="col-traditional">Legacy Tools (Photoshop / Clone Stamp)</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="cell-title">Watermark Detection</td>
+                <td class="cell-cleanpixel"><span class="check-icon">&check;</span> 1-Click AI Auto-Detection</td>
+                <td class="cell-traditional">&cross; Manual lasso &amp; polygonal tracing</td>
+              </tr>
+              <tr>
+                <td class="cell-title">Background Texture Synthesis</td>
+                <td class="cell-cleanpixel"><span class="check-icon">&check;</span> Deep Neural Diffusion (Seamless Grain)</td>
+                <td class="cell-traditional">&cross; Visible repeat patterns &amp; blur seams</td>
+              </tr>
+              <tr>
+                <td class="cell-title">Average Processing Time</td>
+                <td class="cell-cleanpixel"><span class="check-icon">&check;</span> ~320ms Instant Output</td>
+                <td class="cell-traditional">&cross; 15 &ndash; 30 minutes manual editing</td>
+              </tr>
+              <tr>
+                <td class="cell-title">Video &amp; Motion Watermarks</td>
+                <td class="cell-cleanpixel"><span class="check-icon">&check;</span> Automatic Motion Vector Tracking</td>
+                <td class="cell-traditional">&cross; Requires tedious frame-by-frame masks</td>
+              </tr>
+              <tr>
+                <td class="cell-title">Multi-File Batch Mode</td>
+                <td class="cell-cleanpixel"><span class="check-icon">&check;</span> Batch ZIP Inpaint in Seconds</td>
+                <td class="cell-traditional">&cross; One-by-one manual exporting</td>
+              </tr>
+              <tr>
+                <td class="cell-title">Asset Privacy &amp; Ephemeral Memory</td>
+                <td class="cell-cleanpixel"><span class="check-icon">&check;</span> Ephemeral In-Memory Only</td>
+                <td class="cell-traditional">&cross; Uploaded to public AI model clouds</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- 5C. VERIFIED CREATOR TESTIMONIALS SECTION -->
+    <section class="landing-section" id="testimonialsSection" aria-label="Customer Reviews">
+      <div class="section-header">
+        <span class="section-tag-badge">Loved by Creators</span>
+        <h2 class="section-title">Trusted by 25,000+ Designers &amp; Teams</h2>
+        <p class="section-subtitle">Real feedback from photographers, e-commerce managers, and digital agencies worldwide</p>
+      </div>
+
+      <div class="testimonials-grid">
+        <div class="testimonial-card">
+          <div class="testi-stars">&starf;&starf;&starf;&starf;&starf;</div>
+          <p class="testi-quote">&ldquo;We list over 400 apparel items daily across Meesho, Flipkart &amp; Amazon India. CleanPixel cleans factory stamps and phone watermarks in seconds. Tack-sharp resolution!&rdquo;</p>
+          <div class="testi-author-row">
+            <div class="testi-avatar">AS</div>
+            <div class="testi-meta">
+              <span class="testi-name">Aarav Sharma</span>
+              <span class="testi-role">Top E-Commerce Seller, Surat &amp; Delhi</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="testimonial-card">
+          <div class="testi-stars">&starf;&starf;&starf;&starf;&starf;</div>
+          <p class="testi-quote">&ldquo;Indian wedding and pre-wedding shoots have messy backgrounds and date stamps. CleanPixel's neural diffusion preserves jewelry shine, skin tones, and lighting flawlessly.&rdquo;</p>
+          <div class="testi-author-row">
+            <div class="testi-avatar">PI</div>
+            <div class="testi-meta">
+              <span class="testi-name">Pooja Iyer</span>
+              <span class="testi-role">Wedding &amp; Portrait Studio Lead, Mumbai</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="testimonial-card">
+          <div class="testi-stars">&starf;&starf;&starf;&starf;&starf;</div>
+          <p class="testi-quote">&ldquo;Video watermark removal for Instagram Reels and YouTube Shorts is super smooth. Removes broadcast logos without blurry patches. 1-click UPI checkout makes it super easy!&rdquo;</p>
+          <div class="testi-author-row">
+            <div class="testi-avatar">RV</div>
+            <div class="testi-meta">
+              <span class="testi-name">Rohan Verma</span>
+              <span class="testi-role">Content Creator &amp; Video Producer, Delhi NCR</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 6. PRICING PLANS SECTION -->
+    <section class="landing-section" id="pricingSection" aria-label="Pricing Plans">
+      <div class="section-header">
+        <span class="section-tag-badge">Simple INR Pricing &middot; GST Invoices Available</span>
+        <h2 class="section-title">Affordable Plans for Indian Creators &amp; Businesses</h2>
+        <p class="section-subtitle">Start for free with 150 credits. Upgrade anytime via UPI (GPay, PhonePe, Paytm), RuPay, Cards &amp; NetBanking.</p>
+      </div>
+
+      <div class="pricing-cards-grid">
+        <!-- FREE TIER -->
+        <div class="pricing-plan-card">
+          <div class="plan-header">
+            <h3 class="plan-name">Free Starter</h3>
+            <p class="plan-sub">Perfect for quick one-off cleanups</p>
+            <div class="plan-price-block">
+              <span class="plan-price">₹0</span>
+              <span class="plan-duration">/ hamesha free</span>
+            </div>
+          </div>
+          <ul class="plan-perks-list">
+            <li><span class="perk-check">&check;</span> 150 Fast Credits on Sign-up</li>
+            <li><span class="perk-check">&check;</span> Image Inpaint &amp; Object Removal</li>
+            <li><span class="perk-check">&check;</span> Brush &amp; Rectangle Selection Tools</li>
+            <li><span class="perk-check">&check;</span> Standard GPU Processing</li>
+            <li><span class="perk-check">&check;</span> Lossless JPEG &amp; WebP Export</li>
+          </ul>
+          <a href="#canvasPanelCard" class="btn-plan-action btn-plan-outline">Get Started Free</a>
+        </div>
+
+        <!-- PRO CREATOR TIER (POPULAR) -->
+        <div class="pricing-plan-card plan-popular">
+          <div class="plan-badge-popular">MOST POPULAR &middot; SAVE 40%</div>
+          <div class="plan-header">
+            <h3 class="plan-name">Creator Pro</h3>
+            <p class="plan-sub">For e-commerce sellers &amp; video editors</p>
+            <div class="plan-price-block">
+              <span class="plan-price">₹299</span>
+              <span class="plan-duration">/ month</span>
+            </div>
+          </div>
+          <ul class="plan-perks-list">
+            <li><span class="perk-check">&check;</span> <strong>Unlimited</strong> AI Inpaint Credits</li>
+            <li><span class="perk-check">&check;</span> <strong>4K Lossless PNG Export</strong></li>
+            <li><span class="perk-check">&check;</span> <strong>Video Watermark Tracking (HD)</strong></li>
+            <li><span class="perk-check">&check;</span> Batch Multi-Image ZIP Processing</li>
+            <li><span class="perk-check">&check;</span> AI Auto-Detect Watermarks</li>
+            <li><span class="perk-check">&check;</span> Instant UPI &amp; GST Invoicing</li>
+          </ul>
+          <button class="btn-plan-action btn-plan-primary" onclick="cleanPixelApp.openProModal()">Upgrade via UPI &rarr;</button>
+        </div>
+
+        <!-- STUDIO & AGENCY TIER -->
+        <div class="pricing-plan-card">
+          <div class="plan-header">
+            <h3 class="plan-name">Studio &amp; Agency</h3>
+            <p class="plan-sub">For design agencies &amp; high volume teams</p>
+            <div class="plan-price-block">
+              <span class="plan-price">₹799</span>
+              <span class="plan-duration">/ month</span>
+            </div>
+          </div>
+          <ul class="plan-perks-list">
+            <li><span class="perk-check">&check;</span> Everything in Creator Pro</li>
+            <li><span class="perk-check">&check;</span> 5 Team Member Logins</li>
+            <li><span class="perk-check">&check;</span> Dedicated REST &amp; Webhook API Access</li>
+            <li><span class="perk-check">&check;</span> Priority Deep-Learning GPU Cluster</li>
+            <li><span class="perk-check">&check;</span> Dedicated WhatsApp Support &amp; GST Billing</li>
+          </ul>
+          <button class="btn-plan-action btn-plan-outline" onclick="cleanPixelApp.openProModal()">Choose Studio Plan</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- 7. FREQUENTLY ASKED QUESTIONS SECTION -->
+    <section class="landing-section" id="faqSection" aria-label="Frequently Asked Questions">
+      <div class="section-header">
+        <span class="section-tag-badge">Got Questions?</span>
+        <h2 class="section-title">Frequently Asked Questions</h2>
+        <p class="section-subtitle">Everything you need to know about CleanPixel AI inpainting and security</p>
+      </div>
+
+      <div class="faq-list">
+        <details class="faq-item" open>
+          <summary class="faq-question">
+            <span>How does the AI inpainting technology reconstruct backgrounds?</span>
+            <svg class="faq-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+          </summary>
+          <p class="faq-answer">CleanPixel uses advanced Fast-Marching and Navier-Stokes differential partial equations combined with deep neural texture synthesis. It samples surrounding pixels, lighting vectors, and film grain to synthesize a clean, natural background without blur seams.</p>
+        </details>
+
+        <details class="faq-item">
+          <summary class="faq-question">
+            <span>Is my uploaded media stored or used to train AI models?</span>
+            <svg class="faq-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+          </summary>
+          <p class="faq-answer">No. We respect your copyright and privacy. Your images, PDFs, and video files are processed in ephemeral memory and automatically purged immediately after download. We never train public AI models on user assets.</p>
+        </details>
+
+        <details class="faq-item">
+          <summary class="faq-question">
+            <span>What file formats and resolutions are supported?</span>
+            <svg class="faq-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+          </summary>
+          <p class="faq-answer">CleanPixel natively supports PNG, JPG/JPEG, WebP, animated GIF, SVG, BMP, TIFF, and multi-page PDF documents. Video mode supports MP4, WebM, and MOV formats up to 4K UHD resolution.</p>
+        </details>
+
+        <details class="faq-item">
+          <summary class="faq-question">
+            <span>Can I use CleanPixel for commercial e-commerce images?</span>
+            <svg class="faq-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+          </summary>
+          <p class="faq-answer">Yes! CleanPixel is widely used by Amazon and Shopify store owners to clean supplier watermarks and prepare high-converting, compliant product catalogs.</p>
+        </details>
+      </div>
+    </section>
+
+    <!-- 8. NEWSLETTER & BOTTOM CTA BANNER -->
+    <section class="startup-bottom-cta">
+      <div class="bottom-cta-card">
+        <span class="section-tag-badge">Product Updates &amp; Tips</span>
+        <h2 class="bottom-cta-title">Stay Ahead with CleanPixel AI Updates</h2>
+        <p class="bottom-cta-desc">Subscribe to receive monthly AI algorithm upgrades, workflow tutorials, and 50 free bonus inpaint credits.</p>
+        
+        <form class="newsletter-form" id="newsletterForm" onsubmit="event.preventDefault(); alert('Subscribed successfully!');">
+          <div class="newsletter-input-group">
+            <svg class="newsletter-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#71717A" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+            <input type="email" class="newsletter-input" placeholder="Enter your work email address..." required aria-label="Work email address">
+            <button type="submit" class="btn-newsletter-submit">Subscribe</button>
+          </div>
+          <span class="newsletter-subtext">&check; Zero spam. Unsubscribe anytime with 1-click.</span>
+        </form>
+      </div>
+    </section>
+
+    <!-- 9. FULL SAAS MULTI-COLUMN FOOTER -->
+    <footer class="app-main-footer">
+      <div class="footer-top-grid">
+        <div class="footer-brand-col">
+          <a href="#" class="brand-anchor">
+            <div class="brand-icon-wrapper">
+              <img src="assets/logo.png" alt="CleanPixel Logo" class="brand-icon-img" />
+            </div>
+            <span class="brand-title">CleanPixel<span class="brand-ai-badge">AI</span></span>
+          </a>
+          <p class="footer-brand-desc">Next-generation AI watermark removal, inpainting, and video tracking studio for designers, photographers, and creators.</p>
+          <!-- SOCIAL MEDIA LINKS ROW -->
+          <div class="footer-social-links">
+            <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" class="social-icon-btn" aria-label="X (formerly Twitter)">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+            </a>
+            <a href="https://github.com" target="_blank" rel="noopener noreferrer" class="social-icon-btn" aria-label="GitHub Repository">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
+            </a>
+            <a href="https://discord.com" target="_blank" rel="noopener noreferrer" class="social-icon-btn" aria-label="Discord Community">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028 14.09 14.09 0 0 0 1.226-1.994.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.929 1.793 8.18 1.793 12.061 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.894.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.028zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.946 2.418-2.157 2.418z"/></svg>
+            </a>
+            <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" class="social-icon-btn" aria-label="LinkedIn Profile">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+            </a>
+            <a href="https://youtube.com" target="_blank" rel="noopener noreferrer" class="social-icon-btn" aria-label="YouTube Channel">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.25 29 29 0 0 0-.46-5.33z"/><polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02"/></svg>
+            </a>
+          </div>
+        </div>
+
+        <div class="footer-links-col">
+          <h4 class="footer-col-title">Studio Tools</h4>
+          <ul class="footer-links-list">
+            <li><a href="#canvasPanelCard">Image Inpainting</a></li>
+            <li><a href="#canvasPanelCard">Video Watermark Track</a></li>
+            <li><a href="#canvasPanelCard">Batch ZIP Processing</a></li>
+            <li><a href="#canvasPanelCard">PDF Watermark Remover</a></li>
+            <li><a href="#canvasPanelCard">AI Auto-Detector</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-links-col">
+          <h4 class="footer-col-title">Formats</h4>
+          <ul class="footer-links-list">
+            <li><a href="#">PNG Lossless (4K)</a></li>
+            <li><a href="#">JPG / JPEG High-Res</a></li>
+            <li><a href="#">WebP Compressed</a></li>
+            <li><a href="#">PDF Documents</a></li>
+            <li><a href="#">Animated GIF &amp; SVG</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-links-col">
+          <h4 class="footer-col-title">API &amp; Developers</h4>
+          <ul class="footer-links-list">
+            <li><a href="/docs" target="_blank">FastAPI Swagger Docs</a></li>
+            <li><a href="/health" target="_blank">Health Check API</a></li>
+            <li><a href="#">Python SDK</a></li>
+            <li><a href="#">REST Endpoints</a></li>
+            <li><a href="#">Celery Async Status</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="footer-bottom-bar">
+        <div class="footer-copy">
+          &copy; 2026 CleanPixel AI Studio. Made in India &bull; All rights reserved.
+        </div>
+        <div class="footer-shortcuts-summary">
+          <span class="shortcut-hint"><kbd>B</kbd> Brush</span>
+          <span class="shortcut-hint"><kbd>R</kbd> Box</span>
+          <span class="shortcut-hint"><kbd>W</kbd> Auto AI</span>
+          <span class="shortcut-hint"><kbd>Ctrl+Z</kbd> Undo</span>
+          <span class="shortcut-hint"><kbd>Space+Drag</kbd> Pan</span>
+        </div>
+      </div>
+    </footer>
+
+    <!-- HISTORY / GALLERY DRAWER (SIDEBAR) -->
+    <aside class="history-drawer" id="historyDrawer">
+      <div class="history-drawer-header">
+        <h3 class="history-drawer-title">Processing History &amp; Projects</h3>
+        <button class="btn-modal-close" id="btnCloseHistory" aria-label="Close history">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
+      </div>
+      <div class="history-drawer-body" id="historyDrawerBody">
+        <div class="history-empty-state" id="historyEmptyState">
+          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="var(--text-muted)" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          <p>No processing history yet</p>
+        </div>
+        <div class="history-items-list" id="historyItemsList"></div>
+      </div>
+      <div class="history-drawer-footer">
+        <button class="btn-clear-history" id="btnClearHistory">Clear All History</button>
+      </div>
+    </aside>
+
+  </div>
+
+  <!-- FLOATING AI CHATBOT ASSISTANT WIDGET -->
+  <div class="chatbot-widget-wrap">
+    <!-- Chat Trigger Button -->
+    <button class="btn-chatbot-trigger" id="btnChatbotTrigger" aria-label="Open AI Assistant" title="Chat with CleanPixel AI">
+      <div class="chatbot-badge-unread">1</div>
+      <div class="chatbot-icon-closed">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+      </div>
+      <div class="chatbot-icon-opened" style="display: none;">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </div>
+    </button>
+
+    <!-- Chatbot Window Panel -->
+    <div class="chatbot-window-card" id="chatbotWindowCard" style="display: none;">
+      <div class="chatbot-header">
+        <div class="chatbot-header-info">
+          <div class="chatbot-avatar">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2.5"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+            <div class="chatbot-online-dot"></div>
+          </div>
+          <div class="chatbot-header-text">
+            <span class="chatbot-bot-name">CleanPixel AI Support</span>
+            <span class="chatbot-bot-status">Online &bull; Instant Help</span>
+          </div>
+        </div>
+        <button class="btn-chatbot-close" id="btnChatbotClose" aria-label="Close Chat">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
+      </div>
+
+      <!-- Messages Body -->
+      <div class="chatbot-body" id="chatbotMessagesBody">
+        <div class="chat-msg msg-bot">
+          <div class="chat-msg-bubble">
+            Hello! I'm your <strong>CleanPixel Studio Assistant</strong>. How can I help you clean your images or videos today?
+          </div>
+          <span class="chat-msg-time">Just now</span>
+        </div>
+
+        <!-- Quick Question Chips -->
+        <div class="chat-suggestion-chips" id="chatSuggestionChips">
+          <button class="suggestion-chip" data-q="meesho">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><polyline points="21 15 16 10 5 21"/></svg>
+            <span>E-Commerce Catalog Cleaning</span>
+          </button>
+          <button class="suggestion-chip" data-q="engines">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+            <span>LaMa vs Telea Engine</span>
+          </button>
+          <button class="suggestion-chip" data-q="video">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2" ry="2"/></svg>
+            <span>Video Watermark Track</span>
+          </button>
+          <button class="suggestion-chip" data-q="upi">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
+            <span>UPI &amp; Pricing Plans</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Footer Input Form -->
+      <form class="chatbot-footer" id="chatbotForm">
+        <input type="text" id="chatbotInput" class="chatbot-input" placeholder="Type your question..." autocomplete="off" required aria-label="Type question for AI chatbot" />
+        <button type="submit" class="btn-chatbot-send" id="btnChatbotSend" aria-label="Send message">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- FLOATING BACK TO TOP BUTTON -->
+  <button class="btn-back-to-top" id="btnBackToTop" aria-label="Back to top" title="Scroll to top">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="18 15 12 9 6 15"/></svg>
+  </button>
+
+  <!-- TOAST NOTIFICATION CONTAINER -->
+  <div class="toast-container" id="toastContainer" aria-live="polite"></div>
+
+  <script src="app.js"></script>
+</body>
+</html>

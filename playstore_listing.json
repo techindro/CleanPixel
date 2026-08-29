@@ -1,0 +1,91 @@
+{
+  "app_details": {
+    "package_name": "com.cleanpixel.ai.watermarkremover",
+    "app_name": "CleanPixel AI: Watermark Erase",
+    "developer_name": "CleanPixel AI Studios",
+    "default_language": "en-US",
+    "category": "PHOTOGRAPHY",
+    "sub_category": "ART_AND_DESIGN",
+    "content_rating": "Everyone (PEGI 3)",
+    "contains_ads": false,
+    "has_in_app_purchases": true
+  },
+  "listings": {
+    "en-US": {
+      "title": "CleanPixel: Watermark Remover",
+      "short_description": "Magic AI Watermark & Object Remover. Clean photos & videos with 1-tap inpainting!",
+      "full_description": "✨ <b>Erase Watermarks, Logos, Timestamps & Unwanted Objects in Seconds with CleanPixel AI!</b>\n\nCleanPixel AI is the ultimate next-generation AI Photo & Video Retouching Studio. Powered by state-of-the-art neural inpainting models, CleanPixel allows you to wipe away distractions, unwanted photo-bombers, stamps, date tags, and watermark overlays cleanly—leaving zero trace, zero blur, and 100% crystal-clear quality.\n\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n🔥 <b>TOP FEATURES USERS LOVE:</b>\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n🪄 <b>1-Tap Neural Watermark Remover</b>\nJust brush over any text, copyright stamp, TikTok/Reels watermark, or brand logo, and watch our AI reconstruct the natural background textures seamlessly.\n\n👥 <b>Flawless Object & People Eraser</b>\nAccidental tourist in your vacation portrait? Street poles, trash cans, or cables ruining your shot? One brush stroke erases them like they were never there.\n\n🎥 <b>Deep Video Watermark Eradication</b>\nRemove moving watermarks and logo overlays across high-framerate video clips with intelligent temporal consistency.\n\n⚡ <b>Interactive Split-View Slider</b>\nCompare your original and enhanced crystal-clean results instantly before saving in full ultra-HD resolution.\n\n💎 <b>Lossless 4K Export</b>\nExport your edited masterworks at original photo resolution (up to 4K) without compression artifacts or pixelation.\n\n🔒 <b>100% Private & Secure</b>\nYour images and videos are processed with enterprise-grade SSL encryption and automatically purged from our processing buffers.\n\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n🚀 <b>PERFECT FOR:</b>\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n• Content Creators & Social Media Influencers (Reels, TikTok, YouTube Shorts)\n• Photographers & Graphic Designers\n• E-commerce sellers (cleaning product shots & background logos)\n• Everyday users wanting spotless vacation and family photos\n\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n💎 <b>CLEANPIXEL PRO BENEFITS:</b>\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n• Unlimited high-speed cloud GPU processing\n• Batch watermark removal for multiple photos\n• 4K Ultra-HD video watermark removal\n• Priority 24/7 Neural Engine Queue\n\nDownload <b>CleanPixel AI</b> today and experience the magic of flawless, clean photography!",
+      "video_url": "https://www.youtube.com/watch?v=cleanpixel_demo"
+    },
+    "hi-IN": {
+      "title": "CleanPixel AI: वाटरमार्क रिमूवर",
+      "short_description": "फोटो और वीडियो से वाटरमार्क, लोगो और अनचाहे ऑब्जेक्ट्स हटाएं सिर्फ 1-टैप में!",
+      "full_description": "✨ <b>CleanPixel AI के साथ फोटो और वीडियो से वाटरमार्क, टेक्स्ट और लोगो हटाएं चुटकियों में!</b>\n\nCleanPixel AI एक आधुनिक न्यूरल AI फोटो और वीडियो क्लीनर है। यह आपकी तस्वीरों से टेक्स्ट, वाटरमार्क, लोगो, और अनचाहे लोगों को बिना क्वालिटी खोए गायब कर देता है।\n\n🌟 <b>मुख्य विशेषताएं:</b>\n• 🪄 <b>1-टैप वाटरमार्क रिमूवर:</b> ब्रश से मार्क करें और वाटरमार्क गायब!\n• 👥 <b>ऑब्जेक्ट और पीपल इरेज़र:</b> बैकग्राउंड से अनचाहे ऑब्जेक्ट हटाएं।\n• 🎥 <b>वीडियो वाटरमार्क क्लीनर:</b> रील और वीडियो से लोगो हटाएं।\n• 💎 <b>4K अल्ट्रा-HD एक्सपोर्ट:</b> बिना किसी क्वालिटी नुकसान के सेव करें।\n• 🔒 <b>सुरक्षित और निजी:</b> आपका डेटा 100% सुरक्षित और एन्क्रिप्टेड है।\n\nआज ही <b>CleanPixel AI</b> डाउनलोड करें और अपनी तस्वीरों को बनाएं एक दम क्लीन और प्रोफेशनल!"
+    }
+  },
+  "keywords": [
+    "watermark remover",
+    "object remover",
+    "photo eraser",
+    "magic eraser",
+    "logo remover",
+    "remove watermark from photo",
+    "video watermark remover",
+    "ai photo retouch",
+    "clean photo",
+    "text remover",
+    "bg clean",
+    "inpainting ai"
+  ],
+  "monetization": {
+    "subscriptions": [
+      {
+        "sku": "cleanpixel_pro_monthly",
+        "name": "CleanPixel Pro Monthly",
+        "price_usd": 9.99,
+        "billing_period": "P1M",
+        "trial_period": "P3D"
+      },
+      {
+        "sku": "cleanpixel_pro_annual",
+        "name": "CleanPixel Pro Annual (Best Value)",
+        "price_usd": 59.88,
+        "equivalent_monthly": 4.99,
+        "billing_period": "P1Y",
+        "trial_period": "P7D"
+      }
+    ]
+  },
+  "release_notes": {
+    "version_code": 1,
+    "version_name": "1.0.0",
+    "notes_en": "🎉 Welcome to CleanPixel AI 1.0.0!\n- 🪄 Neural Inpainting Engine for instant watermark & object removal\n- ⚡ Interactive live neon brush & split-screen comparison\n- 💎 4K lossless photo export\n- 🚀 Lightning fast GPU processing",
+    "notes_hi": "🎉 CleanPixel AI 1.0.0 में आपका स्वागत है!\n- 🪄 सुपरफास्ट न्यूरल वाटरमार्क और ऑब्जेक्ट इरेज़र\n- ⚡ लाइव ब्रश और स्प्लिट-स्क्रीन कंपैरिजन\n- 💎 4K अल्ट्रा-HD एक्सपोर्ट सपोर्ट"
+  },
+  "screenshot_copy_kit": [
+    {
+      "screen_index": 1,
+      "headline": "ERASE WATERMARKS",
+      "subheadline": "Remove Any Logo, Text or Watermark in 1 Tap",
+      "theme_color": "#2563EB"
+    },
+    {
+      "screen_index": 2,
+      "headline": "MAGIC OBJECT REMOVER",
+      "subheadline": "Eradicate Unwanted People & Clutter Instantly",
+      "theme_color": "#06B6D4"
+    },
+    {
+      "screen_index": 3,
+      "headline": "VIDEO WATERMARK CLEANER",
+      "subheadline": "Clean Social Media Clips with Zero Blur",
+      "theme_color": "#8B5CF6"
+    },
+    {
+      "screen_index": 4,
+      "headline": "INSTANT BEFORE & AFTER",
+      "subheadline": "Interactive Split Slider with 4K Lossless Export",
+      "theme_color": "#10B981"
+    }
+  ]
+}

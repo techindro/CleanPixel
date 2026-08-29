@@ -1,0 +1,35 @@
+{
+  "usr_ca748de7d267": {
+    "id": "usr_ca748de7d267",
+    "email": "oauth_user@gmail.com",
+    "password_hash": null,
+    "full_name": "Google User Test",
+    "avatar_url": "https://example.com/avatar.png",
+    "is_pro": false,
+    "credits_remaining": 150,
+    "oauth_provider": "google",
+    "created_at": "2026-08-22T06:46:07.336307"
+  },
+  "usr_7a34a7b82729": {
+    "id": "usr_7a34a7b82729",
+    "email": "creator_test@cleanpixel.ai",
+    "password_hash": "0487d143a715d2ab4ee7eb9c2f3e417d$46e930d436c620c892585a6a5776e6a80d167160d52b7948a6dfe49c7aa0c074",
+    "full_name": "Test Creator",
+    "avatar_url": "https://api.dicebear.com/7.x/bottts/svg?seed=usr_7a34a7b82729",
+    "is_pro": false,
+    "credits_remaining": 150,
+    "oauth_provider": null,
+    "created_at": "2026-08-22T06:46:35.621988+00:00"
+  },
+  "usr_57735eb8b713": {
+    "id": "usr_57735eb8b713",
+    "email": "creator_4887@gmail.com",
+    "password_hash": null,
+    "full_name": "Google Creator",
+    "avatar_url": "https://api.dicebear.com/7.x/bottts/svg?seed=creator_4887@gmail.com",
+    "is_pro": false,
+    "credits_remaining": 150,
+    "oauth_provider": "google",
+    "created_at": "2026-08-22T06:47:23.162121+00:00"
+  }
+}

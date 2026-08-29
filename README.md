@@ -1,55 +1,75 @@
-# CleanPixel: Image & Video Watermark Remover
+<div align="center">
+  <img src="assets/logo.png" width="128" height="128" alt="CleanPixel AI Logo" style="border-radius: 24px;" />
+  <h1>CleanPixel AI: Image & Video Watermark Remover</h1>
+  <p><strong>Next-Generation Neural Inpainting & Seamless Watermark Eradication</strong></p>
+</div>
 
-CleanPixel is a Python-powered computer vision application designed to seamlessly remove watermarks, logos, and text overlays from both static images and video streams. By leveraging advanced image inpainting techniques, it reconstructs missing pixel data to restore your media without degrading background quality.
+CleanPixel AI is a full-stack computer vision application designed to seamlessly remove watermarks, logos, timestamps, and unwanted text overlays from high-resolution images and video streams.
 
-## 🚀 Features
-* **Multi-Format Support:** Works flawlessly on high-resolution images and videos.
-* **Intelligent Inpainting:** Utilizes OpenCV algorithms (`Fast Martching` / `Navier-Stokes`) for seamless blending.
-* **Frame-by-Frame Video Processing:** Extracts frames, applies masks, removes watermarks, and re-stitches videos.
-* **Interactive UI (Planned):** A lightweight web interface built with Streamlit for quick drag-and-drop cleaning.
+---
 
-## 🛠️ Tech Stack
-* **Language:** Python 3.10+
-* **Libraries:** OpenCV (`cv2`), NumPy, Streamlit (for UI)
-* **Video Handling:** FFmpeg / MoviePy (for audio retention)
+## System Architecture
 
-## 📦 Installation & Setup
-
-1. **Clone the repository:**
-   ```bash
-   git clone https://github.com
-   cd CleanPixel
-   ```
-
-2. **Install required dependencies:**
-   ```bash
-   pip install -r requirements.txt
-   ```
-
-## 💻 Usage
-
-### 1. Removing Watermark from an Image
-Run the script by providing the path to your source image and a binary mask image (where the watermark area is highlighted in solid white, and the rest is black):
-
-```python
-from src.cleaner import remove_watermark
-
-remove_watermark(
-    image_path="input.jpg", 
-    mask_path="mask.jpg", 
-    output_path="cleaned_output.jpg"
-)
+```text
+cleanpixel-ai/
+│
+├── backend/                  # FastAPI Backend Services
+│   ├── app/
+│   │   ├── api/              # API Endpoints (Upload, Inpaint, Async Video, Auth, Results)
+│   │   ├── core/             # Config, Security, JWT, Directory & S3 Storage
+│   │   ├── models/           # OpenCV Telea/NS & Neural Inpainting Pipelines
+│   │   ├── services/         # Celery Async Background Workers
+│   │   └── main.py           # FastAPI Application Entry Point
+│   ├── Dockerfile
+│   └── requirements.txt
+│
+├── frontend/                 # Cross-Platform Flutter Mobile Application
+│   ├── lib/
+│   │   ├── components/       # Interactive Canvas, Contextual Toolbar, Paywall, Comparison Slider
+│   │   ├── screens/          # Workspace Studio, Splash, Pro Subscription
+│   │   ├── services/         # CleanPixel API & Auth Client
+│   │   └── main.dart
+│   └── pubspec.yaml
+│
+├── infrastructure/           # Cloud Deployment Configuration
+│   └── docker-compose.yml    # FastAPI API + Celery Worker + Redis Queue
+│
+└── ui/                       # High-End Silicon Valley Web Studio (HTML5/CSS3/Vanilla JS)
+    ├── assets/               # Official CleanPixel Brand Assets
+    ├── index.html            # 4-State Central Studio Viewport
+    ├── index.css             # Deep Slate & Electric Blue Design Tokens
+    └── app.js                # State Machine & Canvas Brush Drawing Engine
 ```
 
-### 2. Processing a Video (Coming Soon)
-The pipeline will break down video files frame-by-frame, apply static/dynamic masks, and rebuild the video file.
+---
 
-## 🗺️ Roadmap
-- [x] Core image inpainting algorithm using OpenCV.
-- [ ] Frame-by-frame video processing script.
-- [ ] Streamlit web dashboard with a canvas brush tool to draw masks manually.
-- [ ] Integration of Deep Learning models (e.g., GANs / LaMa Inpainting) for automated watermark detection.
+## Quick Start Guide
 
-## 📄 License
-This project is licensed under the MIT License - see the LICENSE file for details.
+### 1. Web Studio (Instant Browser Access)
+Open [`ui/index.html`](ui/index.html) in any modern browser to immediately access the interactive studio with sample photo presets, live neon-brush drawing, and split-slider comparison.
 
+### 2. FastAPI Backend Engine
+```bash
+cd backend
+pip install -r requirements.txt
+uvicorn app.main:app --reload --port 8000
+```
+API Documentation will be accessible at: `http://localhost:8000/docs`
+
+### 3. Docker Compose Stack (API + Celery Worker + Redis)
+```bash
+cd infrastructure
+docker-compose up --build
+```
+
+### 4. Flutter Mobile App
+```bash
+cd frontend
+flutter pub get
+flutter run
+```
+
+---
+
+## License
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.

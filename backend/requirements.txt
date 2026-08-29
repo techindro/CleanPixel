@@ -1,0 +1,27 @@
+# Core FastAPI Framework (Python 3.13+ Compatible Binary Wheels)
+fastapi>=0.115.0
+uvicorn[standard]>=0.30.0
+pydantic>=2.9.0
+pydantic-settings>=2.5.0
+python-multipart>=0.0.9
+
+# Computer Vision & Inpainting Algorithms
+opencv-python-headless>=4.9.0
+numpy>=1.26.0
+pillow>=10.2.0
+
+# Asynchronous Task Queue & Cache
+celery>=5.3.6
+redis>=5.0.3
+
+# Cloud Storage & File Handling
+boto3>=1.34.0       # AWS S3 क्लाउड स्टोरेज के लिए
+aiofiles>=23.2.1
+requests>=2.31.0
+
+# Video Processing & Audio Preservation
+moviepy>=1.0.3
+
+# Security & Authentication (JWT)
+python-jose[cryptography]>=3.3.0
+passlib[bcrypt]>=1.7.4

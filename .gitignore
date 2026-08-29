@@ -1,0 +1,39 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+ENV/
+.env
+backend/storage/uploads/*
+backend/storage/results/*
+backend/storage/temp/*
+.pytest_cache/
+*.temp.*
+*.log
+
+# Flutter & Android
+.dart_tool/
+.flutter-plugins
+.flutter-plugins-dependencies
+.packages
+build/
+**/build/
+**/android/.gradle/
+**/android/local.properties
+**/android/key.properties
+**/android/app/*.jks
+*.apk
+*.aab
+*.zip
+
+# IDEs & System
+.idea/
+.vscode/
+*.swp
+*.swo
+.DS_Store
+Thumbs.db
