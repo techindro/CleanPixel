@@ -91,10 +91,18 @@ class _AuthScreenState extends State<AuthScreen> with SingleTickerProviderStateM
 
     if (mounted) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          backgroundColor: Color(0xFF10B981),
+        SnackBar(
+          backgroundColor: const Color(0xFF10B981),
           behavior: SnackBarBehavior.floating,
-          content: Text('📲 Verification code sent! Demo Code: 123456'),
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+          margin: const EdgeInsets.all(16),
+          content: const Row(
+            children: [
+              Icon(Icons.check_circle_outline_rounded, color: Colors.white, size: 18),
+              SizedBox(width: 8),
+              Text('Verification code sent. Demo Code: 123456'),
+            ],
+          ),
         ),
       );
     }
@@ -279,8 +287,8 @@ class _AuthScreenState extends State<AuthScreen> with SingleTickerProviderStateM
                       ),
                       child: Row(
                         children: [
-                          _buildAuthMethodTab('✉️ Email Login', AuthTab.email),
-                          _buildAuthMethodTab('📱 Mobile OTP', AuthTab.phone, badge: 'FAST'),
+                          _buildAuthMethodTab('Email Login', Icons.email_outlined, AuthTab.email),
+                          _buildAuthMethodTab('Mobile OTP', Icons.phone_android_rounded, AuthTab.phone, badge: 'FAST'),
                         ],
                       ),
                     ),
@@ -371,7 +379,7 @@ class _AuthScreenState extends State<AuthScreen> with SingleTickerProviderStateM
     );
   }
 
-  Widget _buildAuthMethodTab(String label, AuthTab tab, {String? badge}) {
+  Widget _buildAuthMethodTab(String label, IconData icon, AuthTab tab, {String? badge}) {
     final isSelected = _activeTab == tab;
     return Expanded(
       child: GestureDetector(
@@ -392,6 +400,12 @@ class _AuthScreenState extends State<AuthScreen> with SingleTickerProviderStateM
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
+              Icon(
+                icon,
+                size: 16,
+                color: isSelected ? Colors.white : const Color(0xFF94A3B8),
+              ),
+              const SizedBox(width: 6),
               Text(
                 label,
                 style: TextStyle(
@@ -487,10 +501,10 @@ class _AuthScreenState extends State<AuthScreen> with SingleTickerProviderStateM
                     dropdownColor: const Color(0xFF1E293B),
                     style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 13),
                     items: const [
-                      DropdownMenuItem(value: '+91', child: Text('🇮🇳 +91')),
-                      DropdownMenuItem(value: '+1', child: Text('🇺🇸 +1')),
-                      DropdownMenuItem(value: '+44', child: Text('🇬🇧 +44')),
-                      DropdownMenuItem(value: '+971', child: Text('🇦🇪 +971')),
+                      DropdownMenuItem(value: '+91', child: Text('IN +91')),
+                      DropdownMenuItem(value: '+1', child: Text('US +1')),
+                      DropdownMenuItem(value: '+44', child: Text('UK +44')),
+                      DropdownMenuItem(value: '+971', child: Text('AE +971')),
                     ],
                     onChanged: (v) => setState(() => _selectedCountryCode = v!),
                   ),

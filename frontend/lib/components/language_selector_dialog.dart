@@ -158,7 +158,30 @@ class _LanguageSelectorDialogState extends State<LanguageSelectorDialog> {
                         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
                         child: Row(
                           children: [
-                            Text(lang.flag, style: const TextStyle(fontSize: 24)),
+                            Container(
+                              width: 36,
+                              height: 36,
+                              decoration: BoxDecoration(
+                                color: isSelected
+                                    ? const Color(0xFF38BDF8).withValues(alpha: 0.2)
+                                    : Colors.white.withValues(alpha: 0.06),
+                                borderRadius: BorderRadius.circular(10),
+                                border: Border.all(
+                                  color: isSelected
+                                      ? const Color(0xFF38BDF8)
+                                      : Colors.white.withValues(alpha: 0.1),
+                                ),
+                              ),
+                              alignment: Alignment.center,
+                              child: Text(
+                                lang.tag,
+                                style: TextStyle(
+                                  color: isSelected ? const Color(0xFF38BDF8) : Colors.white70,
+                                  fontWeight: FontWeight.w800,
+                                  fontSize: 12,
+                                ),
+                              ),
+                            ),
                             const SizedBox(width: 14),
                             Expanded(
                               child: Column(

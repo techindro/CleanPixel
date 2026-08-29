@@ -63,7 +63,7 @@ class _PixelAgentSheetState extends State<PixelAgentSheet> {
 
     widget.onAgentAction(
       artifacts.map((e) => e.boundingBox).toList(),
-      "⚡ PixelAgent auto-targeted ${artifacts.length} watermarks & logos.",
+      "PixelAgent auto-targeted ${artifacts.length} watermarks and logos.",
     );
   }
 
@@ -208,7 +208,7 @@ class _PixelAgentSheetState extends State<PixelAgentSheet> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              '⚡ Auto-Remove All Watermarks',
+                              'Auto-Remove All Watermarks',
                               style: TextStyle(color: Colors.white, fontWeight: FontWeight.w700, fontSize: 14),
                             ),
                             SizedBox(height: 2),

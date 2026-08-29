@@ -394,7 +394,13 @@ class _PremiumScreenState extends State<PremiumScreen> with TickerProviderStateM
                 behavior: SnackBarBehavior.floating,
                 shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
                 margin: const EdgeInsets.all(16),
-                content: const Text('🎉 Welcome to CleanPixel PRO!', style: TextStyle(fontWeight: FontWeight.bold)),
+                content: const Row(
+                  children: [
+                    Icon(Icons.workspace_premium_rounded, color: Colors.white, size: 20),
+                    SizedBox(width: 8),
+                    Text('Welcome to CleanPixel PRO!', style: TextStyle(fontWeight: FontWeight.bold)),
+                  ],
+                ),
               ),
             );
             Navigator.pop(context);

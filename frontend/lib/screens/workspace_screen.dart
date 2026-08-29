@@ -189,7 +189,13 @@ class _WorkspaceScreenState extends State<WorkspaceScreen> with TickerProviderSt
           behavior: SnackBarBehavior.floating,
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
           margin: const EdgeInsets.all(16),
-          content: const Text('⚠️ 0 Credits Remaining! Upgrade to Pro for unlimited cleans.'),
+          content: const Row(
+            children: [
+              Icon(Icons.info_outline_rounded, color: Colors.white, size: 18),
+              SizedBox(width: 8),
+              Text('0 Credits remaining. Upgrade to Pro for unlimited cleans.'),
+            ],
+          ),
           action: SnackBarAction(
             label: 'Upgrade',
             textColor: Colors.white,
@@ -283,7 +289,7 @@ class _WorkspaceScreenState extends State<WorkspaceScreen> with TickerProviderSt
               children: [
                 const Icon(Icons.check_circle_rounded, color: Colors.white, size: 20),
                 const SizedBox(width: 10),
-                Text('✨ Exported & Saved in ${resolution == ExportResolution.ultra4k ? '4K Ultra' : '2K Quad'}!',
+                Text('Exported and saved in ${resolution == ExportResolution.ultra4k ? '4K Ultra' : '2K Quad'}!',
                     style: const TextStyle(fontWeight: FontWeight.w700)),
               ],
             ),
@@ -727,15 +733,15 @@ class _WorkspaceScreenState extends State<WorkspaceScreen> with TickerProviderSt
       ),
       child: Row(
         children: [
-          _buildModeTab('📸 Photo Cleaner', StudioMode.photo),
-          _buildModeTab('🎥 Video Tracker', StudioMode.video, badge: 'PRO'),
-          _buildModeTab('⚡ Batch Mode', StudioMode.batch),
+          _buildModeTab('Photo', Icons.photo_outlined, StudioMode.photo),
+          _buildModeTab('Video', Icons.videocam_outlined, StudioMode.video, badge: 'PRO'),
+          _buildModeTab('Batch', Icons.layers_outlined, StudioMode.batch),
         ],
       ),
     );
   }
 
-  Widget _buildModeTab(String label, StudioMode mode, {String? badge}) {
+  Widget _buildModeTab(String label, IconData icon, StudioMode mode, {String? badge}) {
     final isSelected = _mode == mode;
     return Expanded(
       child: GestureDetector(
@@ -754,25 +760,35 @@ class _WorkspaceScreenState extends State<WorkspaceScreen> with TickerProviderSt
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
+              Icon(
+                icon,
+                size: 15,
+                color: isSelected ? const Color(0xFF38BDF8) : const Color(0xFF94A3B8),
+              ),
+              const SizedBox(width: 5),
               Text(
                 label,
                 style: TextStyle(
                   color: isSelected ? Colors.white : const Color(0xFF94A3B8),
-                  fontSize: 11,
-                  fontWeight: isSelected ? FontWeight.w700 : FontWeight.w500,
+                  fontWeight: FontWeight.w700,
+                  fontSize: 12,
                 ),
               ),
               if (badge != null) ...[
                 const SizedBox(width: 4),
                 Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 1),
+                  padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 1),
                   decoration: BoxDecoration(
-                    gradient: const LinearGradient(colors: [Color(0xFFF59E0B), Color(0xFFEC4899)]),
+                    color: const Color(0xFFF59E0B),
                     borderRadius: BorderRadius.circular(4),
                   ),
                   child: Text(
                     badge,
-                    style: const TextStyle(color: Colors.white, fontSize: 8, fontWeight: FontWeight.w900),
+                    style: const TextStyle(
+                      color: Colors.black,
+                      fontWeight: FontWeight.w900,
+                      fontSize: 8,
+                    ),
                   ),
                 ),
               ],

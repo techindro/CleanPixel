@@ -129,10 +129,18 @@ class UpdateService {
                     HapticFeedback.heavyImpact();
                     Navigator.pop(ctx);
                     ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(
+                      SnackBar(
                         behavior: SnackBarBehavior.floating,
-                        backgroundColor: Color(0xFF10B981),
-                        content: Text('⬇️ Downloading latest update package in background...'),
+                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                        margin: const EdgeInsets.all(16),
+                        backgroundColor: const Color(0xFF10B981),
+                        content: const Row(
+                          children: [
+                            Icon(Icons.downloading_rounded, color: Colors.white, size: 18),
+                            SizedBox(width: 8),
+                            Text('Downloading update package in background...'),
+                          ],
+                        ),
                       ),
                     );
                   },

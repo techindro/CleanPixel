@@ -129,8 +129,8 @@ class _SettingsScreenState extends State<SettingsScreen> with SingleTickerProvid
                     return _buildStaggered(0.18, 0.48, child: _buildSettingTile(
                       icon: Icons.translate_rounded,
                       iconColor: const Color(0xFF38BDF8),
-                      title: 'App Language / भाषा',
-                      subtitle: '${currentLang.flag} ${currentLang.nativeName} (${currentLang.name})',
+                      title: 'App Language',
+                      subtitle: '[${currentLang.tag}] ${currentLang.nativeName} (${currentLang.name})',
                       onTap: () => LanguageSelectorDialog.show(context),
                     ));
                   },
@@ -153,7 +153,13 @@ class _SettingsScreenState extends State<SettingsScreen> with SingleTickerProvid
                         behavior: SnackBarBehavior.floating,
                         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
                         margin: const EdgeInsets.all(16),
-                        content: const Text('📋 App share link copied to clipboard!'),
+                        content: const Row(
+                          children: [
+                            Icon(Icons.content_copy_rounded, color: Colors.white, size: 18),
+                            SizedBox(width: 8),
+                            Text('App share link copied to clipboard'),
+                          ],
+                        ),
                       ),
                     );
                   },
@@ -171,7 +177,13 @@ class _SettingsScreenState extends State<SettingsScreen> with SingleTickerProvid
                         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
                         margin: const EdgeInsets.all(16),
                         backgroundColor: const Color(0xFF10B981),
-                        content: const Text('⚡ Cache successfully cleared!'),
+                        content: const Row(
+                          children: [
+                            Icon(Icons.check_circle_outline_rounded, color: Colors.white, size: 18),
+                            SizedBox(width: 8),
+                            Text('Cache successfully cleared'),
+                          ],
+                        ),
                       ),
                     );
                   },

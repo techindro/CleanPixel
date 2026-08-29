@@ -5,14 +5,14 @@ class LanguageModel {
   final String code;
   final String name;
   final String nativeName;
-  final String flag;
+  final String tag;
   final String region;
 
   const LanguageModel({
     required this.code,
     required this.name,
     required this.nativeName,
-    required this.flag,
+    required this.tag,
     required this.region,
   });
 }
@@ -23,30 +23,30 @@ class LocaleService {
 
   static const List<LanguageModel> supportedLanguages = [
     // Global Languages
-    LanguageModel(code: 'en', name: 'English', nativeName: 'English (US)', flag: '🇺🇸', region: 'Global'),
-    LanguageModel(code: 'es', name: 'Spanish', nativeName: 'Español', flag: '🇪🇸', region: 'Global'),
-    LanguageModel(code: 'fr', name: 'French', nativeName: 'Français', flag: '🇫🇷', region: 'Global'),
-    LanguageModel(code: 'de', name: 'German', nativeName: 'Deutsch', flag: '🇩🇪', region: 'Global'),
-    LanguageModel(code: 'pt', name: 'Portuguese', nativeName: 'Português', flag: '🇧🇷', region: 'Global'),
-    LanguageModel(code: 'ru', name: 'Russian', nativeName: 'Русский', flag: '🇷🇺', region: 'Global'),
-    LanguageModel(code: 'ja', name: 'Japanese', nativeName: '日本語', flag: '🇯🇵', region: 'Global'),
-    LanguageModel(code: 'ko', name: 'Korean', nativeName: '한국어', flag: '🇰🇷', region: 'Global'),
-    LanguageModel(code: 'zh', name: 'Chinese', nativeName: '简体中文', flag: '🇨🇳', region: 'Global'),
-    LanguageModel(code: 'ar', name: 'Arabic', nativeName: 'العربية', flag: '🇸🇦', region: 'Global'),
+    LanguageModel(code: 'en', name: 'English', nativeName: 'English (US)', tag: 'US', region: 'Global'),
+    LanguageModel(code: 'es', name: 'Spanish', nativeName: 'Español', tag: 'ES', region: 'Global'),
+    LanguageModel(code: 'fr', name: 'French', nativeName: 'Français', tag: 'FR', region: 'Global'),
+    LanguageModel(code: 'de', name: 'German', nativeName: 'Deutsch', tag: 'DE', region: 'Global'),
+    LanguageModel(code: 'pt', name: 'Portuguese', nativeName: 'Português', tag: 'PT', region: 'Global'),
+    LanguageModel(code: 'ru', name: 'Russian', nativeName: 'Русский', tag: 'RU', region: 'Global'),
+    LanguageModel(code: 'ja', name: 'Japanese', nativeName: '日本語', tag: 'JP', region: 'Global'),
+    LanguageModel(code: 'ko', name: 'Korean', nativeName: '한국어', tag: 'KR', region: 'Global'),
+    LanguageModel(code: 'zh', name: 'Chinese', nativeName: '简体中文', tag: 'CN', region: 'Global'),
+    LanguageModel(code: 'ar', name: 'Arabic', nativeName: 'العربية', tag: 'AR', region: 'Global'),
 
     // Indian Languages
-    LanguageModel(code: 'hi', name: 'Hindi', nativeName: 'हिन्दी', flag: '🇮🇳', region: 'India'),
-    LanguageModel(code: 'bn', name: 'Bengali', nativeName: 'বাংলা', flag: '🇮🇳', region: 'India'),
-    LanguageModel(code: 'mr', name: 'Marathi', nativeName: 'मराठी', flag: '🇮🇳', region: 'India'),
-    LanguageModel(code: 'te', name: 'Telugu', nativeName: 'తెలుగు', flag: '🇮🇳', region: 'India'),
-    LanguageModel(code: 'ta', name: 'Tamil', nativeName: 'தமிழ்', flag: '🇮🇳', region: 'India'),
-    LanguageModel(code: 'gu', name: 'Gujarati', nativeName: 'ગુજરાતી', flag: '🇮🇳', region: 'India'),
-    LanguageModel(code: 'kn', name: 'Kannada', nativeName: 'ಕನ್ನಡ', flag: '🇮🇳', region: 'India'),
-    LanguageModel(code: 'ml', name: 'Malayalam', nativeName: 'മലയാളം', flag: '🇮🇳', region: 'India'),
-    LanguageModel(code: 'pa', name: 'Punjabi', nativeName: 'ਪੰਜਾਬੀ', flag: '🇮🇳', region: 'India'),
-    LanguageModel(code: 'or', name: 'Odia', nativeName: 'ଓଡ଼ିଆ', flag: '🇮🇳', region: 'India'),
-    LanguageModel(code: 'ur', name: 'Urdu', nativeName: 'اردو', flag: '🇮🇳', region: 'India'),
-    LanguageModel(code: 'as', name: 'Assamese', nativeName: 'অসমীয়া', flag: '🇮🇳', region: 'India'),
+    LanguageModel(code: 'hi', name: 'Hindi', nativeName: 'हिन्दी', tag: 'HI', region: 'India'),
+    LanguageModel(code: 'bn', name: 'Bengali', nativeName: 'বাংলা', tag: 'BN', region: 'India'),
+    LanguageModel(code: 'mr', name: 'Marathi', nativeName: 'मराठी', tag: 'MR', region: 'India'),
+    LanguageModel(code: 'te', name: 'Telugu', nativeName: 'తెలుగు', tag: 'TE', region: 'India'),
+    LanguageModel(code: 'ta', name: 'Tamil', nativeName: 'தமிழ்', tag: 'TA', region: 'India'),
+    LanguageModel(code: 'gu', name: 'Gujarati', nativeName: 'ગુજરાતી', tag: 'GU', region: 'India'),
+    LanguageModel(code: 'kn', name: 'Kannada', nativeName: 'ಕನ್ನಡ', tag: 'KN', region: 'India'),
+    LanguageModel(code: 'ml', name: 'Malayalam', nativeName: 'മലയാളം', tag: 'ML', region: 'India'),
+    LanguageModel(code: 'pa', name: 'Punjabi', nativeName: 'ਪੰਜਾਬੀ', tag: 'PA', region: 'India'),
+    LanguageModel(code: 'or', name: 'Odia', nativeName: 'ଓଡ଼ିଆ', tag: 'OR', region: 'India'),
+    LanguageModel(code: 'ur', name: 'Urdu', nativeName: 'اردو', tag: 'UR', region: 'India'),
+    LanguageModel(code: 'as', name: 'Assamese', nativeName: 'অসমীয়া', tag: 'AS', region: 'India'),
   ];
 
   static final Map<String, Map<String, String>> _translations = {
