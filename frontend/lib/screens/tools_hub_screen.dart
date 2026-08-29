@@ -9,33 +9,40 @@ class ToolsHubScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
     return Scaffold(
-      backgroundColor: const Color(0xFF0B0F19),
+      backgroundColor: isDark ? const Color(0xFF0F0715) : const Color(0xFFFAF5FF),
       appBar: AppBar(
-        backgroundColor: const Color(0xFF0B0F19),
+        backgroundColor: isDark ? const Color(0xFF0F0715) : Colors.white,
         elevation: 0,
-        title: const Column(
+        title: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
               'AI Creative Suite',
-              style: TextStyle(fontWeight: FontWeight.w800, fontSize: 20, color: Colors.white, letterSpacing: -0.3),
+              style: TextStyle(
+                fontWeight: FontWeight.w800,
+                fontSize: 20,
+                color: isDark ? Colors.white : const Color(0xFF1E293B),
+                letterSpacing: -0.3,
+              ),
             ),
-            Text(
+            const Text(
               'Select an AI neural model for your media',
-              style: TextStyle(fontSize: 11, fontWeight: FontWeight.w500, color: Color(0xFF64748B)),
+              style: TextStyle(fontSize: 11, fontWeight: FontWeight.w600, color: Color(0xFFEC4899)),
             ),
           ],
         ),
       ),
       body: ListView(
-        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
         children: [
           // 1. Watermark Inpainter
           _buildToolCard(
             context,
             icon: Icons.auto_fix_high_rounded,
-            gradient: const [Color(0xFF38BDF8), Color(0xFF2563EB)],
+            gradient: const [Color(0xFFEC4899), Color(0xFFF43F5E)],
             title: 'Watermark & Text Remover',
             description: 'Brush over copyright stamps, logos, subtitles, and TikTok stamps to erase in 1-tap.',
             badge: 'POPULAR',
@@ -44,13 +51,13 @@ class ToolsHubScreen extends StatelessWidget {
               if (onSelectTool != null) onSelectTool!('watermark');
             },
           ),
-          const SizedBox(height: 12),
+          const SizedBox(height: 14),
 
           // 2. Object & People Eraser
           _buildToolCard(
             context,
             icon: Icons.person_remove_rounded,
-            gradient: const [Color(0xFFEC4899), Color(0xFF8B5CF6)],
+            gradient: const [Color(0xFFFB7185), Color(0xFFE11D48)],
             title: 'Magic Object & People Eraser',
             description: 'Erase photobombers, power lines, trash, and unwanted background distractions.',
             badge: 'AI NEURAL',
@@ -59,7 +66,7 @@ class ToolsHubScreen extends StatelessWidget {
               if (onSelectTool != null) onSelectTool!('object');
             },
           ),
-          const SizedBox(height: 12),
+          const SizedBox(height: 14),
 
           // 3. Background Cutout Studio
           _buildToolCard(
@@ -74,7 +81,7 @@ class ToolsHubScreen extends StatelessWidget {
               if (onSelectTool != null) onSelectTool!('background');
             },
           ),
-          const SizedBox(height: 12),
+          const SizedBox(height: 14),
 
           // 4. 4K Super-Resolution Upscaler
           _buildToolCard(
@@ -89,38 +96,26 @@ class ToolsHubScreen extends StatelessWidget {
               if (onSelectTool != null) onSelectTool!('upscale');
             },
           ),
-          const SizedBox(height: 12),
+          const SizedBox(height: 14),
 
           // 5. Video Inpainter (PRO)
           _buildToolCard(
             context,
             icon: Icons.videocam_rounded,
-            gradient: const [Color(0xFFA855F7), Color(0xFF6366F1)],
+            gradient: const [Color(0xFFA855F7), Color(0xFFEC4899)],
             title: 'Temporal Video Inpainter',
             description: 'Erase moving watermarks and objects across 60 FPS video tracks with keyframe propagation.',
-            badge: 'PRO EXCLUSIVE',
+            badge: 'PRO TIER',
             isPro: true,
             onTap: () {
-              HapticFeedback.lightImpact();
-              Navigator.push(context, MaterialPageRoute(builder: (context) => const PremiumScreen()));
-            },
-          ),
-          const SizedBox(height: 12),
-
-          // 6. Batch Multi-Image Processor
-          _buildToolCard(
-            context,
-            icon: Icons.layers_rounded,
-            gradient: const [Color(0xFF3B82F6), Color(0xFF1D4ED8)],
-            title: 'Bulk Batch Queue Worker',
-            description: 'Upload up to 50 photos simultaneously and process watermarks in high-speed GPU queues.',
-            badge: 'ENTERPRISE',
-            onTap: () {
               HapticFeedback.mediumImpact();
-              if (onSelectTool != null) onSelectTool!('batch');
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const PremiumScreen()),
+              );
             },
           ),
-          const SizedBox(height: 20),
+          const SizedBox(height: 24),
         ],
       ),
     );
@@ -133,93 +128,110 @@ class ToolsHubScreen extends StatelessWidget {
     required String title,
     required String description,
     required String badge,
-    bool isPro = false,
     required VoidCallback onTap,
+    bool isPro = false,
   }) {
-    return Container(
-      decoration: BoxDecoration(
-        color: const Color(0xFF1E293B),
-        borderRadius: BorderRadius.circular(18),
-        border: Border.all(color: Colors.white.withValues(alpha: 0.06)),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withValues(alpha: 0.25),
-            blurRadius: 16,
-            offset: const Offset(0, 6),
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        padding: const EdgeInsets.all(16),
+        decoration: BoxDecoration(
+          color: isDark ? const Color(0xFF1B0C24) : Colors.white,
+          borderRadius: BorderRadius.circular(20),
+          border: Border.all(
+            color: isDark ? Colors.white.withValues(alpha: 0.06) : const Color(0xFFFCE7F3),
+            width: 1,
           ),
-        ],
-      ),
-      child: Material(
-        color: Colors.transparent,
-        child: InkWell(
-          borderRadius: BorderRadius.circular(18),
-          onTap: onTap,
-          child: Padding(
-            padding: const EdgeInsets.all(18),
-            child: Row(
-              children: [
-                Container(
-                  width: 52,
-                  height: 52,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(14),
-                    gradient: LinearGradient(
-                      colors: gradient,
-                      begin: Alignment.topLeft,
-                      end: Alignment.bottomRight,
-                    ),
-                    boxShadow: [
-                      BoxShadow(
-                        color: gradient.first.withValues(alpha: 0.35),
-                        blurRadius: 12,
-                        offset: const Offset(0, 4),
-                      ),
-                    ],
+          boxShadow: isDark
+              ? []
+              : [
+                  BoxShadow(
+                    color: const Color(0xFFEC4899).withValues(alpha: 0.08),
+                    blurRadius: 14,
+                    offset: const Offset(0, 4),
                   ),
-                  child: Icon(icon, color: Colors.white, size: 26),
+                ],
+        ),
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Container(
+              width: 52,
+              height: 52,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(16),
+                gradient: LinearGradient(
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
+                  colors: gradient,
                 ),
-                const SizedBox(width: 16),
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Row(
-                        children: [
-                          Flexible(
-                            child: Text(
-                              title,
-                              style: const TextStyle(color: Colors.white, fontSize: 15, fontWeight: FontWeight.w700),
-                            ),
-                          ),
-                          const SizedBox(width: 8),
-                          Container(
-                            padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
-                            decoration: BoxDecoration(
-                              color: gradient.first.withValues(alpha: 0.18),
-                              borderRadius: BorderRadius.circular(4),
-                            ),
-                            child: Text(
-                              badge,
-                              style: TextStyle(color: gradient.first, fontSize: 8, fontWeight: FontWeight.w900),
-                            ),
-                          ),
-                        ],
-                      ),
-                      const SizedBox(height: 4),
-                      Text(
-                        description,
-                        maxLines: 2,
-                        overflow: TextOverflow.ellipsis,
-                        style: const TextStyle(color: Color(0xFF94A3B8), fontSize: 12, height: 1.3),
-                      ),
-                    ],
+                boxShadow: [
+                  BoxShadow(
+                    color: gradient.first.withValues(alpha: 0.35),
+                    blurRadius: 12,
+                    offset: const Offset(0, 4),
                   ),
-                ),
-                const SizedBox(width: 8),
-                const Icon(Icons.arrow_forward_ios_rounded, color: Colors.white24, size: 14),
-              ],
+                ],
+              ),
+              child: Icon(icon, size: 26, color: Colors.white),
             ),
-          ),
+            const SizedBox(width: 16),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    children: [
+                      Expanded(
+                        child: Text(
+                          title,
+                          style: TextStyle(
+                            color: isDark ? Colors.white : const Color(0xFF1E293B),
+                            fontSize: 15,
+                            fontWeight: FontWeight.w800,
+                            letterSpacing: -0.2,
+                          ),
+                        ),
+                      ),
+                      Container(
+                        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
+                        decoration: BoxDecoration(
+                          color: isPro
+                              ? const Color(0xFFEC4899)
+                              : (isDark ? Colors.white.withValues(alpha: 0.08) : const Color(0xFFFDF2F8)),
+                          borderRadius: BorderRadius.circular(6),
+                          border: isPro
+                              ? null
+                              : Border.all(
+                                  color: isDark ? Colors.white.withValues(alpha: 0.1) : const Color(0xFFFCE7F3)),
+                        ),
+                        child: Text(
+                          badge,
+                          style: TextStyle(
+                            color: isPro ? Colors.white : const Color(0xFFEC4899),
+                            fontSize: 9,
+                            fontWeight: FontWeight.w900,
+                            letterSpacing: 0.4,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 6),
+                  Text(
+                    description,
+                    style: TextStyle(
+                      color: isDark ? const Color(0xFF94A3B8) : const Color(0xFF64748B),
+                      fontSize: 12,
+                      height: 1.4,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
         ),
       ),
     );
