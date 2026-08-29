@@ -208,12 +208,12 @@ class ToolsHubScreen extends StatelessWidget {
                             padding: const EdgeInsets.symmetric(horizontal: 7, vertical: 3),
                             decoration: BoxDecoration(
                               color: isPro
-                                  ? const Color(0xFFF59E0B).withValues(alpha: 0.15)
+                                  ? const Color(0xFFEF4444).withValues(alpha: 0.15)
                                   : const Color(0xFF2563EB).withValues(alpha: isDark ? 0.2 : 0.1),
                               borderRadius: BorderRadius.circular(6),
                               border: Border.all(
                                 color: isPro
-                                    ? const Color(0xFFF59E0B)
+                                    ? const Color(0xFFEF4444)
                                     : const Color(0xFF2563EB).withValues(alpha: 0.3),
                                 width: 1,
                               ),
@@ -222,13 +222,13 @@ class ToolsHubScreen extends StatelessWidget {
                               mainAxisSize: MainAxisSize.min,
                               children: [
                                 if (isPro) ...[
-                                  const Icon(Icons.star_rounded, color: Color(0xFFF59E0B), size: 10),
+                                  const Icon(Icons.star_rounded, color: Color(0xFFFF6B00), size: 10),
                                   const SizedBox(width: 2),
                                 ],
                                 Text(
                                   badge,
                                   style: TextStyle(
-                                    color: isPro ? const Color(0xFFF59E0B) : const Color(0xFF2563EB),
+                                    color: isPro ? const Color(0xFFFF6B00) : const Color(0xFF2563EB),
                                     fontSize: 9,
                                     fontWeight: FontWeight.w900,
                                     letterSpacing: 0.5,

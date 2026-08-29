@@ -71,13 +71,13 @@ class _RatingDialogState extends State<RatingDialog> with SingleTickerProviderSt
                       decoration: BoxDecoration(
                         shape: BoxShape.circle,
                         gradient: const LinearGradient(
-                          colors: [Color(0xFFF59E0B), Color(0xFF2563EB)],
+                          colors: [Color(0xFFFF6B00), Color(0xFFEF4444)],
                           begin: Alignment.topLeft,
                           end: Alignment.bottomRight,
                         ),
                         boxShadow: [
                           BoxShadow(
-                            color: const Color(0xFF2563EB).withValues(alpha: 0.3),
+                            color: const Color(0xFFEF4444).withValues(alpha: 0.35),
                             blurRadius: 20,
                             spreadRadius: 2,
                           ),

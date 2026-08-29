@@ -52,16 +52,16 @@ class _PaywallBadgeState extends State<PaywallBadge> with SingleTickerProviderSt
               gradient: SweepGradient(
                 startAngle: angle,
                 colors: const [
-                  Color(0xFFF59E0B),
+                  Color(0xFFFF6B00),
+                  Color(0xFFEF4444),
                   Color(0xFF2563EB),
                   Color(0xFF38BDF8),
-                  Color(0xFF60A5FA),
-                  Color(0xFFF59E0B),
+                  Color(0xFFFF6B00),
                 ],
               ),
               boxShadow: [
                 BoxShadow(
-                  color: const Color(0xFF2563EB).withValues(alpha: 0.25 + _sparkleController.value * 0.1),
+                  color: const Color(0xFFEF4444).withValues(alpha: 0.25 + _sparkleController.value * 0.1),
                   blurRadius: 10,
                   spreadRadius: 1,
                 ),
@@ -76,11 +76,11 @@ class _PaywallBadgeState extends State<PaywallBadge> with SingleTickerProviderSt
               child: Row(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  const Icon(Icons.workspace_premium_rounded, size: 14, color: Color(0xFFF59E0B)),
+                  const Icon(Icons.workspace_premium_rounded, size: 14, color: Color(0xFFFF6B00)),
                   const SizedBox(width: 5),
                   ShaderMask(
                     shaderCallback: (bounds) => const LinearGradient(
-                      colors: [Color(0xFFF59E0B), Color(0xFF2563EB)],
+                      colors: [Color(0xFFFF6B00), Color(0xFFEF4444)],
                     ).createShader(bounds),
                     child: const Text(
                       'PRO',

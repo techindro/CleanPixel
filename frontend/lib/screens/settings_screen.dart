@@ -474,7 +474,7 @@ class _SettingsScreenState extends State<SettingsScreen> with SingleTickerProvid
             decoration: BoxDecoration(
               gradient: LinearGradient(
                 colors: isPro
-                    ? [const Color(0xFFF59E0B), const Color(0xFF2563EB)]
+                    ? [const Color(0xFFFF6B00), const Color(0xFFEF4444)]
                     : [const Color(0xFF2563EB), const Color(0xFF38BDF8)],
               ),
               shape: BoxShape.circle,
@@ -508,7 +508,7 @@ class _SettingsScreenState extends State<SettingsScreen> with SingleTickerProvid
                       padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
                       decoration: BoxDecoration(
                         gradient: isPro
-                            ? const LinearGradient(colors: [Color(0xFFF59E0B), Color(0xFF2563EB)])
+                            ? const LinearGradient(colors: [Color(0xFFFF6B00), Color(0xFFEF4444)])
                             : null,
                         color: isPro ? null : const Color(0xFF2563EB).withValues(alpha: 0.12),
                         borderRadius: BorderRadius.circular(6),

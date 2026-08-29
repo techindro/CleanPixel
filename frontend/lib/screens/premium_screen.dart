@@ -177,12 +177,12 @@ class _PremiumScreenState extends State<PremiumScreen> with TickerProviderStateM
                       padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 6),
                       decoration: BoxDecoration(
                         gradient: const LinearGradient(
-                          colors: [Color(0xFFF59E0B), Color(0xFF2563EB)],
+                          colors: [Color(0xFFFF6B00), Color(0xFFEF4444)],
                         ),
                         borderRadius: BorderRadius.circular(20),
                         boxShadow: [
                           BoxShadow(
-                            color: const Color(0xFF2563EB).withValues(alpha: 0.3),
+                            color: const Color(0xFFEF4444).withValues(alpha: 0.35),
                             blurRadius: 12,
                             offset: const Offset(0, 2),
                           ),
@@ -440,7 +440,7 @@ class _PremiumScreenState extends State<PremiumScreen> with TickerProviderStateM
                           padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
                           decoration: BoxDecoration(
                             gradient: const LinearGradient(
-                              colors: [Color(0xFFF59E0B), Color(0xFF2563EB)],
+                              colors: [Color(0xFFFF6B00), Color(0xFFEF4444)],
                             ),
                             borderRadius: BorderRadius.circular(6),
                           ),
