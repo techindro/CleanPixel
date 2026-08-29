@@ -1,0 +1,19 @@
+{
+  "version": "2.8.0",
+  "build_number": 104,
+  "force_update": false,
+  "release_notes": [
+    "PixelAgent Autonomous AI Copilot",
+    "Real-Time Content-Aware Inpainting",
+    "22-Language Multi-Lingual Engine",
+    "Mobile Number OTP Authentication",
+    "Zero-Crash Resilience Shield"
+  ],
+  "apk_url": "http://192.168.31.210:8080/CleanPixel_AI.apk",
+  "dynamic_features": {
+    "video_cleaner_enabled": true,
+    "batch_processing_enabled": true,
+    "pixel_agent_enabled": true,
+    "cloud_sync_enabled": true
+  }
+}

@@ -1,5 +1,7 @@
+import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:http/http.dart' as http;
 
 class AppUpdateInfo {
   final String latestVersion;
@@ -7,6 +9,7 @@ class AppUpdateInfo {
   final String releaseNotes;
   final String downloadUrl;
   final bool isMandatory;
+  final Map<String, dynamic> dynamicFeatures;
 
   AppUpdateInfo({
     required this.latestVersion,
@@ -14,23 +17,44 @@ class AppUpdateInfo {
     required this.releaseNotes,
     required this.downloadUrl,
     this.isMandatory = false,
+    this.dynamicFeatures = const {},
   });
 }
 
 class UpdateService {
-  static const String currentVersion = "2.6.0";
-  static const int currentBuildNumber = 103;
+  static const String currentVersion = "2.8.0";
+  static const int currentBuildNumber = 104;
+  static const String remoteVersionUrl = "http://192.168.31.210:8080/version.json";
 
-  /// Check for latest OTA version update
+  /// Check for latest OTA version update from remote hosted server
   static Future<AppUpdateInfo?> checkForUpdate() async {
-    // Simulated remote version check endpoint
-    await Future.delayed(const Duration(milliseconds: 800));
+    try {
+      final response = await http.get(
+        Uri.parse(remoteVersionUrl),
+      ).timeout(const Duration(seconds: 3));
 
-    // Remote server payload simulation
+      if (response.statusCode == 200) {
+        final data = jsonDecode(response.body);
+        final notes = (data['release_notes'] as List<dynamic>?)?.map((e) => "• $e").join("\n") ??
+            "• Performance improvements and bug fixes";
+
+        return AppUpdateInfo(
+          latestVersion: data['version'] ?? currentVersion,
+          latestBuildNumber: data['build_number'] ?? currentBuildNumber,
+          releaseNotes: notes,
+          downloadUrl: data['apk_url'] ?? "http://192.168.31.210:8080/CleanPixel_AI.apk",
+          isMandatory: data['force_update'] ?? false,
+          dynamicFeatures: data['dynamic_features'] ?? {},
+        );
+      }
+    } catch (e) {
+      debugPrint('OTA Update check offline fallback: $e');
+    }
+
     return AppUpdateInfo(
-      latestVersion: "2.6.0",
-      latestBuildNumber: 103,
-      releaseNotes: "• 22-Language Multi-Lingual Engine\n• Mobile Number OTP Authentication\n• Over-The-Air Seamless Update Channel\n• Lossless 4K Master Neural Inpainter",
+      latestVersion: currentVersion,
+      latestBuildNumber: currentBuildNumber,
+      releaseNotes: "• 22-Language Multi-Lingual Engine\n• Mobile Number OTP Authentication\n• Zero-Crash Global Shield\n• Lossless 4K Master Neural Inpainter",
       downloadUrl: "http://192.168.31.210:8080/CleanPixel_AI.apk",
       isMandatory: false,
     );
@@ -47,6 +71,13 @@ class UpdateService {
         decoration: const BoxDecoration(
           color: Color(0xFF1E293B),
           borderRadius: BorderRadius.vertical(top: Radius.circular(28)),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black54,
+              blurRadius: 32,
+              offset: Offset(0, -8),
+            ),
+          ],
         ),
         child: Column(
           mainAxisSize: MainAxisSize.min,
@@ -78,11 +109,11 @@ class UpdateService {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     const Text(
-                      'CleanPixel AI Update',
+                      'New Update Available',
                       style: TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.w800),
                     ),
                     Text(
-                      'Version ${info.latestVersion} is ready to install',
+                      'CleanPixel AI v${info.latestVersion}',
                       style: const TextStyle(color: Color(0xFF10B981), fontSize: 12, fontWeight: FontWeight.w600),
                     ),
                   ],
@@ -138,7 +169,7 @@ class UpdateService {
                           children: [
                             Icon(Icons.downloading_rounded, color: Colors.white, size: 18),
                             SizedBox(width: 8),
-                            Text('Downloading update package in background...'),
+                            Text('Downloading and applying update...'),
                           ],
                         ),
                       ),
@@ -146,7 +177,7 @@ class UpdateService {
                   },
                   icon: const Icon(Icons.download_rounded, color: Colors.white),
                   label: const Text(
-                    'Download & Install Update Now',
+                    '1-Tap Update Now',
                     style: TextStyle(color: Colors.white, fontWeight: FontWeight.w700, fontSize: 15),
                   ),
                 ),
