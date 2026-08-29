@@ -84,7 +84,7 @@ class _InteractiveCanvasState extends State<InteractiveCanvas> {
           ),
 
           // 3. Live Dynamic Brush Reticle HUD
-          if (_isDragging && _currentCursor != null)
+          if (_isDragging && _currentCursor != null) ...[
             Positioned(
               left: _currentCursor!.dx - (widget.currentStrokeWidth / 2),
               top: _currentCursor!.dy - (widget.currentStrokeWidth / 2),
@@ -110,6 +110,59 @@ class _InteractiveCanvasState extends State<InteractiveCanvas> {
                 ),
               ),
             ),
+
+            // 4. Precision Magnifier Loupe (Microscope HUD - Founder Feature)
+            Positioned(
+              top: 14,
+              right: 14,
+              child: IgnorePointer(
+                child: Container(
+                  width: 84,
+                  height: 84,
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: const Color(0xFF0F172A),
+                    border: Border.all(color: const Color(0xFF38BDF8), width: 2),
+                    boxShadow: [
+                      BoxShadow(
+                        color: const Color(0xFF38BDF8).withValues(alpha: 0.35),
+                        blurRadius: 16,
+                        spreadRadius: 2,
+                      ),
+                    ],
+                  ),
+                  child: ClipOval(
+                    child: Stack(
+                      children: [
+                        if (widget.sourceImage != null)
+                          Positioned.fill(
+                            child: Image(
+                              image: widget.sourceImage!,
+                              fit: BoxFit.cover,
+                            ),
+                          ),
+                        Center(
+                          child: Container(
+                            width: widget.currentStrokeWidth * 0.8,
+                            height: widget.currentStrokeWidth * 0.8,
+                            decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              border: Border.all(color: const Color(0xFF38BDF8), width: 1.5),
+                              color: const Color(0xFF38BDF8).withValues(alpha: 0.2),
+                            ),
+                          ),
+                        ),
+                        // Crosshair indicator
+                        Center(
+                          child: Icon(Icons.crop_free_rounded, size: 28, color: Colors.white.withValues(alpha: 0.7)),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ],
         ],
       ),
     );
