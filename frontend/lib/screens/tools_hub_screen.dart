@@ -33,7 +33,7 @@ class ToolsHubScreen extends StatelessWidget {
                   ),
                 ),
                 const Text(
-                  'Select an AI neural model for your media',
+                  'Choose an AI tool to get started',
                   style: TextStyle(fontSize: 11, fontWeight: FontWeight.w700, color: Color(0xFF2563EB)),
                 ),
               ],
@@ -48,7 +48,7 @@ class ToolsHubScreen extends StatelessWidget {
                 icon: Icons.auto_fix_high_rounded,
                 gradient: const [Color(0xFF2563EB), Color(0xFF38BDF8)],
                 title: LocaleService.tr('erase_watermark'),
-                description: 'Brush over copyright stamps, logos, subtitles, and TikTok stamps to erase in 1-tap.',
+                description: 'Erase watermarks, logos, dates & text with a single brush stroke.',
                 badge: 'POPULAR',
                 onTap: () {
                   HapticFeedback.mediumImpact();
@@ -62,8 +62,8 @@ class ToolsHubScreen extends StatelessWidget {
                 context,
                 icon: Icons.person_remove_rounded,
                 gradient: const [Color(0xFF0284C7), Color(0xFF0EA5E9)],
-                title: 'Magic Object & People Eraser',
-                description: 'Remove photobombers, power lines, trash cans, and blemishes without distorting background.',
+                title: 'Remove People & Objects',
+                description: 'Cleanly erase photobombers, power lines, and unwanted objects.',
                 badge: 'SMART AI',
                 onTap: () {
                   HapticFeedback.mediumImpact();
@@ -77,8 +77,8 @@ class ToolsHubScreen extends StatelessWidget {
                 context,
                 icon: Icons.layers_clear_rounded,
                 gradient: const [Color(0xFF0D9488), Color(0xFF14B8A6)],
-                title: 'AI Background Remover',
-                description: 'Generate instant transparent PNG cutouts for e-commerce products and creator portraits.',
+                title: 'Remove Background',
+                description: 'Create clean transparent PNG cutouts instantly with one tap.',
                 badge: 'HD CUTOUT',
                 onTap: () {
                   HapticFeedback.mediumImpact();
@@ -92,8 +92,8 @@ class ToolsHubScreen extends StatelessWidget {
                 context,
                 icon: Icons.high_quality_rounded,
                 gradient: const [Color(0xFF4F46E5), Color(0xFF6366F1)],
-                title: '4K Ultra-HD Upscaler',
-                description: 'Enhance blurry low-res photos up to 400% resolution using Real-ESRGAN super-resolution.',
+                title: 'Enhance & Upscale',
+                description: 'Make low-resolution and blurry photos sharp and crystal clear.',
                 badge: 'ENHANCE',
                 onTap: () {
                   HapticFeedback.mediumImpact();
@@ -107,9 +107,9 @@ class ToolsHubScreen extends StatelessWidget {
                 context,
                 icon: Icons.videocam_rounded,
                 gradient: const [Color(0xFF7C3AED), Color(0xFF8B5CF6)],
-                title: LocaleService.tr('video_tracker'),
-                description: 'Track and erase moving watermarks and logos across 60 FPS video frames seamlessly.',
-                badge: 'PRO EXCLUSIVE',
+                title: 'Video Watermark Remover',
+                description: 'Erase moving logos and watermarks from your videos seamlessly.',
+                badge: 'PRO',
                 isPro: true,
                 onTap: () {
                   HapticFeedback.mediumImpact();

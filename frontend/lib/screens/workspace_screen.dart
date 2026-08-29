@@ -211,7 +211,7 @@ class _WorkspaceScreenState extends State<WorkspaceScreen> with TickerProviderSt
     HapticFeedback.heavyImpact();
     setState(() {
       _state = StudioState.processing;
-      _stepperStatus = "Finding watermark area...";
+      _stepperStatus = "Detecting watermark...";
       _stepperProgress = "Step 1 of 4 • 25%";
     });
 
@@ -227,27 +227,27 @@ class _WorkspaceScreenState extends State<WorkspaceScreen> with TickerProviderSt
       canvasSize: canvasSize,
     );
 
-    await Future.delayed(const Duration(milliseconds: 600));
+    await Future.delayed(const Duration(milliseconds: 500));
     if (!mounted) return;
     setState(() {
-      _stepperStatus = "Erasing unwanted objects...";
+      _stepperStatus = "Removing object...";
       _stepperProgress = "Step 2 of 4 • 50%";
     });
 
-    await Future.delayed(const Duration(milliseconds: 600));
+    await Future.delayed(const Duration(milliseconds: 500));
     if (!mounted) return;
     setState(() {
-      _stepperStatus = "Restoring clean background...";
+      _stepperStatus = "Restoring background...";
       _stepperProgress = "Step 3 of 4 • 75%";
     });
 
     final cleanedBytes = await inpaintFuture;
     await AuthService.deductCredit();
 
-    await Future.delayed(const Duration(milliseconds: 500));
+    await Future.delayed(const Duration(milliseconds: 400));
     if (!mounted) return;
     setState(() {
-      _stepperStatus = "Finishing up photo...";
+      _stepperStatus = "Finalizing image...";
       _stepperProgress = "Step 4 of 4 • 100%";
     });
 
@@ -442,7 +442,7 @@ class _WorkspaceScreenState extends State<WorkspaceScreen> with TickerProviderSt
                   ),
                 ),
                 const Text(
-                  'Neural Inpaint Studio',
+                  'Watermark & Object Eraser',
                   style: TextStyle(fontSize: 10, fontWeight: FontWeight.w700, color: Color(0xFF2563EB)),
                 ),
               ],
@@ -703,7 +703,7 @@ class _WorkspaceScreenState extends State<WorkspaceScreen> with TickerProviderSt
                             onPressed: _runAiEnhance,
                             icon: const Icon(Icons.auto_awesome_rounded, size: 18, color: Color(0xFF2563EB)),
                             label: const Text(
-                              '✨ AI 1-Tap HDR Enhance & Sharpen',
+                              '✨ Enhance Quality',
                               style: TextStyle(color: Color(0xFF2563EB), fontWeight: FontWeight.bold, fontSize: 13),
                             ),
                           ),
@@ -772,7 +772,7 @@ class _WorkspaceScreenState extends State<WorkspaceScreen> with TickerProviderSt
                                     onPressed: _saveResultAndPromptRating,
                                     icon: const Icon(Icons.download_rounded, size: 20, color: Colors.white),
                                     label: const Text(
-                                      'Save Clean Photo',
+                                      'Save to Gallery',
                                       style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 14),
                                     ),
                                   ),
@@ -821,7 +821,7 @@ class _WorkspaceScreenState extends State<WorkspaceScreen> with TickerProviderSt
                       },
                       icon: const Icon(Icons.workspace_premium_rounded, color: Colors.white, size: 20),
                       label: const Text(
-                        'Unlock Video Tracking in PRO Tier',
+                        'Video Watermark Remover (PRO)',
                         style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 15),
                       ),
                     ),

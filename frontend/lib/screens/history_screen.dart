@@ -217,7 +217,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
                   ),
                 ),
                 const Text(
-                  'Your cleaned photos & 4K exports',
+                  'Your saved and edited photos',
                   style: TextStyle(fontSize: 11, fontWeight: FontWeight.w700, color: Color(0xFF2563EB)),
                 ),
               ],
@@ -233,8 +233,8 @@ class _HistoryScreenState extends State<HistoryScreen> {
                       builder: (ctx) => AlertDialog(
                         backgroundColor: isDark ? const Color(0xFF131C2E) : Colors.white,
                         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(18)),
-                        title: Text('Clear All History?', style: TextStyle(color: isDark ? Colors.white : const Color(0xFF0F172A))),
-                        content: Text('This will delete all locally cached exports.', style: TextStyle(color: isDark ? const Color(0xFF94A3B8) : const Color(0xFF64748B))),
+                        title: Text('Clear History?', style: TextStyle(color: isDark ? Colors.white : const Color(0xFF0F172A))),
+                        content: Text('This will delete all saved edits from history.', style: TextStyle(color: isDark ? const Color(0xFF94A3B8) : const Color(0xFF64748B))),
                         actions: [
                           TextButton(onPressed: () => Navigator.pop(ctx, false), child: Text('Cancel', style: TextStyle(color: isDark ? Colors.white60 : const Color(0xFF64748B)))),
                           TextButton(onPressed: () => Navigator.pop(ctx, true), child: const Text('Clear', style: TextStyle(color: Color(0xFFEF4444), fontWeight: FontWeight.bold))),
@@ -367,7 +367,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
             ),
             const SizedBox(height: 20),
             Text(
-              'No Saved Creations Yet',
+              'No Edited Photos Yet',
               style: TextStyle(
                 color: isDark ? Colors.white : const Color(0xFF0F172A),
                 fontSize: 18,
@@ -376,7 +376,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
             ),
             const SizedBox(height: 8),
             Text(
-              'Process watermarked photos or videos in the Studio and your saved outputs will appear here automatically.',
+              'Photos you edit and clean will appear here automatically.',
               textAlign: TextAlign.center,
               style: TextStyle(
                 color: isDark ? const Color(0xFF94A3B8) : const Color(0xFF64748B),
@@ -406,7 +406,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
                 ),
                 onPressed: widget.onOpenStudio,
                 icon: const Icon(Icons.auto_fix_high_rounded, color: Colors.white, size: 18),
-                label: Text(LocaleService.tr('studio'), style: const TextStyle(color: Colors.white, fontWeight: FontWeight.w800, fontSize: 13)),
+                label: const Text('Start Editing Photos', style: TextStyle(color: Colors.white, fontWeight: FontWeight.w800, fontSize: 13)),
               ),
             ),
           ],

@@ -18,23 +18,23 @@ class _PremiumScreenState extends State<PremiumScreen> with TickerProviderStateM
 
   final List<Map<String, String>> _planDetails = [
     {
-      'title': 'Annual Pro Pass',
+      'title': 'Yearly Plan',
       'price': '₹1,999 / year',
-      'subtext': 'Save 60% (Just ₹166/month)',
+      'subtext': 'Save 60% (₹166 / month)',
       'type': 'yearly',
       'badge': 'BEST VALUE',
     },
     {
-      'title': 'Monthly Pro Subscription',
+      'title': 'Monthly Plan',
       'price': '₹399 / month',
-      'subtext': 'Cancel anytime in Play Store',
+      'subtext': 'Cancel anytime in Google Play',
       'type': 'monthly',
-      'badge': 'FLEXIBLE',
+      'badge': 'MONTHLY',
     },
     {
-      'title': 'Lifetime Founder Pass',
+      'title': 'Lifetime Access',
       'price': '₹4,999',
-      'subtext': 'One-time payment • Lifetime access',
+      'subtext': 'Pay once • Use forever',
       'type': 'lifetime',
       'badge': 'LIFETIME',
     },
@@ -62,11 +62,11 @@ class _PremiumScreenState extends State<PremiumScreen> with TickerProviderStateM
   }
 
   final List<Map<String, dynamic>> _features = [
-    {'icon': Icons.all_inclusive_rounded, 'text': 'Unlimited 4K Neural Inpaints'},
-    {'icon': Icons.videocam_rounded, 'text': 'Deep Diffusion Video Tracking'},
-    {'icon': Icons.speed_rounded, 'text': 'Priority Ultra-Fast GPU Queue'},
-    {'icon': Icons.hide_image_rounded, 'text': 'Zero Watermark on Master Exports'},
-    {'icon': Icons.science_rounded, 'text': 'Early Access to New AI Models'},
+    {'icon': Icons.all_inclusive_rounded, 'text': 'Unlimited HD & 4K Inpainting'},
+    {'icon': Icons.videocam_rounded, 'text': 'Video Watermark Remover'},
+    {'icon': Icons.speed_rounded, 'text': 'Ultra-Fast Processing Speed'},
+    {'icon': Icons.hide_image_rounded, 'text': 'Lossless High-Resolution Exports'},
+    {'icon': Icons.science_rounded, 'text': 'Early Access to New AI Tools'},
   ];
 
   Future<void> _openCheckout() async {
@@ -208,7 +208,7 @@ class _PremiumScreenState extends State<PremiumScreen> with TickerProviderStateM
                     const SizedBox(height: 16),
 
                     Text(
-                      'Unleash Ultimate AI Power',
+                      'Unlock CleanPixel PRO',
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         fontSize: 26,
@@ -219,7 +219,7 @@ class _PremiumScreenState extends State<PremiumScreen> with TickerProviderStateM
                     ),
                     const SizedBox(height: 6),
                     Text(
-                      'Unlimited 4K neural inpainting with zero wait times',
+                      'Unlimited HD inpainting with instant processing',
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         fontSize: 13,

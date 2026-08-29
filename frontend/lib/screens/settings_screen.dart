@@ -114,7 +114,7 @@ class _SettingsScreenState extends State<SettingsScreen> with SingleTickerProvid
                       ),
                     ),
                     const Text(
-                      'Preferences & Workspace Configuration',
+                      'App Preferences & Account',
                       style: TextStyle(fontSize: 11, fontWeight: FontWeight.w700, color: Color(0xFF2563EB)),
                     ),
                   ],
@@ -137,7 +137,7 @@ class _SettingsScreenState extends State<SettingsScreen> with SingleTickerProvid
                         const SizedBox(height: 22),
 
                         // 3. Section 1: App Experience
-                        _buildStaggered(0.15, 0.45, child: _buildSectionLabel('APPLICATION & CREATOR', isDark)),
+                        _buildStaggered(0.15, 0.45, child: _buildSectionLabel('APP SETTINGS', isDark)),
                         const SizedBox(height: 10),
 
                         // Theme Switcher Tile
@@ -177,16 +177,16 @@ class _SettingsScreenState extends State<SettingsScreen> with SingleTickerProvid
                         _buildStaggered(0.2, 0.5, child: _buildSettingTile(
                           icon: Icons.star_rate_rounded,
                           iconColor: const Color(0xFFF59E0B),
-                          title: 'Rate CleanPixel on Play Store',
-                          subtitle: 'Help us grow with a 5-star review',
+                          title: 'Rate on Play Store',
+                          subtitle: 'Support us with a 5-star review',
                           onTap: () => RatingDialog.show(context),
                           isDark: isDark,
                         )),
                         _buildStaggered(0.25, 0.55, child: _buildSettingTile(
                           icon: Icons.share_rounded,
                           iconColor: const Color(0xFF2563EB),
-                          title: 'Share with Friends & Creators',
-                          subtitle: 'Spread the word about CleanPixel AI',
+                          title: 'Share App with Friends',
+                          subtitle: 'Invite friends to use CleanPixel AI',
                           onTap: () {
                             ScaffoldMessenger.of(context).showSnackBar(
                               SnackBar(
@@ -198,7 +198,7 @@ class _SettingsScreenState extends State<SettingsScreen> with SingleTickerProvid
                                   children: [
                                     Icon(Icons.content_copy_rounded, color: Colors.white, size: 18),
                                     SizedBox(width: 8),
-                                    Text('App share link copied to clipboard'),
+                                    Text('App link copied to clipboard'),
                                   ],
                                 ),
                               ),
@@ -210,7 +210,7 @@ class _SettingsScreenState extends State<SettingsScreen> with SingleTickerProvid
                           icon: Icons.cleaning_services_rounded,
                           iconColor: const Color(0xFF10B981),
                           title: LocaleService.tr('clear_cache'),
-                          subtitle: 'Free up device memory',
+                          subtitle: 'Free up storage space on your device',
                           onTap: () {
                             HapticFeedback.mediumImpact();
                             ScaffoldMessenger.of(context).showSnackBar(
@@ -223,7 +223,7 @@ class _SettingsScreenState extends State<SettingsScreen> with SingleTickerProvid
                                   children: [
                                     Icon(Icons.check_circle_outline_rounded, color: Colors.white, size: 18),
                                     SizedBox(width: 8),
-                                    Text('Cache successfully cleared'),
+                                    Text('Cache cleared successfully'),
                                   ],
                                 ),
                               ),
@@ -235,7 +235,7 @@ class _SettingsScreenState extends State<SettingsScreen> with SingleTickerProvid
                           icon: Icons.system_update_rounded,
                           iconColor: const Color(0xFF8B5CF6),
                           title: 'Check for Updates',
-                          subtitle: 'Current Version ${UpdateService.currentVersion} (Up to date)',
+                          subtitle: 'Version 2.4.0 • Up to date',
                           onTap: () async {
                             HapticFeedback.mediumImpact();
                             final update = await UpdateService.checkForUpdate();
@@ -248,13 +248,13 @@ class _SettingsScreenState extends State<SettingsScreen> with SingleTickerProvid
                         const SizedBox(height: 22),
 
                         // 4. Section 2: Privacy & Legal
-                        _buildStaggered(0.35, 0.65, child: _buildSectionLabel('PRIVACY & POLICIES', isDark)),
+                        _buildStaggered(0.35, 0.65, child: _buildSectionLabel('PRIVACY & ABOUT', isDark)),
                         const SizedBox(height: 10),
                         _buildStaggered(0.4, 0.7, child: _buildSettingTile(
                           icon: Icons.privacy_tip_rounded,
                           iconColor: const Color(0xFF2563EB),
                           title: LocaleService.tr('privacy_policy'),
-                          subtitle: 'How we securely handle your media',
+                          subtitle: 'How we protect your photos and privacy',
                           onTap: () {
                             _showPolicyDialog(
                               context,
@@ -268,7 +268,7 @@ class _SettingsScreenState extends State<SettingsScreen> with SingleTickerProvid
                           icon: Icons.description_rounded,
                           iconColor: const Color(0xFF38BDF8),
                           title: LocaleService.tr('terms_service'),
-                          subtitle: 'Read our service terms',
+                          subtitle: 'Terms of service and usage guidelines',
                           onTap: () {
                             _showPolicyDialog(
                               context,
@@ -281,8 +281,8 @@ class _SettingsScreenState extends State<SettingsScreen> with SingleTickerProvid
                         _buildStaggered(0.5, 0.8, child: _buildSettingTile(
                           icon: Icons.verified_user_rounded,
                           iconColor: const Color(0xFF10B981),
-                          title: 'Zero-Knowledge Privacy',
-                          subtitle: 'In-memory processing guarantee (Active)',
+                          title: 'Secure Device Processing',
+                          subtitle: 'Photos are never stored on external servers',
                           trailing: const Icon(Icons.check_circle_rounded, color: Color(0xFF10B981), size: 18),
                           onTap: () {},
                           isDark: isDark,
@@ -290,13 +290,13 @@ class _SettingsScreenState extends State<SettingsScreen> with SingleTickerProvid
                         const SizedBox(height: 22),
 
                         // 5. Section 3: Account & Session
-                        _buildStaggered(0.55, 0.85, child: _buildSectionLabel('ACCOUNT & SESSION', isDark)),
+                        _buildStaggered(0.55, 0.85, child: _buildSectionLabel('ACCOUNT', isDark)),
                         const SizedBox(height: 10),
                         _buildStaggered(0.6, 0.9, child: _buildSettingTile(
                           icon: Icons.logout_rounded,
                           iconColor: const Color(0xFFEF4444),
                           title: LocaleService.tr('logout'),
-                          subtitle: 'Sign out of your creator account',
+                          subtitle: 'Sign out of your account',
                           titleColor: const Color(0xFFEF4444),
                           onTap: _handleLogout,
                           isDark: isDark,
@@ -318,7 +318,7 @@ class _SettingsScreenState extends State<SettingsScreen> with SingleTickerProvid
                                 ),
                                 const SizedBox(height: 8),
                                 Text(
-                                  'CleanPixel AI v2.4.0 (Founder Edition)',
+                                  'CleanPixel AI • Version 2.4.0',
                                   style: TextStyle(
                                     color: isDark ? const Color(0xFF64748B) : const Color(0xFF94A3B8),
                                     fontSize: 12,
