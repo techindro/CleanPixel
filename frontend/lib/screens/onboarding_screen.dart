@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:cleanpixel_ai/screens/workspace_screen.dart';
-
 import 'package:cleanpixel_ai/screens/auth_screen.dart';
 
 class OnboardingScreen extends StatefulWidget {
@@ -22,21 +20,21 @@ class _OnboardingScreenState extends State<OnboardingScreen> with TickerProvider
   final List<Map<String, dynamic>> _slides = [
     {
       'icon': Icons.auto_fix_high_rounded,
-      'gradient': [Color(0xFF38BDF8), Color(0xFF2563EB)],
+      'gradient': const [Color(0xFF38BDF8), Color(0xFF2563EB)],
       'title': 'AI Watermark Remover',
       'subtitle': 'Brush over any text, copyright stamp or TikTok logo and watch it vanish in 1-tap.',
       'badge': 'NEURAL INPAINTING'
     },
     {
       'icon': Icons.person_remove_rounded,
-      'gradient': [Color(0xFFEC4899), Color(0xFF8B5CF6)],
+      'gradient': const [Color(0xFFEC4899), Color(0xFFF43F5E)],
       'title': 'Magic Object & People Eraser',
       'subtitle': 'Erase photobombers, wires, power lines, and clutter with zero blur and pure clarity.',
       'badge': 'DEEP DIFFUSION'
     },
     {
       'icon': Icons.hd_rounded,
-      'gradient': [Color(0xFF10B981), Color(0xFF0284C7)],
+      'gradient': const [Color(0xFF10B981), Color(0xFF059669)],
       'title': 'Lossless 4K Ultra-HD Export',
       'subtitle': 'Save your cleaned photos in original pristine resolution without compression loss.',
       'badge': '4K MASTERWORK'
@@ -85,8 +83,10 @@ class _OnboardingScreenState extends State<OnboardingScreen> with TickerProvider
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
     return Scaffold(
-      backgroundColor: const Color(0xFF0B0F19),
+      backgroundColor: isDark ? const Color(0xFF0F0715) : const Color(0xFFFAF5FF),
       body: SafeArea(
         child: Column(
           children: [
@@ -98,39 +98,45 @@ class _OnboardingScreenState extends State<OnboardingScreen> with TickerProvider
                 children: [
                   Row(
                     children: [
-                      Container(
-                        width: 28,
-                        height: 28,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(8),
-                          gradient: const LinearGradient(
-                            colors: [Color(0xFF38BDF8), Color(0xFF2563EB)],
-                          ),
+                      Image.asset(
+                        'assets/logo.png',
+                        width: 32,
+                        height: 32,
+                        fit: BoxFit.contain,
+                        errorBuilder: (_, __, ___) => const Icon(
+                          Icons.auto_fix_high_rounded,
+                          color: Color(0xFF38BDF8),
+                          size: 24,
                         ),
-                        child: const Icon(Icons.auto_fix_high_rounded, size: 16, color: Colors.white),
                       ),
                       const SizedBox(width: 8),
-                      const Text(
+                      Text(
                         'CleanPixel AI',
-                        style: TextStyle(fontSize: 16, fontWeight: FontWeight.w800, color: Colors.white),
+                        style: TextStyle(
+                          color: isDark ? Colors.white : const Color(0xFF1E293B),
+                          fontWeight: FontWeight.w800,
+                          fontSize: 16,
+                          letterSpacing: -0.3,
+                        ),
                       ),
                     ],
                   ),
-                  if (_currentPage < _slides.length - 1)
-                    TextButton(
-                      onPressed: _completeOnboarding,
-                      child: const Text(
-                        'Skip',
-                        style: TextStyle(color: Color(0xFF64748B), fontWeight: FontWeight.w600),
+                  TextButton(
+                    onPressed: _completeOnboarding,
+                    child: Text(
+                      'Skip',
+                      style: TextStyle(
+                        color: isDark ? const Color(0xFF94A3B8) : const Color(0xFF64748B),
+                        fontWeight: FontWeight.w600,
+                        fontSize: 13,
                       ),
-                    )
-                  else
-                    const SizedBox(height: 48),
+                    ),
+                  ),
                 ],
               ),
             ),
 
-            // Main Carousel View
+            // Carousel Slides
             Expanded(
               child: PageView.builder(
                 controller: _pageController,
@@ -138,162 +144,93 @@ class _OnboardingScreenState extends State<OnboardingScreen> with TickerProvider
                 itemCount: _slides.length,
                 itemBuilder: (context, index) {
                   final slide = _slides[index];
+                  final List<Color> gradColors = slide['gradient'] as List<Color>;
+
                   return AnimatedBuilder(
                     animation: _slideAnimController,
                     builder: (context, _) {
-                      final iconScale = Tween<double>(begin: 0.3, end: 1.0).animate(
-                        CurvedAnimation(
-                          parent: _slideAnimController,
-                          curve: const Interval(0.0, 0.5, curve: Curves.elasticOut),
-                        ),
+                      final scale = Tween<double>(begin: 0.9, end: 1.0).animate(
+                        CurvedAnimation(parent: _slideAnimController, curve: Curves.easeOutCubic),
                       ).value;
-                      final iconOpacity = Tween<double>(begin: 0.0, end: 1.0).animate(
-                        CurvedAnimation(
-                          parent: _slideAnimController,
-                          curve: const Interval(0.0, 0.3, curve: Curves.easeOut),
-                        ),
-                      ).value;
-                      final badgeSlide = Tween<double>(begin: 30.0, end: 0.0).animate(
-                        CurvedAnimation(
-                          parent: _slideAnimController,
-                          curve: const Interval(0.25, 0.55, curve: Curves.easeOutCubic),
-                        ),
-                      ).value;
-                      final titleSlide = Tween<double>(begin: 20.0, end: 0.0).animate(
-                        CurvedAnimation(
-                          parent: _slideAnimController,
-                          curve: const Interval(0.35, 0.65, curve: Curves.easeOutCubic),
-                        ),
-                      ).value;
-                      final titleOpacity = Tween<double>(begin: 0.0, end: 1.0).animate(
-                        CurvedAnimation(
-                          parent: _slideAnimController,
-                          curve: const Interval(0.35, 0.6, curve: Curves.easeOut),
-                        ),
-                      ).value;
-                      final subtitleOpacity = Tween<double>(begin: 0.0, end: 1.0).animate(
-                        CurvedAnimation(
-                          parent: _slideAnimController,
-                          curve: const Interval(0.5, 0.75, curve: Curves.easeOut),
-                        ),
+                      final opacity = Tween<double>(begin: 0.0, end: 1.0).animate(
+                        CurvedAnimation(parent: _slideAnimController, curve: Curves.easeOut),
                       ).value;
 
                       return Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 32),
+                        padding: const EdgeInsets.symmetric(horizontal: 28),
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            // Animated Floating Particles behind icon
-                            SizedBox(
-                              width: 180,
-                              height: 180,
-                              child: Stack(
-                                alignment: Alignment.center,
-                                children: [
-                                  // Ambient glow
-                                  Container(
-                                    width: 160,
-                                    height: 160,
-                                    decoration: BoxDecoration(
-                                      shape: BoxShape.circle,
-                                      boxShadow: [
-                                        BoxShadow(
-                                          color: (slide['gradient'][0] as Color).withOpacity(0.25 * iconOpacity),
-                                          blurRadius: 60,
-                                          spreadRadius: 10,
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                  // Icon Circle
-                                  Opacity(
-                                    opacity: iconOpacity,
-                                    child: Transform.scale(
-                                      scale: iconScale,
-                                      child: Container(
-                                        width: 140,
-                                        height: 140,
-                                        decoration: BoxDecoration(
-                                          shape: BoxShape.circle,
-                                          gradient: LinearGradient(
-                                            colors: slide['gradient'] as List<Color>,
-                                            begin: Alignment.topLeft,
-                                            end: Alignment.bottomRight,
-                                          ),
-                                          boxShadow: [
-                                            BoxShadow(
-                                              color: (slide['gradient'][0] as Color).withOpacity(0.4),
-                                              blurRadius: 32,
-                                              offset: const Offset(0, 12),
-                                            ),
-                                          ],
-                                        ),
-                                        child: Icon(slide['icon'] as IconData, size: 64, color: Colors.white),
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                            const SizedBox(height: 36),
-
-                            // Pill Badge - slides in from right
-                            Transform.translate(
-                              offset: Offset(badgeSlide, 0),
+                            Transform.scale(
+                              scale: scale,
                               child: Opacity(
-                                opacity: titleOpacity,
+                                opacity: opacity,
                                 child: Container(
-                                  padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 6),
+                                  width: 170,
+                                  height: 170,
                                   decoration: BoxDecoration(
-                                    color: Colors.white.withOpacity(0.06),
-                                    borderRadius: BorderRadius.circular(20),
-                                    border: Border.all(color: Colors.white10),
-                                  ),
-                                  child: Text(
-                                    slide['badge'],
-                                    style: TextStyle(
-                                      color: slide['gradient'][0] as Color,
-                                      fontSize: 11,
-                                      fontWeight: FontWeight.w800,
-                                      letterSpacing: 1.2,
+                                    shape: BoxShape.circle,
+                                    gradient: LinearGradient(
+                                      begin: Alignment.topLeft,
+                                      end: Alignment.bottomRight,
+                                      colors: gradColors,
                                     ),
+                                    boxShadow: [
+                                      BoxShadow(
+                                        color: gradColors.first.withValues(alpha: 0.35),
+                                        blurRadius: 36,
+                                        spreadRadius: 4,
+                                      ),
+                                    ],
+                                  ),
+                                  child: Icon(
+                                    slide['icon'] as IconData,
+                                    size: 72,
+                                    color: Colors.white,
                                   ),
                                 ),
                               ),
                             ),
-                            const SizedBox(height: 16),
+                            const SizedBox(height: 36),
 
-                            // Title - slides up
-                            Transform.translate(
-                              offset: Offset(0, titleSlide),
-                              child: Opacity(
-                                opacity: titleOpacity,
-                                child: Text(
-                                  slide['title'],
-                                  textAlign: TextAlign.center,
-                                  style: const TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 28,
-                                    fontWeight: FontWeight.w800,
-                                    letterSpacing: -0.5,
-                                    height: 1.2,
-                                  ),
+                            // Badge
+                            Container(
+                              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+                              decoration: BoxDecoration(
+                                color: const Color(0xFFEC4899).withValues(alpha: isDark ? 0.2 : 0.12),
+                                borderRadius: BorderRadius.circular(20),
+                                border: Border.all(color: const Color(0xFFEC4899).withValues(alpha: 0.3)),
+                              ),
+                              child: Text(
+                                slide['badge'] as String,
+                                style: const TextStyle(
+                                  color: Color(0xFFEC4899),
+                                  fontSize: 10,
+                                  fontWeight: FontWeight.w900,
+                                  letterSpacing: 1.2,
                                 ),
                               ),
                             ),
                             const SizedBox(height: 14),
 
-                            // Subtitle - fades in
-                            Opacity(
-                              opacity: subtitleOpacity,
-                              child: Text(
-                                slide['subtitle'],
-                                textAlign: TextAlign.center,
-                                style: const TextStyle(
-                                  color: Color(0xFF94A3B8),
-                                  fontSize: 15,
-                                  height: 1.6,
-                                ),
+                            Text(
+                              slide['title'] as String,
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                color: isDark ? Colors.white : const Color(0xFF1E293B),
+                                fontSize: 24,
+                                fontWeight: FontWeight.w800,
+                                letterSpacing: -0.4,
+                              ),
+                            ),
+                            const SizedBox(height: 10),
+                            Text(
+                              slide['subtitle'] as String,
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                color: isDark ? const Color(0xFF94A3B8) : const Color(0xFF64748B),
+                                fontSize: 14,
+                                height: 1.5,
                               ),
                             ),
                           ],
@@ -305,112 +242,84 @@ class _OnboardingScreenState extends State<OnboardingScreen> with TickerProvider
               ),
             ),
 
-            // Pagination Dots & CTA Button
-            Padding(
-              padding: const EdgeInsets.fromLTRB(28, 8, 28, 28),
-              child: Column(
-                children: [
-                  // Animated Indicators
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: List.generate(_slides.length, (idx) {
-                      final isActive = idx == _currentPage;
-                      return AnimatedContainer(
-                        duration: const Duration(milliseconds: 350),
-                        curve: Curves.easeOutCubic,
-                        margin: const EdgeInsets.symmetric(horizontal: 4),
-                        width: isActive ? 32 : 8,
-                        height: 8,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(4),
-                          gradient: isActive
-                              ? LinearGradient(
-                                  colors: _slides[_currentPage]['gradient'] as List<Color>,
-                                )
-                              : null,
-                          color: isActive ? null : Colors.white.withOpacity(0.15),
-                        ),
-                      );
-                    }),
+            // Pagination Dots
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: List.generate(_slides.length, (idx) {
+                final isSelected = _currentPage == idx;
+                return AnimatedContainer(
+                  duration: const Duration(milliseconds: 300),
+                  margin: const EdgeInsets.symmetric(horizontal: 4),
+                  width: isSelected ? 24 : 8,
+                  height: 8,
+                  decoration: BoxDecoration(
+                    color: isSelected
+                        ? const Color(0xFFEC4899)
+                        : (isDark ? Colors.white24 : const Color(0xFFCBD5E1)),
+                    borderRadius: BorderRadius.circular(4),
                   ),
-                  const SizedBox(height: 28),
+                );
+              }),
+            ),
+            const SizedBox(height: 28),
 
-                  // Action Button with shimmer
-                  _buildActionButton(),
-                ],
+            // Bottom CTA Button
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
+              child: SizedBox(
+                width: double.infinity,
+                height: 52,
+                child: Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(14),
+                    gradient: const LinearGradient(
+                      colors: [Color(0xFFEC4899), Color(0xFFF43F5E)],
+                    ),
+                    boxShadow: [
+                      BoxShadow(
+                        color: const Color(0xFFEC4899).withValues(alpha: 0.35),
+                        blurRadius: 16,
+                        offset: const Offset(0, 4),
+                      ),
+                    ],
+                  ),
+                  child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.transparent,
+                      shadowColor: Colors.transparent,
+                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
+                    ),
+                    onPressed: () {
+                      if (_currentPage < _slides.length - 1) {
+                        _pageController.nextPage(
+                          duration: const Duration(milliseconds: 400),
+                          curve: Curves.easeInOut,
+                        );
+                      } else {
+                        _completeOnboarding();
+                      }
+                    },
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          _currentPage == _slides.length - 1 ? 'Get Started Free' : 'Continue',
+                          style: const TextStyle(
+                            color: Colors.white,
+                            fontSize: 16,
+                            fontWeight: FontWeight.w800,
+                          ),
+                        ),
+                        const SizedBox(width: 8),
+                        const Icon(Icons.arrow_forward_rounded, color: Colors.white, size: 20),
+                      ],
+                    ),
+                  ),
+                ),
               ),
             ),
           ],
         ),
-      ),
-    );
-  }
-
-  Widget _buildActionButton() {
-    final isLast = _currentPage == _slides.length - 1;
-    return GestureDetector(
-      onTapDown: (_) => HapticFeedback.lightImpact(),
-      child: AnimatedBuilder(
-        animation: _buttonShimmerController,
-        builder: (context, child) {
-          return Container(
-            width: double.infinity,
-            height: 58,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(16),
-              gradient: LinearGradient(
-                colors: isLast
-                    ? [const Color(0xFF10B981), const Color(0xFF0284C7)]
-                    : [const Color(0xFF38BDF8), const Color(0xFF2563EB), const Color(0xFF1D4ED8)],
-              ),
-              boxShadow: [
-                BoxShadow(
-                  color: (isLast ? const Color(0xFF10B981) : const Color(0xFF2563EB)).withOpacity(0.4),
-                  blurRadius: 20,
-                  offset: const Offset(0, 8),
-                ),
-              ],
-            ),
-            child: Material(
-              color: Colors.transparent,
-              child: InkWell(
-                borderRadius: BorderRadius.circular(16),
-                onTap: () {
-                  if (_currentPage < _slides.length - 1) {
-                    _pageController.nextPage(
-                      duration: const Duration(milliseconds: 400),
-                      curve: Curves.easeInOutCubic,
-                    );
-                  } else {
-                    _completeOnboarding();
-                  }
-                },
-                child: Center(
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        isLast ? "Get Started" : "Continue",
-                        style: const TextStyle(
-                          fontSize: 17,
-                          fontWeight: FontWeight.w700,
-                          color: Colors.white,
-                          letterSpacing: -0.2,
-                        ),
-                      ),
-                      const SizedBox(width: 8),
-                      Icon(
-                        isLast ? Icons.rocket_launch_rounded : Icons.arrow_forward_rounded,
-                        color: Colors.white,
-                        size: 20,
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-            ),
-          );
-        },
       ),
     );
   }
