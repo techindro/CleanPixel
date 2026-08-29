@@ -144,12 +144,12 @@ class _SplashScreenState extends State<SplashScreen> with TickerProviderStateMix
                           shape: BoxShape.circle,
                           boxShadow: [
                             BoxShadow(
-                              color: const Color(0xFFEC4899).withValues(alpha: 0.5),
+                              color: const Color(0xFF38BDF8).withValues(alpha: 0.5),
                               blurRadius: _glowRadius.value,
                               spreadRadius: 2,
                             ),
                             BoxShadow(
-                              color: const Color(0xFFF43F5E).withValues(alpha: 0.25),
+                              color: const Color(0xFF2563EB).withValues(alpha: 0.3),
                               blurRadius: _glowRadius.value * 1.5,
                               spreadRadius: 4,
                             ),
@@ -166,32 +166,23 @@ class _SplashScreenState extends State<SplashScreen> with TickerProviderStateMix
                             height: 104,
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(26),
-                              gradient: const LinearGradient(
-                                begin: Alignment.topLeft,
-                                end: Alignment.bottomRight,
-                                colors: [Colors.white, Color(0xFFFDF2F8)],
-                              ),
                               boxShadow: [
                                 BoxShadow(
-                                  color: const Color(0xFFEC4899).withValues(alpha: 0.3),
+                                  color: const Color(0xFF2563EB).withValues(alpha: 0.35),
                                   blurRadius: 24,
                                   offset: const Offset(0, 8),
                                 ),
                               ],
-                              border: Border.all(
-                                color: const Color(0xFFEC4899).withValues(alpha: 0.4),
-                                width: 2,
-                              ),
                             ),
                             child: ClipRRect(
-                              borderRadius: BorderRadius.circular(24),
+                              borderRadius: BorderRadius.circular(26),
                               child: Image.asset(
                                 'assets/logo.png',
                                 fit: BoxFit.contain,
                                 errorBuilder: (context, error, stackTrace) => const Icon(
                                   Icons.auto_fix_high_rounded,
                                   size: 48,
-                                  color: Color(0xFFEC4899),
+                                  color: Color(0xFF38BDF8),
                                 ),
                               ),
                             ),

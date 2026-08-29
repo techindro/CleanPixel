@@ -34,7 +34,6 @@ class ThemeService {
       case ThemeMode.system:
         return 'System Default';
       case ThemeMode.light:
-      default:
         return 'Light Mode (White & Pink)';
     }
   }

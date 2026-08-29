@@ -1,4 +1,3 @@
-import 'dart:math';
 import 'package:flutter/material.dart';
 
 class DetectedArtifact {
@@ -18,7 +17,6 @@ class AgenticAiService {
   static Future<List<DetectedArtifact>> autoDetectArtifacts({
     required Size imageSize,
   }) async {
-    // Neural vision scan simulation (can hook into YOLO / SAM / SegFormer backend)
     await Future.delayed(const Duration(milliseconds: 700));
 
     final w = imageSize.width > 0 ? imageSize.width : 360.0;

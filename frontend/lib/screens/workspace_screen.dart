@@ -1,10 +1,8 @@
 import 'dart:io';
 import 'dart:ui';
-import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:path_provider/path_provider.dart';
 import 'package:cleanpixel_ai/components/interactive_canvas.dart';
 import 'package:cleanpixel_ai/components/contextual_toolbar.dart';
 import 'package:cleanpixel_ai/components/comparison_slider.dart';
