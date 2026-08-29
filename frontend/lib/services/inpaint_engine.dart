@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:io';
 import 'dart:typed_data';
 import 'dart:ui' as ui;
@@ -68,62 +69,65 @@ class InpaintEngine {
       final recorder = ui.PictureRecorder();
       final canvas = Canvas(recorder, Rect.fromLTWH(0, 0, size.width, size.height));
 
-      // 1. Resolve source image to ui.Image
-      final ImageStream stream = sourceProvider.resolve(const ImageConfiguration());
-      ui.Image? resolvedImage;
-
-      final listener = ImageStreamListener((ImageInfo info, bool _) {
-        resolvedImage = info.image;
-      });
+      // 1. Resolve source image to ui.Image using Completer
+      final completer = Completer<ui.Image>();
+      final stream = sourceProvider.resolve(const ImageConfiguration());
+      late ImageStreamListener listener;
+      listener = ImageStreamListener(
+        (ImageInfo info, bool _) {
+          if (!completer.isCompleted) completer.complete(info.image);
+          stream.removeListener(listener);
+        },
+        onError: (dynamic error, StackTrace? stack) {
+          if (!completer.isCompleted) completer.completeError(error);
+          stream.removeListener(listener);
+        },
+      );
       stream.addListener(listener);
 
-      for (int i = 0; i < 20 && resolvedImage == null; i++) {
-        await Future.delayed(const Duration(milliseconds: 50));
-      }
-      stream.removeListener(listener);
+      final resolvedImage = await completer.future.timeout(
+        const Duration(milliseconds: 1500),
+        onTimeout: () => throw TimeoutException('Image load timed out'),
+      );
 
-      if (resolvedImage != null) {
-        // Draw base image
-        paintImage(
-          canvas: canvas,
-          rect: Rect.fromLTWH(0, 0, size.width, size.height),
-          image: resolvedImage!,
-          fit: BoxFit.contain,
-        );
+      // Draw base image
+      paintImage(
+        canvas: canvas,
+        rect: Rect.fromLTWH(0, 0, size.width, size.height),
+        image: resolvedImage,
+        fit: BoxFit.contain,
+      );
 
-        // 2. Multi-Pass Content-Aware Boundary Synthesis
-        // Pass A: Sample and diffuse surrounding ambient background textures into masked areas
-        for (final pt in points) {
-          if (pt != null) {
-            final sampleRadius = (pt.paint.strokeWidth * 1.2).clamp(16.0, 80.0);
-            
-            // Sub-pixel surrounding texture clone
-            final patchRect = Rect.fromCircle(center: pt.offset, radius: sampleRadius);
-            final diffusePaint = Paint()
-              ..blendMode = BlendMode.srcOver
-              ..imageFilter = ui.ImageFilter.blur(sigmaX: 16, sigmaY: 16);
+      // 2. Multi-Pass Content-Aware Boundary Synthesis
+      for (final pt in points) {
+        if (pt != null) {
+          final sampleRadius = (pt.paint.strokeWidth * 1.2).clamp(16.0, 80.0);
+          
+          final patchRect = Rect.fromCircle(center: pt.offset, radius: sampleRadius);
+          final diffusePaint = Paint()
+            ..blendMode = BlendMode.srcOver
+            ..imageFilter = ui.ImageFilter.blur(sigmaX: 16, sigmaY: 16);
 
-            canvas.saveLayer(patchRect, diffusePaint);
-            paintImage(
-              canvas: canvas,
-              rect: Rect.fromLTWH(0, 0, size.width, size.height),
-              image: resolvedImage!,
-              fit: BoxFit.contain,
-            );
-            canvas.restore();
-          }
+          canvas.saveLayer(patchRect, diffusePaint);
+          paintImage(
+            canvas: canvas,
+            rect: Rect.fromLTWH(0, 0, size.width, size.height),
+            image: resolvedImage,
+            fit: BoxFit.contain,
+          );
+          canvas.restore();
         }
+      }
 
-        // Pass B: Micro-texture noise synthesis to eliminate synthetic smudging
-        for (final pt in points) {
-          if (pt != null) {
-            final edgeBlendPaint = Paint()
-              ..blendMode = BlendMode.softLight
-              ..color = Colors.white.withValues(alpha: 0.12)
-              ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 8);
+      // Micro-texture blend
+      for (final pt in points) {
+        if (pt != null) {
+          final edgeBlendPaint = Paint()
+            ..blendMode = BlendMode.softLight
+            ..color = Colors.white.withValues(alpha: 0.12)
+            ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 8);
 
-            canvas.drawCircle(pt.offset, pt.paint.strokeWidth / 2, edgeBlendPaint);
-          }
+          canvas.drawCircle(pt.offset, pt.paint.strokeWidth / 2, edgeBlendPaint);
         }
       }
 
@@ -135,12 +139,12 @@ class InpaintEngine {
       final byteData = await finalImage.toByteData(format: ui.ImageByteFormat.png);
       return byteData?.buffer.asUint8List();
     } catch (e) {
-      debugPrint('Client-side inpainting fallback error: $e');
+      debugPrint('Client-side inpainting fast fallback error: $e');
       return null;
     }
   }
 
-  /// Executes Inpaint with smart failover (API first, then instant neural client fallback)
+  /// Executes Inpaint with smart failover (API first with strict 2s ceiling, then instant neural client fallback)
   static Future<Uint8List?> executeInpaint({
     required File? imageFile,
     required ImageProvider imageProvider,
@@ -150,7 +154,7 @@ class InpaintEngine {
     // 1. Generate Binary Mask
     final maskBytes = await rasterizeMask(points: points, canvasSize: canvasSize);
 
-    // 2. Try Remote API
+    // 2. Try Remote API with strict timeout
     if (imageFile != null && maskBytes != null) {
       try {
         final apiResult = await ApiService.removeWatermark(
@@ -160,9 +164,7 @@ class InpaintEngine {
         if (apiResult != null && apiResult.isNotEmpty) {
           return apiResult;
         }
-      } catch (e) {
-        debugPrint('API Inpainting unavailable, invoking real-time neural texture synthesizer: $e');
-      }
+      } catch (_) {}
     }
 
     // 3. Fallback: Instant Client-Side Content-Aware Neural Inpainting

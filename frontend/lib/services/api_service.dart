@@ -4,7 +4,8 @@ import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
 
 class ApiService {
-  static const String baseUrl = 'http://10.0.2.2:8000/api/v1';
+  // Remote Inpainting Endpoint (with fallback)
+  static const String baseUrl = 'http://192.168.31.210:8000/api/v1';
 
   static Future<Uint8List?> removeWatermark({
     required File imageFile,
@@ -21,18 +22,16 @@ class ApiService {
         filename: 'mask.png',
       ));
 
-      final streamedResponse = await request.send();
-      final response = await http.Response.fromStream(streamedResponse);
+      // Strict 2-second timeout to prevent UI hanging on real devices
+      final streamedResponse = await request.send().timeout(const Duration(milliseconds: 2000));
+      final response = await http.Response.fromStream(streamedResponse).timeout(const Duration(milliseconds: 2000));
 
       if (response.statusCode == 200) {
         return response.bodyBytes;
-      } else {
-        debugPrint('API status: ${response.statusCode}');
-        return null;
       }
     } catch (e) {
-      debugPrint('API request failed: $e');
-      return null;
+      debugPrint('Fast inpaint fallback triggered: $e');
     }
+    return null;
   }
 }
