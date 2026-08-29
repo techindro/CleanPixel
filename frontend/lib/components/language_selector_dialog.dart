@@ -24,6 +24,7 @@ class _LanguageSelectorDialogState extends State<LanguageSelectorDialog> {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
     final currentCode = LocaleService.currentLocale.value;
 
     final filteredList = LocaleService.supportedLanguages.where((lang) {
@@ -38,14 +39,17 @@ class _LanguageSelectorDialogState extends State<LanguageSelectorDialog> {
     return Container(
       height: MediaQuery.of(context).size.height * 0.75,
       padding: const EdgeInsets.fromLTRB(20, 16, 20, 20),
-      decoration: const BoxDecoration(
-        color: Color(0xFF1E293B),
-        borderRadius: BorderRadius.vertical(top: Radius.circular(28)),
+      decoration: BoxDecoration(
+        color: isDark ? const Color(0xFF1B0C24) : Colors.white,
+        borderRadius: const BorderRadius.vertical(top: Radius.circular(28)),
+        border: Border.all(
+          color: isDark ? Colors.white.withValues(alpha: 0.06) : const Color(0xFFFCE7F3),
+        ),
         boxShadow: [
           BoxShadow(
-            color: Colors.black54,
+            color: isDark ? Colors.black54 : const Color(0xFFEC4899).withValues(alpha: 0.12),
             blurRadius: 32,
-            offset: Offset(0, -8),
+            offset: const Offset(0, -8),
           ),
         ],
       ),
@@ -58,7 +62,7 @@ class _LanguageSelectorDialogState extends State<LanguageSelectorDialog> {
               width: 40,
               height: 4,
               decoration: BoxDecoration(
-                color: Colors.white.withValues(alpha: 0.15),
+                color: isDark ? Colors.white24 : const Color(0xFFCBD5E1),
                 borderRadius: BorderRadius.circular(2),
               ),
             ),
@@ -66,20 +70,35 @@ class _LanguageSelectorDialogState extends State<LanguageSelectorDialog> {
           const SizedBox(height: 16),
 
           // Title
-          const Row(
+          Row(
             children: [
-              Icon(Icons.translate_rounded, color: Color(0xFF38BDF8), size: 24),
-              SizedBox(width: 10),
+              Container(
+                padding: const EdgeInsets.all(8),
+                decoration: BoxDecoration(
+                  color: const Color(0xFFEC4899).withValues(alpha: isDark ? 0.2 : 0.12),
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                child: const Icon(Icons.translate_rounded, color: Color(0xFFEC4899), size: 20),
+              ),
+              const SizedBox(width: 10),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
                     'Select App Language',
-                    style: TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.w800, letterSpacing: -0.3),
+                    style: TextStyle(
+                      color: isDark ? Colors.white : const Color(0xFF1E293B),
+                      fontSize: 18,
+                      fontWeight: FontWeight.w800,
+                      letterSpacing: -0.3,
+                    ),
                   ),
                   Text(
                     '22 Indian & International Languages Supported',
-                    style: TextStyle(color: Color(0xFF94A3B8), fontSize: 11),
+                    style: TextStyle(
+                      color: isDark ? const Color(0xFF94A3B8) : const Color(0xFF64748B),
+                      fontSize: 11,
+                    ),
                   ),
                 ],
               ),
@@ -90,25 +109,36 @@ class _LanguageSelectorDialogState extends State<LanguageSelectorDialog> {
           // Search Field
           TextField(
             onChanged: (v) => setState(() => _searchQuery = v),
-            style: const TextStyle(color: Colors.white, fontSize: 14),
+            style: TextStyle(
+              color: isDark ? Colors.white : const Color(0xFF1E293B),
+              fontSize: 14,
+              fontWeight: FontWeight.w600,
+            ),
             decoration: InputDecoration(
               filled: true,
-              fillColor: const Color(0xFF111827),
+              fillColor: isDark ? const Color(0xFF110817) : const Color(0xFFFDF2F8),
               hintText: 'Search language / भाषा खोजें...',
-              hintStyle: const TextStyle(color: Color(0xFF64748B), fontSize: 13),
-              prefixIcon: const Icon(Icons.search_rounded, color: Color(0xFF64748B), size: 20),
+              hintStyle: TextStyle(
+                color: isDark ? const Color(0xFF64748B) : const Color(0xFF94A3B8),
+                fontSize: 13,
+              ),
+              prefixIcon: const Icon(Icons.search_rounded, color: Color(0xFFEC4899), size: 20),
               contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(12),
-                borderSide: BorderSide(color: Colors.white.withValues(alpha: 0.08)),
+                borderSide: BorderSide(
+                  color: isDark ? Colors.white.withValues(alpha: 0.08) : const Color(0xFFFCE7F3),
+                ),
               ),
               enabledBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(12),
-                borderSide: BorderSide(color: Colors.white.withValues(alpha: 0.08)),
+                borderSide: BorderSide(
+                  color: isDark ? Colors.white.withValues(alpha: 0.08) : const Color(0xFFFCE7F3),
+                ),
               ),
               focusedBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(12),
-                borderSide: const BorderSide(color: Color(0xFF38BDF8)),
+                borderSide: const BorderSide(color: Color(0xFFEC4899), width: 1.5),
               ),
             ),
           ),
@@ -117,11 +147,11 @@ class _LanguageSelectorDialogState extends State<LanguageSelectorDialog> {
           // Category Chips
           Row(
             children: [
-              _buildCategoryChip('All (22)'),
+              _buildCategoryChip('All (22)', isDark),
               const SizedBox(width: 8),
-              _buildCategoryChip('Global (10)', categoryKey: 'Global'),
+              _buildCategoryChip('Global (10)', isDark, categoryKey: 'Global'),
               const SizedBox(width: 8),
-              _buildCategoryChip('Indian (12)', categoryKey: 'Indian'),
+              _buildCategoryChip('Indian (12)', isDark, categoryKey: 'Indian'),
             ],
           ),
           const SizedBox(height: 12),
@@ -137,12 +167,25 @@ class _LanguageSelectorDialogState extends State<LanguageSelectorDialog> {
                 return Container(
                   margin: const EdgeInsets.only(bottom: 8),
                   decoration: BoxDecoration(
-                    color: isSelected ? const Color(0xFF2563EB).withValues(alpha: 0.15) : const Color(0xFF111827),
+                    color: isSelected
+                        ? const Color(0xFFEC4899).withValues(alpha: isDark ? 0.2 : 0.1)
+                        : (isDark ? const Color(0xFF110817) : Colors.white),
                     borderRadius: BorderRadius.circular(14),
                     border: Border.all(
-                      color: isSelected ? const Color(0xFF38BDF8) : Colors.white.withValues(alpha: 0.04),
+                      color: isSelected
+                          ? const Color(0xFFEC4899)
+                          : (isDark ? Colors.white.withValues(alpha: 0.04) : const Color(0xFFFCE7F3)),
                       width: isSelected ? 1.5 : 1,
                     ),
+                    boxShadow: isDark || isSelected
+                        ? []
+                        : [
+                            BoxShadow(
+                              color: const Color(0xFFEC4899).withValues(alpha: 0.04),
+                              blurRadius: 8,
+                              offset: const Offset(0, 2),
+                            ),
+                          ],
                   ),
                   child: Material(
                     color: Colors.transparent,
@@ -163,13 +206,13 @@ class _LanguageSelectorDialogState extends State<LanguageSelectorDialog> {
                               height: 38,
                               decoration: BoxDecoration(
                                 color: isSelected
-                                    ? const Color(0xFF38BDF8).withValues(alpha: 0.2)
-                                    : Colors.white.withValues(alpha: 0.06),
+                                    ? const Color(0xFFEC4899).withValues(alpha: 0.2)
+                                    : (isDark ? Colors.white.withValues(alpha: 0.06) : const Color(0xFFFDF2F8)),
                                 borderRadius: BorderRadius.circular(10),
                                 border: Border.all(
                                   color: isSelected
-                                      ? const Color(0xFF38BDF8)
-                                      : Colors.white.withValues(alpha: 0.1),
+                                      ? const Color(0xFFEC4899)
+                                      : (isDark ? Colors.white.withValues(alpha: 0.1) : const Color(0xFFFCE7F3)),
                                 ),
                               ),
                               alignment: Alignment.center,
@@ -186,14 +229,19 @@ class _LanguageSelectorDialogState extends State<LanguageSelectorDialog> {
                                   Text(
                                     lang.nativeName,
                                     style: TextStyle(
-                                      color: isSelected ? const Color(0xFF38BDF8) : Colors.white,
+                                      color: isSelected
+                                          ? const Color(0xFFEC4899)
+                                          : (isDark ? Colors.white : const Color(0xFF1E293B)),
                                       fontWeight: FontWeight.w700,
                                       fontSize: 15,
                                     ),
                                   ),
                                   Text(
                                     '${lang.name} • ${lang.region}',
-                                    style: const TextStyle(color: Color(0xFF64748B), fontSize: 11),
+                                    style: TextStyle(
+                                      color: isDark ? const Color(0xFF64748B) : const Color(0xFF94A3B8),
+                                      fontSize: 11,
+                                    ),
                                   ),
                                 ],
                               ),
@@ -203,9 +251,9 @@ class _LanguageSelectorDialogState extends State<LanguageSelectorDialog> {
                                 padding: const EdgeInsets.all(4),
                                 decoration: const BoxDecoration(
                                   shape: BoxShape.circle,
-                                  color: Color(0xFF38BDF8),
+                                  color: Color(0xFFEC4899),
                                 ),
-                                child: const Icon(Icons.check_rounded, color: Colors.black, size: 14),
+                                child: const Icon(Icons.check_rounded, color: Colors.white, size: 14),
                               ),
                           ],
                         ),
@@ -221,7 +269,7 @@ class _LanguageSelectorDialogState extends State<LanguageSelectorDialog> {
     );
   }
 
-  Widget _buildCategoryChip(String label, {String? categoryKey}) {
+  Widget _buildCategoryChip(String label, bool isDark, {String? categoryKey}) {
     final key = categoryKey ?? 'All';
     final isSelected = _selectedCategory == key;
 
@@ -234,18 +282,24 @@ class _LanguageSelectorDialogState extends State<LanguageSelectorDialog> {
         duration: const Duration(milliseconds: 200),
         padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
         decoration: BoxDecoration(
-          color: isSelected ? const Color(0xFF38BDF8).withValues(alpha: 0.2) : const Color(0xFF111827),
+          color: isSelected
+              ? const Color(0xFFEC4899).withValues(alpha: isDark ? 0.25 : 0.12)
+              : (isDark ? const Color(0xFF110817) : const Color(0xFFFDF2F8)),
           borderRadius: BorderRadius.circular(8),
           border: Border.all(
-            color: isSelected ? const Color(0xFF38BDF8) : Colors.white.withValues(alpha: 0.08),
+            color: isSelected
+                ? const Color(0xFFEC4899)
+                : (isDark ? Colors.white.withValues(alpha: 0.08) : const Color(0xFFFCE7F3)),
           ),
         ),
         child: Text(
           label,
           style: TextStyle(
-            color: isSelected ? const Color(0xFF38BDF8) : const Color(0xFF94A3B8),
+            color: isSelected
+                ? const Color(0xFFEC4899)
+                : (isDark ? const Color(0xFF94A3B8) : const Color(0xFF64748B)),
             fontSize: 11,
-            fontWeight: isSelected ? FontWeight.w800 : FontWeight.w500,
+            fontWeight: isSelected ? FontWeight.w800 : FontWeight.w600,
           ),
         ),
       ),

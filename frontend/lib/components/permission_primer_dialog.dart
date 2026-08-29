@@ -21,16 +21,21 @@ class PermissionPrimerDialog extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
     return Container(
       padding: const EdgeInsets.all(24),
-      decoration: const BoxDecoration(
-        color: Color(0xFF1E293B),
-        borderRadius: BorderRadius.vertical(top: Radius.circular(28)),
+      decoration: BoxDecoration(
+        color: isDark ? const Color(0xFF1B0C24) : Colors.white,
+        borderRadius: const BorderRadius.vertical(top: Radius.circular(28)),
+        border: Border.all(
+          color: isDark ? Colors.white.withValues(alpha: 0.06) : const Color(0xFFFCE7F3),
+        ),
         boxShadow: [
           BoxShadow(
-            color: Colors.black45,
+            color: isDark ? Colors.black45 : const Color(0xFFEC4899).withValues(alpha: 0.12),
             blurRadius: 32,
-            offset: Offset(0, -8),
+            offset: const Offset(0, -8),
           ),
         ],
       ),
@@ -42,35 +47,43 @@ class PermissionPrimerDialog extends StatelessWidget {
             width: 40,
             height: 4,
             decoration: BoxDecoration(
-              color: Colors.white.withValues(alpha: 0.15),
+              color: isDark ? Colors.white24 : const Color(0xFFCBD5E1),
               borderRadius: BorderRadius.circular(2),
             ),
           ),
           const SizedBox(height: 20),
-          
+
           // Header
           Row(
             children: [
               Container(
                 padding: const EdgeInsets.all(12),
                 decoration: BoxDecoration(
-                  color: const Color(0xFF38BDF8).withValues(alpha: 0.12),
+                  color: const Color(0xFFEC4899).withValues(alpha: isDark ? 0.2 : 0.12),
                   borderRadius: BorderRadius.circular(12),
                 ),
-                child: const Icon(Icons.add_photo_alternate_rounded, color: Color(0xFF38BDF8), size: 24),
+                child: const Icon(Icons.add_photo_alternate_rounded, color: Color(0xFFEC4899), size: 24),
               ),
               const SizedBox(width: 14),
-              const Column(
+              Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
                     'Import Watermarked Media',
-                    style: TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.w800, letterSpacing: -0.3),
+                    style: TextStyle(
+                      color: isDark ? Colors.white : const Color(0xFF1E293B),
+                      fontSize: 18,
+                      fontWeight: FontWeight.w800,
+                      letterSpacing: -0.3,
+                    ),
                   ),
-                  SizedBox(height: 2),
+                  const SizedBox(height: 2),
                   Text(
                     'Choose image source for AI inpainting',
-                    style: TextStyle(color: Color(0xFF94A3B8), fontSize: 12),
+                    style: TextStyle(
+                      color: isDark ? const Color(0xFF94A3B8) : const Color(0xFF64748B),
+                      fontSize: 12,
+                    ),
                   ),
                 ],
               ),
@@ -82,10 +95,11 @@ class PermissionPrimerDialog extends StatelessWidget {
           _buildSourceTile(
             context,
             icon: Icons.photo_library_rounded,
-            iconColor: const Color(0xFF38BDF8),
+            iconColor: const Color(0xFFEC4899),
             title: 'Choose from Gallery',
             subtitle: 'PNG, JPG, WebP, HEIC photos',
             badge: 'RECOMMENDED',
+            isDark: isDark,
             onTap: () {
               HapticFeedback.mediumImpact();
               onSelectSource(MediaPickSource.gallery);
@@ -100,6 +114,7 @@ class PermissionPrimerDialog extends StatelessWidget {
             iconColor: const Color(0xFF10B981),
             title: 'Take a Photo with Camera',
             subtitle: 'Capture document, screen or watermark live',
+            isDark: isDark,
             onTap: () {
               HapticFeedback.mediumImpact();
               onSelectSource(MediaPickSource.camera);
@@ -114,6 +129,7 @@ class PermissionPrimerDialog extends StatelessWidget {
             iconColor: const Color(0xFFF59E0B),
             title: 'Try 4K Demo Preset',
             subtitle: 'Instant sample image to test inpainting magic',
+            isDark: isDark,
             onTap: () {
               HapticFeedback.lightImpact();
               onSelectSource(MediaPickSource.demo);
@@ -125,17 +141,25 @@ class PermissionPrimerDialog extends StatelessWidget {
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
             decoration: BoxDecoration(
-              color: Colors.white.withValues(alpha: 0.04),
+              color: isDark ? Colors.white.withValues(alpha: 0.04) : const Color(0xFFFDF2F8),
               borderRadius: BorderRadius.circular(10),
-              border: Border.all(color: Colors.white.withValues(alpha: 0.06)),
+              border: Border.all(
+                color: isDark ? Colors.white.withValues(alpha: 0.06) : const Color(0xFFFCE7F3),
+              ),
             ),
-            child: const Row(
+            child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Icon(Icons.shield_rounded, size: 14, color: Color(0xFF10B981)),
-                SizedBox(width: 6),
-                Text('100% Private • Transient In-Memory Processing',
-                    style: TextStyle(color: Color(0xFF94A3B8), fontSize: 11, fontWeight: FontWeight.w600)),
+                const Icon(Icons.shield_rounded, size: 14, color: Color(0xFF10B981)),
+                const SizedBox(width: 6),
+                Text(
+                  '100% Private • Transient In-Memory Processing',
+                  style: TextStyle(
+                    color: isDark ? const Color(0xFF94A3B8) : const Color(0xFF64748B),
+                    fontSize: 11,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
               ],
             ),
           ),
@@ -151,14 +175,17 @@ class PermissionPrimerDialog extends StatelessWidget {
     required Color iconColor,
     required String title,
     required String subtitle,
+    required bool isDark,
     String? badge,
     required VoidCallback onTap,
   }) {
     return Container(
       decoration: BoxDecoration(
-        color: const Color(0xFF111827),
+        color: isDark ? const Color(0xFF110817) : const Color(0xFFFDF2F8),
         borderRadius: BorderRadius.circular(14),
-        border: Border.all(color: Colors.white.withValues(alpha: 0.06)),
+        border: Border.all(
+          color: isDark ? Colors.white.withValues(alpha: 0.06) : const Color(0xFFFCE7F3),
+        ),
       ),
       child: Material(
         color: Colors.transparent,
@@ -186,30 +213,50 @@ class PermissionPrimerDialog extends StatelessWidget {
                         children: [
                           Text(
                             title,
-                            style: const TextStyle(color: Colors.white, fontSize: 14, fontWeight: FontWeight.w700),
+                            style: TextStyle(
+                              color: isDark ? Colors.white : const Color(0xFF1E293B),
+                              fontSize: 14,
+                              fontWeight: FontWeight.w800,
+                            ),
                           ),
                           if (badge != null) ...[
                             const SizedBox(width: 8),
                             Container(
                               padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
                               decoration: BoxDecoration(
-                                color: const Color(0xFF38BDF8).withValues(alpha: 0.15),
+                                gradient: const LinearGradient(
+                                  colors: [Color(0xFFEC4899), Color(0xFFF43F5E)],
+                                ),
                                 borderRadius: BorderRadius.circular(4),
                               ),
                               child: Text(
                                 badge,
-                                style: const TextStyle(color: Color(0xFF38BDF8), fontSize: 9, fontWeight: FontWeight.w800),
+                                style: const TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 8,
+                                  fontWeight: FontWeight.w900,
+                                ),
                               ),
                             ),
                           ],
                         ],
                       ),
                       const SizedBox(height: 2),
-                      Text(subtitle, style: const TextStyle(color: Color(0xFF64748B), fontSize: 11)),
+                      Text(
+                        subtitle,
+                        style: TextStyle(
+                          color: isDark ? const Color(0xFF94A3B8) : const Color(0xFF64748B),
+                          fontSize: 11,
+                        ),
+                      ),
                     ],
                   ),
                 ),
-                Icon(Icons.arrow_forward_ios_rounded, color: Colors.white.withValues(alpha: 0.2), size: 14),
+                Icon(
+                  Icons.arrow_forward_ios_rounded,
+                  color: isDark ? Colors.white24 : const Color(0xFFCBD5E1),
+                  size: 14,
+                ),
               ],
             ),
           ),

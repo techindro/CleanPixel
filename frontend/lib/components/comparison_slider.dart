@@ -22,7 +22,6 @@ class _ComparisonSliderState extends State<ComparisonSlider> {
     return LayoutBuilder(
       builder: (context, constraints) {
         final width = constraints.maxWidth;
-        final height = constraints.maxHeight;
 
         return ClipRRect(
           borderRadius: BorderRadius.circular(16),
@@ -87,7 +86,7 @@ class _ComparisonSliderState extends State<ComparisonSlider> {
                                 color: Colors.white,
                                 boxShadow: [
                                   BoxShadow(
-                                    color: Colors.white.withOpacity(0.4),
+                                    color: Colors.white.withValues(alpha: 0.6),
                                     blurRadius: 8,
                                     spreadRadius: 1,
                                   ),
@@ -103,20 +102,20 @@ class _ComparisonSliderState extends State<ComparisonSlider> {
                           decoration: BoxDecoration(
                             shape: BoxShape.circle,
                             color: Colors.white,
-                            border: Border.all(color: const Color(0xFF38BDF8), width: 2),
+                            border: Border.all(color: const Color(0xFFEC4899), width: 2),
                             boxShadow: [
                               BoxShadow(
-                                color: Colors.black.withOpacity(0.3),
-                                blurRadius: 8,
-                                spreadRadius: 1,
+                                color: const Color(0xFFEC4899).withValues(alpha: 0.35),
+                                blurRadius: 10,
+                                spreadRadius: 2,
                               ),
                             ],
                           ),
                           child: const Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              Icon(Icons.chevron_left_rounded, size: 14, color: Color(0xFF0F172A)),
-                              Icon(Icons.chevron_right_rounded, size: 14, color: Color(0xFF0F172A)),
+                              Icon(Icons.chevron_left_rounded, size: 14, color: Color(0xFF1E293B)),
+                              Icon(Icons.chevron_right_rounded, size: 14, color: Color(0xFF1E293B)),
                             ],
                           ),
                         ),
@@ -136,11 +135,11 @@ class _ComparisonSliderState extends State<ComparisonSlider> {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
       decoration: BoxDecoration(
-        color: color.withOpacity(0.85),
+        color: color.withValues(alpha: 0.9),
         borderRadius: BorderRadius.circular(6),
         boxShadow: [
           BoxShadow(
-            color: color.withOpacity(0.3),
+            color: color.withValues(alpha: 0.3),
             blurRadius: 8,
           ),
         ],

@@ -36,6 +36,8 @@ class _RatingDialogState extends State<RatingDialog> with SingleTickerProviderSt
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
     return AnimatedBuilder(
       animation: _enterController,
       builder: (context, _) {
@@ -51,8 +53,13 @@ class _RatingDialogState extends State<RatingDialog> with SingleTickerProviderSt
           child: Opacity(
             opacity: opacity,
             child: Dialog(
-              backgroundColor: const Color(0xFF1E293B),
-              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(24)),
+              backgroundColor: isDark ? const Color(0xFF1B0C24) : Colors.white,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(24),
+                side: BorderSide(
+                  color: isDark ? Colors.white.withValues(alpha: 0.06) : const Color(0xFFFCE7F3),
+                ),
+              ),
               child: Padding(
                 padding: const EdgeInsets.all(28.0),
                 child: Column(
@@ -64,13 +71,13 @@ class _RatingDialogState extends State<RatingDialog> with SingleTickerProviderSt
                       decoration: BoxDecoration(
                         shape: BoxShape.circle,
                         gradient: const LinearGradient(
-                          colors: [Color(0xFFF59E0B), Color(0xFFEF4444)],
+                          colors: [Color(0xFFF59E0B), Color(0xFFEC4899)],
                           begin: Alignment.topLeft,
                           end: Alignment.bottomRight,
                         ),
                         boxShadow: [
                           BoxShadow(
-                            color: const Color(0xFFF59E0B).withOpacity(0.3),
+                            color: const Color(0xFFF59E0B).withValues(alpha: 0.3),
                             blurRadius: 20,
                             spreadRadius: 2,
                           ),
@@ -79,15 +86,24 @@ class _RatingDialogState extends State<RatingDialog> with SingleTickerProviderSt
                       child: const Icon(Icons.star_rounded, size: 36, color: Colors.white),
                     ),
                     const SizedBox(height: 20),
-                    const Text(
+                    Text(
                       'Enjoying CleanPixel AI?',
-                      style: TextStyle(color: Colors.white, fontSize: 20, fontWeight: FontWeight.w800, letterSpacing: -0.5),
+                      style: TextStyle(
+                        color: isDark ? Colors.white : const Color(0xFF1E293B),
+                        fontSize: 20,
+                        fontWeight: FontWeight.w800,
+                        letterSpacing: -0.5,
+                      ),
                     ),
                     const SizedBox(height: 8),
-                    const Text(
+                    Text(
                       'Your 5-star rating helps us build more AI features!',
                       textAlign: TextAlign.center,
-                      style: TextStyle(color: Color(0xFF94A3B8), fontSize: 13, height: 1.4),
+                      style: TextStyle(
+                        color: isDark ? const Color(0xFF94A3B8) : const Color(0xFF64748B),
+                        fontSize: 13,
+                        height: 1.4,
+                      ),
                     ),
                     const SizedBox(height: 24),
                     // Star rating row with bounce animation
@@ -131,11 +147,11 @@ class _RatingDialogState extends State<RatingDialog> with SingleTickerProviderSt
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(14),
                           gradient: const LinearGradient(
-                            colors: [Color(0xFFF59E0B), Color(0xFFEF4444)],
+                            colors: [Color(0xFFEC4899), Color(0xFFF43F5E)],
                           ),
                           boxShadow: [
                             BoxShadow(
-                              color: const Color(0xFFF59E0B).withOpacity(0.3),
+                              color: const Color(0xFFEC4899).withValues(alpha: 0.35),
                               blurRadius: 12,
                               offset: const Offset(0, 4),
                             ),
@@ -152,6 +168,7 @@ class _RatingDialogState extends State<RatingDialog> with SingleTickerProviderSt
                             Navigator.pop(context);
                             ScaffoldMessenger.of(context).showSnackBar(
                               SnackBar(
+                                backgroundColor: const Color(0xFFEC4899),
                                 behavior: SnackBarBehavior.floating,
                                 shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
                                 margin: const EdgeInsets.all(16),
@@ -165,7 +182,7 @@ class _RatingDialogState extends State<RatingDialog> with SingleTickerProviderSt
                               Icon(Icons.rate_review_rounded, size: 18, color: Colors.white),
                               SizedBox(width: 8),
                               Text('Rate on Play Store',
-                                  style: TextStyle(color: Colors.white, fontWeight: FontWeight.w700, fontSize: 15)),
+                                  style: TextStyle(color: Colors.white, fontWeight: FontWeight.w800, fontSize: 15)),
                             ],
                           ),
                         ),
@@ -174,7 +191,13 @@ class _RatingDialogState extends State<RatingDialog> with SingleTickerProviderSt
                     const SizedBox(height: 10),
                     TextButton(
                       onPressed: () => Navigator.pop(context),
-                      child: const Text('Maybe Later', style: TextStyle(color: Color(0xFF64748B))),
+                      child: Text(
+                        'Maybe Later',
+                        style: TextStyle(
+                          color: isDark ? const Color(0xFF64748B) : const Color(0xFF94A3B8),
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
                     ),
                   ],
                 ),
