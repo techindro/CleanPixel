@@ -803,10 +803,10 @@ class _WorkspaceScreenState extends State<WorkspaceScreen> with TickerProviderSt
     return AnimatedBuilder(
       animation: _idlePulseController,
       builder: (context, _) {
-        final pulse = Tween<double>(begin: 0.95, end: 1.05).animate(
+        final pulse = Tween<double>(begin: 0.96, end: 1.04).animate(
           CurvedAnimation(parent: _idlePulseController, curve: Curves.easeInOut),
         ).value;
-        final glowOpacity = Tween<double>(begin: 0.15, end: 0.35).animate(
+        final glowOpacity = Tween<double>(begin: 0.2, end: 0.45).animate(
           CurvedAnimation(parent: _idlePulseController, curve: Curves.easeInOut),
         ).value;
         final scanY = _scanLineController.value;
@@ -820,82 +820,79 @@ class _WorkspaceScreenState extends State<WorkspaceScreen> with TickerProviderSt
             ),
             Center(
               child: Padding(
-                padding: const EdgeInsets.all(24.0),
+                padding: const EdgeInsets.symmetric(horizontal: 24.0),
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    InkWell(
-                      onTap: _handleImageImport,
-                      borderRadius: BorderRadius.circular(999),
+                    // Hero Glowing Icon
+                    GestureDetector(
+                      onTap: () => _handleImageSourceDirect(MediaPickSource.gallery),
                       child: Transform.scale(
                         scale: pulse,
                         child: Container(
-                          padding: const EdgeInsets.all(28),
+                          width: 88,
+                          height: 88,
                           decoration: BoxDecoration(
                             shape: BoxShape.circle,
-                            color: const Color(0xFF38BDF8).withValues(alpha: 0.08),
-                            border: Border.all(
-                              color: Color.lerp(
-                                const Color(0xFF38BDF8).withValues(alpha: 0.2),
-                                const Color(0xFF38BDF8).withValues(alpha: 0.5),
-                                glowOpacity,
-                              )!,
-                              width: 2,
+                            gradient: const LinearGradient(
+                              begin: Alignment.topLeft,
+                              end: Alignment.bottomRight,
+                              colors: [Color(0xFF38BDF8), Color(0xFF2563EB)],
                             ),
                             boxShadow: [
                               BoxShadow(
-                                color: const Color(0xFF38BDF8).withValues(alpha: glowOpacity * 0.4),
-                                blurRadius: 32,
+                                color: const Color(0xFF38BDF8).withValues(alpha: glowOpacity),
+                                blurRadius: 36,
                                 spreadRadius: 4,
                               ),
                             ],
                           ),
-                          child: const Icon(Icons.add_photo_alternate_rounded, size: 44, color: Color(0xFF38BDF8)),
+                          child: const Icon(Icons.add_photo_alternate_rounded, size: 40, color: Colors.white),
                         ),
                       ),
                     ),
-                    const SizedBox(height: 22),
+                    const SizedBox(height: 20),
+
                     const Text(
-                      'Tap to Choose Photo',
-                      style: TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.w700, letterSpacing: -0.3),
+                      'Clean Any Photo',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 22,
+                        fontWeight: FontWeight.w800,
+                        letterSpacing: -0.4,
+                      ),
                     ),
-                    const SizedBox(height: 8),
+                    const SizedBox(height: 6),
                     const Text(
-                      'Select from Gallery, Camera, or Sample Photo',
+                      'Remove watermarks, logos & people in 1 tap',
                       textAlign: TextAlign.center,
                       style: TextStyle(color: Color(0xFF94A3B8), fontSize: 13),
                     ),
-                    const SizedBox(height: 14),
-                    // Format badges
+                    const SizedBox(height: 24),
+
+                    // 3 Direct Quick Action Pills
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
-                      children: ['PNG', 'JPG', 'WebP', 'HEIC', 'RAW'].map((fmt) {
-                        return Container(
-                          margin: const EdgeInsets.symmetric(horizontal: 3),
-                          padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
-                          decoration: BoxDecoration(
-                            color: Colors.white.withValues(alpha: 0.04),
-                            borderRadius: BorderRadius.circular(6),
-                            border: Border.all(color: Colors.white.withValues(alpha: 0.08)),
-                          ),
-                          child: Text(
-                            fmt,
-                            style: const TextStyle(color: Color(0xFF64748B), fontSize: 10, fontWeight: FontWeight.w700),
-                          ),
-                        );
-                      }).toList(),
-                    ),
-                    const SizedBox(height: 24),
-                    OutlinedButton.icon(
-                      style: OutlinedButton.styleFrom(
-                        side: BorderSide(color: const Color(0xFF38BDF8).withValues(alpha: 0.4)),
-                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-                        padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 12),
-                      ),
-                      onPressed: _handleImageImport,
-                      icon: const Icon(Icons.file_upload_outlined, size: 18, color: Color(0xFF38BDF8)),
-                      label: const Text('Select Image Source',
-                          style: TextStyle(color: Color(0xFF38BDF8), fontWeight: FontWeight.w600, fontSize: 13)),
+                      children: [
+                        _buildQuickActionPill(
+                          icon: Icons.photo_library_rounded,
+                          label: 'Gallery',
+                          onTap: () => _handleImageSourceDirect(MediaPickSource.gallery),
+                        ),
+                        const SizedBox(width: 8),
+                        _buildQuickActionPill(
+                          icon: Icons.camera_alt_rounded,
+                          label: 'Camera',
+                          onTap: () => _handleImageSourceDirect(MediaPickSource.camera),
+                        ),
+                        const SizedBox(width: 8),
+                        _buildQuickActionPill(
+                          icon: Icons.auto_awesome_rounded,
+                          label: 'Try Sample',
+                          isAccent: true,
+                          onTap: () => _handleImageSourceDirect(MediaPickSource.demo),
+                        ),
+                      ],
                     ),
                   ],
                 ),
@@ -905,6 +902,73 @@ class _WorkspaceScreenState extends State<WorkspaceScreen> with TickerProviderSt
         );
       },
     );
+  }
+
+  Widget _buildQuickActionPill({
+    required IconData icon,
+    required String label,
+    bool isAccent = false,
+    required VoidCallback onTap,
+  }) {
+    return Material(
+      color: Colors.transparent,
+      child: InkWell(
+        borderRadius: BorderRadius.circular(12),
+        onTap: () {
+          HapticFeedback.mediumImpact();
+          onTap();
+        },
+        child: Container(
+          padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
+          decoration: BoxDecoration(
+            color: isAccent
+                ? const Color(0xFF38BDF8).withValues(alpha: 0.15)
+                : const Color(0xFF1E293B).withValues(alpha: 0.8),
+            borderRadius: BorderRadius.circular(12),
+            border: Border.all(
+              color: isAccent
+                  ? const Color(0xFF38BDF8).withValues(alpha: 0.4)
+                  : Colors.white.withValues(alpha: 0.08),
+            ),
+          ),
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Icon(
+                icon,
+                size: 16,
+                color: isAccent ? const Color(0xFF38BDF8) : Colors.white,
+              ),
+              const SizedBox(width: 6),
+              Text(
+                label,
+                style: TextStyle(
+                  color: isAccent ? const Color(0xFF38BDF8) : Colors.white,
+                  fontWeight: FontWeight.w700,
+                  fontSize: 12,
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  void _handleImageSourceDirect(MediaPickSource source) async {
+    if (source == MediaPickSource.gallery) {
+      final picked = await _picker.pickImage(source: ImageSource.gallery);
+      if (picked != null) {
+        _onMediaLoaded(File(picked.path), isDemo: false);
+      }
+    } else if (source == MediaPickSource.camera) {
+      final picked = await _picker.pickImage(source: ImageSource.camera);
+      if (picked != null) {
+        _onMediaLoaded(File(picked.path), isDemo: false);
+      }
+    } else if (source == MediaPickSource.demo) {
+      _loadDemoSample();
+    }
   }
 
   Widget _buildVideoTrackingView() {
