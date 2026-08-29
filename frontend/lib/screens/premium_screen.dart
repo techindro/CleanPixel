@@ -48,7 +48,7 @@ class _PremiumScreenState extends State<PremiumScreen> with TickerProviderStateM
     final isDark = Theme.of(context).brightness == Brightness.dark;
 
     return Scaffold(
-      backgroundColor: isDark ? const Color(0xFF0F0715) : const Color(0xFFFAF5FF),
+      backgroundColor: isDark ? const Color(0xFF0B0F19) : const Color(0xFFF8FAFC),
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
@@ -56,13 +56,13 @@ class _PremiumScreenState extends State<PremiumScreen> with TickerProviderStateM
           icon: Container(
             padding: const EdgeInsets.all(6),
             decoration: BoxDecoration(
-              color: isDark ? Colors.white.withValues(alpha: 0.08) : const Color(0xFFFDF2F8),
+              color: isDark ? Colors.white.withValues(alpha: 0.08) : const Color(0xFFF0F9FF),
               borderRadius: BorderRadius.circular(10),
-              border: Border.all(color: isDark ? Colors.transparent : const Color(0xFFFCE7F3)),
+              border: Border.all(color: isDark ? Colors.transparent : const Color(0xFFE0F2FE)),
             ),
             child: Icon(
               Icons.close_rounded,
-              color: isDark ? Colors.white : const Color(0xFF1E293B),
+              color: isDark ? Colors.white : const Color(0xFF0F172A),
               size: 20,
             ),
           ),
@@ -85,7 +85,7 @@ class _PremiumScreenState extends State<PremiumScreen> with TickerProviderStateM
                     shape: BoxShape.circle,
                     gradient: RadialGradient(
                       colors: [
-                        const Color(0xFFEC4899).withValues(alpha: isDark ? 0.18 : 0.12),
+                        const Color(0xFF2563EB).withValues(alpha: isDark ? 0.18 : 0.12),
                         Colors.transparent,
                       ],
                     ),
@@ -102,12 +102,12 @@ class _PremiumScreenState extends State<PremiumScreen> with TickerProviderStateM
                       padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 6),
                       decoration: BoxDecoration(
                         gradient: const LinearGradient(
-                          colors: [Color(0xFFF59E0B), Color(0xFFEC4899)],
+                          colors: [Color(0xFFF59E0B), Color(0xFF2563EB)],
                         ),
                         borderRadius: BorderRadius.circular(20),
                         boxShadow: [
                           BoxShadow(
-                            color: const Color(0xFFEC4899).withValues(alpha: 0.3),
+                            color: const Color(0xFF2563EB).withValues(alpha: 0.3),
                             blurRadius: 12,
                             offset: const Offset(0, 2),
                           ),
@@ -138,7 +138,7 @@ class _PremiumScreenState extends State<PremiumScreen> with TickerProviderStateM
                       style: TextStyle(
                         fontSize: 26,
                         fontWeight: FontWeight.w900,
-                        color: isDark ? Colors.white : const Color(0xFF1E293B),
+                        color: isDark ? Colors.white : const Color(0xFF0F172A),
                         letterSpacing: -0.5,
                       ),
                     ),
@@ -157,16 +157,16 @@ class _PremiumScreenState extends State<PremiumScreen> with TickerProviderStateM
                     Container(
                       padding: const EdgeInsets.all(18),
                       decoration: BoxDecoration(
-                        color: isDark ? const Color(0xFF1B0C24) : Colors.white,
+                        color: isDark ? const Color(0xFF131C2E) : Colors.white,
                         borderRadius: BorderRadius.circular(20),
                         border: Border.all(
-                          color: isDark ? Colors.white.withValues(alpha: 0.06) : const Color(0xFFFCE7F3),
+                          color: isDark ? Colors.white.withValues(alpha: 0.06) : const Color(0xFFE2E8F0),
                         ),
                         boxShadow: isDark
                             ? []
                             : [
                                 BoxShadow(
-                                  color: const Color(0xFFEC4899).withValues(alpha: 0.08),
+                                  color: const Color(0xFF2563EB).withValues(alpha: 0.08),
                                   blurRadius: 16,
                                   offset: const Offset(0, 4),
                                 ),
@@ -181,20 +181,20 @@ class _PremiumScreenState extends State<PremiumScreen> with TickerProviderStateM
                                 Container(
                                   padding: const EdgeInsets.all(6),
                                   decoration: BoxDecoration(
-                                    color: const Color(0xFFEC4899).withValues(alpha: isDark ? 0.2 : 0.12),
+                                    color: const Color(0xFF2563EB).withValues(alpha: isDark ? 0.2 : 0.12),
                                     borderRadius: BorderRadius.circular(8),
                                   ),
                                   child: Icon(
                                     f['icon'] as IconData,
                                     size: 16,
-                                    color: const Color(0xFFEC4899),
+                                    color: const Color(0xFF2563EB),
                                   ),
                                 ),
                                 const SizedBox(width: 12),
                                 Text(
                                   f['text'] as String,
                                   style: TextStyle(
-                                    color: isDark ? Colors.white : const Color(0xFF1E293B),
+                                    color: isDark ? Colors.white : const Color(0xFF0F172A),
                                     fontSize: 13,
                                     fontWeight: FontWeight.w700,
                                   ),
@@ -243,11 +243,11 @@ class _PremiumScreenState extends State<PremiumScreen> with TickerProviderStateM
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(14),
                           gradient: const LinearGradient(
-                            colors: [Color(0xFFEC4899), Color(0xFFF43F5E)],
+                            colors: [Color(0xFF2563EB), Color(0xFF38BDF8)],
                           ),
                           boxShadow: [
                             BoxShadow(
-                              color: const Color(0xFFEC4899).withValues(alpha: 0.35),
+                              color: const Color(0xFF2563EB).withValues(alpha: 0.35),
                               blurRadius: 18,
                               offset: const Offset(0, 4),
                             ),
@@ -332,20 +332,20 @@ class _PremiumScreenState extends State<PremiumScreen> with TickerProviderStateM
         padding: const EdgeInsets.all(16),
         decoration: BoxDecoration(
           color: isSelected
-              ? const Color(0xFFEC4899).withValues(alpha: isDark ? 0.2 : 0.08)
-              : (isDark ? const Color(0xFF1B0C24) : Colors.white),
+              ? const Color(0xFF2563EB).withValues(alpha: isDark ? 0.2 : 0.08)
+              : (isDark ? const Color(0xFF131C2E) : Colors.white),
           borderRadius: BorderRadius.circular(18),
           border: Border.all(
             color: isSelected
-                ? const Color(0xFFEC4899)
-                : (isDark ? Colors.white.withValues(alpha: 0.06) : const Color(0xFFFCE7F3)),
+                ? const Color(0xFF2563EB)
+                : (isDark ? Colors.white.withValues(alpha: 0.06) : const Color(0xFFE2E8F0)),
             width: isSelected ? 2 : 1,
           ),
           boxShadow: isDark
               ? []
               : [
                   BoxShadow(
-                    color: const Color(0xFFEC4899).withValues(alpha: isSelected ? 0.12 : 0.04),
+                    color: const Color(0xFF2563EB).withValues(alpha: isSelected ? 0.12 : 0.04),
                     blurRadius: 12,
                     offset: const Offset(0, 2),
                   ),
@@ -359,10 +359,10 @@ class _PremiumScreenState extends State<PremiumScreen> with TickerProviderStateM
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
                 border: Border.all(
-                  color: isSelected ? const Color(0xFFEC4899) : (isDark ? Colors.white38 : const Color(0xFFCBD5E1)),
+                  color: isSelected ? const Color(0xFF2563EB) : (isDark ? Colors.white38 : const Color(0xFFCBD5E1)),
                   width: 2,
                 ),
-                color: isSelected ? const Color(0xFFEC4899) : Colors.transparent,
+                color: isSelected ? const Color(0xFF2563EB) : Colors.transparent,
               ),
               child: isSelected
                   ? const Icon(Icons.check, size: 12, color: Colors.white)
@@ -378,7 +378,7 @@ class _PremiumScreenState extends State<PremiumScreen> with TickerProviderStateM
                       Text(
                         title,
                         style: TextStyle(
-                          color: isDark ? Colors.white : const Color(0xFF1E293B),
+                          color: isDark ? Colors.white : const Color(0xFF0F172A),
                           fontWeight: FontWeight.w800,
                           fontSize: 14,
                         ),
@@ -389,7 +389,7 @@ class _PremiumScreenState extends State<PremiumScreen> with TickerProviderStateM
                           padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
                           decoration: BoxDecoration(
                             gradient: const LinearGradient(
-                              colors: [Color(0xFFF59E0B), Color(0xFFEC4899)],
+                              colors: [Color(0xFFF59E0B), Color(0xFF2563EB)],
                             ),
                             borderRadius: BorderRadius.circular(6),
                           ),
@@ -419,7 +419,7 @@ class _PremiumScreenState extends State<PremiumScreen> with TickerProviderStateM
             Text(
               price,
               style: TextStyle(
-                color: isSelected ? const Color(0xFFEC4899) : (isDark ? Colors.white : const Color(0xFF1E293B)),
+                color: isSelected ? const Color(0xFF2563EB) : (isDark ? Colors.white : const Color(0xFF0F172A)),
                 fontWeight: FontWeight.w800,
                 fontSize: 14,
               ),

@@ -107,14 +107,14 @@ class _PixelAgentSheetState extends State<PixelAgentSheet> {
     return Container(
       padding: EdgeInsets.fromLTRB(20, 16, 20, MediaQuery.of(context).viewInsets.bottom + 20),
       decoration: BoxDecoration(
-        color: isDark ? const Color(0xFF1B0C24) : Colors.white,
+        color: isDark ? const Color(0xFF131C2E) : Colors.white,
         borderRadius: const BorderRadius.vertical(top: Radius.circular(28)),
         border: Border.all(
-          color: isDark ? Colors.white.withValues(alpha: 0.06) : const Color(0xFFFCE7F3),
+          color: isDark ? Colors.white.withValues(alpha: 0.06) : const Color(0xFFE2E8F0),
         ),
         boxShadow: [
           BoxShadow(
-            color: isDark ? Colors.black54 : const Color(0xFFEC4899).withValues(alpha: 0.12),
+            color: isDark ? Colors.black54 : const Color(0xFF2563EB).withValues(alpha: 0.12),
             blurRadius: 32,
             offset: const Offset(0, -8),
           ),
@@ -145,11 +145,11 @@ class _PixelAgentSheetState extends State<PixelAgentSheet> {
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(14),
                   gradient: const LinearGradient(
-                    colors: [Color(0xFF38BDF8), Color(0xFFEC4899)],
+                    colors: [Color(0xFF2563EB), Color(0xFF38BDF8)],
                   ),
                   boxShadow: [
                     BoxShadow(
-                      color: const Color(0xFFEC4899).withValues(alpha: 0.35),
+                      color: const Color(0xFF2563EB).withValues(alpha: 0.35),
                       blurRadius: 14,
                       offset: const Offset(0, 4),
                     ),
@@ -166,7 +166,7 @@ class _PixelAgentSheetState extends State<PixelAgentSheet> {
                       Text(
                         'PixelAgent Copilot',
                         style: TextStyle(
-                          color: isDark ? Colors.white : const Color(0xFF1E293B),
+                          color: isDark ? Colors.white : const Color(0xFF0F172A),
                           fontSize: 18,
                           fontWeight: FontWeight.w800,
                           letterSpacing: -0.3,
@@ -176,13 +176,13 @@ class _PixelAgentSheetState extends State<PixelAgentSheet> {
                       Container(
                         padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 1),
                         decoration: BoxDecoration(
-                          color: const Color(0xFFEC4899).withValues(alpha: 0.15),
+                          color: const Color(0xFF2563EB).withValues(alpha: 0.15),
                           borderRadius: BorderRadius.circular(4),
                         ),
                         child: const Text(
                           'AI',
                           style: TextStyle(
-                            color: Color(0xFFEC4899),
+                            color: Color(0xFF2563EB),
                             fontSize: 10,
                             fontWeight: FontWeight.w900,
                           ),
@@ -207,9 +207,9 @@ class _PixelAgentSheetState extends State<PixelAgentSheet> {
           Container(
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(16),
-              color: isDark ? const Color(0xFF110817) : const Color(0xFFFDF2F8),
+              color: isDark ? const Color(0xFF110817) : const Color(0xFFF0F9FF),
               border: Border.all(
-                color: isDark ? Colors.white.withValues(alpha: 0.08) : const Color(0xFFFCE7F3),
+                color: isDark ? Colors.white.withValues(alpha: 0.08) : const Color(0xFFE0F2FE),
               ),
             ),
             child: Material(
@@ -225,9 +225,9 @@ class _PixelAgentSheetState extends State<PixelAgentSheet> {
                         padding: const EdgeInsets.all(10),
                         decoration: BoxDecoration(
                           shape: BoxShape.circle,
-                          color: const Color(0xFFEC4899).withValues(alpha: 0.15),
+                          color: const Color(0xFF2563EB).withValues(alpha: 0.15),
                         ),
-                        child: const Icon(Icons.radar_rounded, color: Color(0xFFEC4899), size: 24),
+                        child: const Icon(Icons.radar_rounded, color: Color(0xFF2563EB), size: 24),
                       ),
                       const SizedBox(width: 14),
                       Expanded(
@@ -237,7 +237,7 @@ class _PixelAgentSheetState extends State<PixelAgentSheet> {
                             Text(
                               'Auto-Remove All Watermarks',
                               style: TextStyle(
-                                color: isDark ? Colors.white : const Color(0xFF1E293B),
+                                color: isDark ? Colors.white : const Color(0xFF0F172A),
                                 fontWeight: FontWeight.w800,
                                 fontSize: 14,
                               ),
@@ -253,7 +253,7 @@ class _PixelAgentSheetState extends State<PixelAgentSheet> {
                           ],
                         ),
                       ),
-                      const Icon(Icons.arrow_forward_rounded, color: Color(0xFFEC4899), size: 18),
+                      const Icon(Icons.arrow_forward_rounded, color: Color(0xFF2563EB), size: 18),
                     ],
                   ),
                 ),
@@ -292,35 +292,35 @@ class _PixelAgentSheetState extends State<PixelAgentSheet> {
                 child: TextField(
                   controller: _promptController,
                   style: TextStyle(
-                    color: isDark ? Colors.white : const Color(0xFF1E293B),
+                    color: isDark ? Colors.white : const Color(0xFF0F172A),
                     fontSize: 13,
                     fontWeight: FontWeight.w600,
                   ),
                   decoration: InputDecoration(
                     filled: true,
-                    fillColor: isDark ? const Color(0xFF110817) : const Color(0xFFFDF2F8),
+                    fillColor: isDark ? const Color(0xFF110817) : const Color(0xFFF0F9FF),
                     hintText: 'e.g. Remove logo on top right...',
                     hintStyle: TextStyle(
                       color: isDark ? const Color(0xFF64748B) : const Color(0xFF94A3B8),
                       fontSize: 12,
                     ),
-                    prefixIcon: const Icon(Icons.chat_bubble_outline_rounded, color: Color(0xFFEC4899), size: 18),
+                    prefixIcon: const Icon(Icons.chat_bubble_outline_rounded, color: Color(0xFF2563EB), size: 18),
                     contentPadding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(12),
                       borderSide: BorderSide(
-                        color: isDark ? Colors.white.withValues(alpha: 0.08) : const Color(0xFFFCE7F3),
+                        color: isDark ? Colors.white.withValues(alpha: 0.08) : const Color(0xFFE0F2FE),
                       ),
                     ),
                     enabledBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(12),
                       borderSide: BorderSide(
-                        color: isDark ? Colors.white.withValues(alpha: 0.08) : const Color(0xFFFCE7F3),
+                        color: isDark ? Colors.white.withValues(alpha: 0.08) : const Color(0xFFE0F2FE),
                       ),
                     ),
                     focusedBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(12),
-                      borderSide: const BorderSide(color: Color(0xFFEC4899), width: 1.5),
+                      borderSide: const BorderSide(color: Color(0xFF2563EB), width: 1.5),
                     ),
                   ),
                   onSubmitted: _handleCustomPrompt,
@@ -330,12 +330,12 @@ class _PixelAgentSheetState extends State<PixelAgentSheet> {
               Container(
                 decoration: BoxDecoration(
                   gradient: const LinearGradient(
-                    colors: [Color(0xFFEC4899), Color(0xFFF43F5E)],
+                    colors: [Color(0xFF2563EB), Color(0xFF38BDF8)],
                   ),
                   borderRadius: BorderRadius.circular(12),
                   boxShadow: [
                     BoxShadow(
-                      color: const Color(0xFFEC4899).withValues(alpha: 0.35),
+                      color: const Color(0xFF2563EB).withValues(alpha: 0.35),
                       blurRadius: 10,
                       offset: const Offset(0, 2),
                     ),
@@ -356,18 +356,18 @@ class _PixelAgentSheetState extends State<PixelAgentSheet> {
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
               decoration: BoxDecoration(
-                color: const Color(0xFFEC4899).withValues(alpha: 0.1),
+                color: const Color(0xFF2563EB).withValues(alpha: 0.1),
                 borderRadius: BorderRadius.circular(8),
-                border: Border.all(color: const Color(0xFFEC4899).withValues(alpha: 0.25)),
+                border: Border.all(color: const Color(0xFF2563EB).withValues(alpha: 0.25)),
               ),
               child: Row(
                 children: [
-                  const Icon(Icons.smart_toy_rounded, color: Color(0xFFEC4899), size: 16),
+                  const Icon(Icons.smart_toy_rounded, color: Color(0xFF2563EB), size: 16),
                   const SizedBox(width: 8),
                   Expanded(
                     child: Text(
                       _agentStatus!,
-                      style: const TextStyle(color: Color(0xFFEC4899), fontSize: 11, fontWeight: FontWeight.w700),
+                      style: const TextStyle(color: Color(0xFF2563EB), fontSize: 11, fontWeight: FontWeight.w700),
                     ),
                   ),
                 ],
@@ -389,21 +389,21 @@ class _PixelAgentSheetState extends State<PixelAgentSheet> {
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
         decoration: BoxDecoration(
-          color: isDark ? const Color(0xFF110817) : const Color(0xFFFDF2F8),
+          color: isDark ? const Color(0xFF110817) : const Color(0xFFF0F9FF),
           borderRadius: BorderRadius.circular(20),
           border: Border.all(
-            color: isDark ? Colors.white.withValues(alpha: 0.08) : const Color(0xFFFCE7F3),
+            color: isDark ? Colors.white.withValues(alpha: 0.08) : const Color(0xFFE0F2FE),
           ),
         ),
         child: Row(
           mainAxisSize: MainAxisSize.min,
           children: [
-            const Icon(Icons.auto_awesome_rounded, color: Color(0xFFEC4899), size: 12),
+            const Icon(Icons.auto_awesome_rounded, color: Color(0xFF2563EB), size: 12),
             const SizedBox(width: 6),
             Text(
               text,
               style: TextStyle(
-                color: isDark ? const Color(0xFFCBD5E1) : const Color(0xFF1E293B),
+                color: isDark ? const Color(0xFFCBD5E1) : const Color(0xFF0F172A),
                 fontSize: 11,
                 fontWeight: FontWeight.w600,
               ),

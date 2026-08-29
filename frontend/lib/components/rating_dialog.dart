@@ -53,11 +53,11 @@ class _RatingDialogState extends State<RatingDialog> with SingleTickerProviderSt
           child: Opacity(
             opacity: opacity,
             child: Dialog(
-              backgroundColor: isDark ? const Color(0xFF1B0C24) : Colors.white,
+              backgroundColor: isDark ? const Color(0xFF131C2E) : Colors.white,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(24),
                 side: BorderSide(
-                  color: isDark ? Colors.white.withValues(alpha: 0.06) : const Color(0xFFFCE7F3),
+                  color: isDark ? Colors.white.withValues(alpha: 0.06) : const Color(0xFFE2E8F0),
                 ),
               ),
               child: Padding(
@@ -71,13 +71,13 @@ class _RatingDialogState extends State<RatingDialog> with SingleTickerProviderSt
                       decoration: BoxDecoration(
                         shape: BoxShape.circle,
                         gradient: const LinearGradient(
-                          colors: [Color(0xFFF59E0B), Color(0xFFEC4899)],
+                          colors: [Color(0xFFF59E0B), Color(0xFF2563EB)],
                           begin: Alignment.topLeft,
                           end: Alignment.bottomRight,
                         ),
                         boxShadow: [
                           BoxShadow(
-                            color: const Color(0xFFF59E0B).withValues(alpha: 0.3),
+                            color: const Color(0xFF2563EB).withValues(alpha: 0.3),
                             blurRadius: 20,
                             spreadRadius: 2,
                           ),
@@ -89,7 +89,7 @@ class _RatingDialogState extends State<RatingDialog> with SingleTickerProviderSt
                     Text(
                       'Enjoying CleanPixel AI?',
                       style: TextStyle(
-                        color: isDark ? Colors.white : const Color(0xFF1E293B),
+                        color: isDark ? Colors.white : const Color(0xFF0F172A),
                         fontSize: 20,
                         fontWeight: FontWeight.w800,
                         letterSpacing: -0.5,
@@ -147,11 +147,11 @@ class _RatingDialogState extends State<RatingDialog> with SingleTickerProviderSt
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(14),
                           gradient: const LinearGradient(
-                            colors: [Color(0xFFEC4899), Color(0xFFF43F5E)],
+                            colors: [Color(0xFF2563EB), Color(0xFF38BDF8)],
                           ),
                           boxShadow: [
                             BoxShadow(
-                              color: const Color(0xFFEC4899).withValues(alpha: 0.35),
+                              color: const Color(0xFF2563EB).withValues(alpha: 0.35),
                               blurRadius: 12,
                               offset: const Offset(0, 4),
                             ),
@@ -168,7 +168,7 @@ class _RatingDialogState extends State<RatingDialog> with SingleTickerProviderSt
                             Navigator.pop(context);
                             ScaffoldMessenger.of(context).showSnackBar(
                               SnackBar(
-                                backgroundColor: const Color(0xFFEC4899),
+                                backgroundColor: const Color(0xFF2563EB),
                                 behavior: SnackBarBehavior.floating,
                                 shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
                                 margin: const EdgeInsets.all(16),

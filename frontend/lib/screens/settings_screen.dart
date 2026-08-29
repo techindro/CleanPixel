@@ -66,9 +66,9 @@ class _SettingsScreenState extends State<SettingsScreen> with SingleTickerProvid
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        backgroundColor: isDark ? const Color(0xFF1B0C24) : Colors.white,
+        backgroundColor: isDark ? const Color(0xFF131C2E) : Colors.white,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-        title: Text(title, style: TextStyle(color: isDark ? Colors.white : const Color(0xFF1E293B), fontWeight: FontWeight.bold)),
+        title: Text(title, style: TextStyle(color: isDark ? Colors.white : const Color(0xFF0F172A), fontWeight: FontWeight.bold)),
         content: SingleChildScrollView(
           child: Text(
             content,
@@ -78,7 +78,7 @@ class _SettingsScreenState extends State<SettingsScreen> with SingleTickerProvid
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context),
-            child: const Text('Close', style: TextStyle(color: Color(0xFFEC4899), fontWeight: FontWeight.w700)),
+            child: const Text('Close', style: TextStyle(color: Color(0xFF2563EB), fontWeight: FontWeight.w700)),
           ),
         ],
       ),
@@ -90,9 +90,9 @@ class _SettingsScreenState extends State<SettingsScreen> with SingleTickerProvid
     final isDark = Theme.of(context).brightness == Brightness.dark;
 
     return Scaffold(
-      backgroundColor: isDark ? const Color(0xFF0F0715) : const Color(0xFFFAF5FF),
+      backgroundColor: isDark ? const Color(0xFF0B0F19) : const Color(0xFFF8FAFC),
       appBar: AppBar(
-        backgroundColor: isDark ? const Color(0xFF0F0715) : Colors.white,
+        backgroundColor: isDark ? const Color(0xFF0B0F19) : Colors.white,
         elevation: 0,
         title: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -102,13 +102,13 @@ class _SettingsScreenState extends State<SettingsScreen> with SingleTickerProvid
               style: TextStyle(
                 fontWeight: FontWeight.w800,
                 fontSize: 20,
-                color: isDark ? Colors.white : const Color(0xFF1E293B),
+                color: isDark ? Colors.white : const Color(0xFF0F172A),
                 letterSpacing: -0.3,
               ),
             ),
             const Text(
               'Preferences & Workspace Configuration',
-              style: TextStyle(fontSize: 11, fontWeight: FontWeight.w600, color: Color(0xFFEC4899)),
+              style: TextStyle(fontSize: 11, fontWeight: FontWeight.w700, color: Color(0xFF2563EB)),
             ),
           ],
         ),
@@ -144,7 +144,7 @@ class _SettingsScreenState extends State<SettingsScreen> with SingleTickerProvid
                             : Icons.dark_mode_rounded;
                     return _buildStaggered(0.17, 0.47, child: _buildSettingTile(
                       icon: icon,
-                      iconColor: const Color(0xFFEC4899),
+                      iconColor: const Color(0xFF2563EB),
                       title: 'Theme Mode',
                       subtitle: ThemeService.getThemeName(currentMode),
                       onTap: () => _showThemeSelectorDialog(context),
@@ -160,7 +160,7 @@ class _SettingsScreenState extends State<SettingsScreen> with SingleTickerProvid
                     final currentLang = LocaleService.getCurrentLanguage();
                     return _buildStaggered(0.19, 0.49, child: _buildSettingTile(
                       icon: Icons.translate_rounded,
-                      iconColor: const Color(0xFFF43F5E),
+                      iconColor: const Color(0xFF0284C7),
                       title: 'App Language',
                       subtitle: '${currentLang.flag} ${currentLang.nativeName} (${currentLang.name})',
                       onTap: () => LanguageSelectorDialog.show(context),
@@ -178,7 +178,7 @@ class _SettingsScreenState extends State<SettingsScreen> with SingleTickerProvid
                 )),
                 _buildStaggered(0.25, 0.55, child: _buildSettingTile(
                   icon: Icons.share_rounded,
-                  iconColor: const Color(0xFFEC4899),
+                  iconColor: const Color(0xFF2563EB),
                   title: 'Share with Friends & Creators',
                   subtitle: 'Spread the word about CleanPixel AI',
                   onTap: () {
@@ -187,7 +187,7 @@ class _SettingsScreenState extends State<SettingsScreen> with SingleTickerProvid
                         behavior: SnackBarBehavior.floating,
                         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
                         margin: const EdgeInsets.all(16),
-                        backgroundColor: const Color(0xFFEC4899),
+                        backgroundColor: const Color(0xFF2563EB),
                         content: const Row(
                           children: [
                             Icon(Icons.content_copy_rounded, color: Colors.white, size: 18),
@@ -227,7 +227,7 @@ class _SettingsScreenState extends State<SettingsScreen> with SingleTickerProvid
                 )),
                 _buildStaggered(0.32, 0.62, child: _buildSettingTile(
                   icon: Icons.system_update_rounded,
-                  iconColor: const Color(0xFFA855F7),
+                  iconColor: const Color(0xFF8B5CF6),
                   title: 'Check for Updates',
                   subtitle: 'Current Version ${UpdateService.currentVersion} (Up to date)',
                   onTap: () async {
@@ -246,7 +246,7 @@ class _SettingsScreenState extends State<SettingsScreen> with SingleTickerProvid
                 const SizedBox(height: 10),
                 _buildStaggered(0.4, 0.7, child: _buildSettingTile(
                   icon: Icons.privacy_tip_rounded,
-                  iconColor: const Color(0xFFEC4899),
+                  iconColor: const Color(0xFF2563EB),
                   title: 'Privacy Policy',
                   subtitle: 'How we securely handle your media',
                   onTap: () {
@@ -260,7 +260,7 @@ class _SettingsScreenState extends State<SettingsScreen> with SingleTickerProvid
                 )),
                 _buildStaggered(0.45, 0.75, child: _buildSettingTile(
                   icon: Icons.description_rounded,
-                  iconColor: const Color(0xFF3B82F6),
+                  iconColor: const Color(0xFF38BDF8),
                   title: 'Terms of Service',
                   subtitle: 'Read our service terms',
                   onTap: () {
@@ -308,7 +308,7 @@ class _SettingsScreenState extends State<SettingsScreen> with SingleTickerProvid
                           'assets/logo.png',
                           height: 32,
                           fit: BoxFit.contain,
-                          errorBuilder: (_, __, ___) => const Icon(Icons.auto_fix_high_rounded, color: Color(0xFFEC4899), size: 28),
+                          errorBuilder: (_, __, ___) => const Icon(Icons.auto_fix_high_rounded, color: Color(0xFF38BDF8), size: 28),
                         ),
                         const SizedBox(height: 8),
                         Text(
@@ -338,15 +338,15 @@ class _SettingsScreenState extends State<SettingsScreen> with SingleTickerProvid
       context: context,
       builder: (context) {
         return AlertDialog(
-          backgroundColor: isDark ? const Color(0xFF1B0C24) : Colors.white,
+          backgroundColor: isDark ? const Color(0xFF131C2E) : Colors.white,
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
           title: Row(
             children: [
-              const Icon(Icons.palette_rounded, color: Color(0xFFEC4899), size: 24),
+              const Icon(Icons.palette_rounded, color: Color(0xFF2563EB), size: 24),
               const SizedBox(width: 10),
               Text(
                 'Select Theme',
-                style: TextStyle(color: isDark ? Colors.white : const Color(0xFF1E293B), fontWeight: FontWeight.bold, fontSize: 18),
+                style: TextStyle(color: isDark ? Colors.white : const Color(0xFF0F172A), fontWeight: FontWeight.bold, fontSize: 18),
               ),
             ],
           ),
@@ -356,7 +356,7 @@ class _SettingsScreenState extends State<SettingsScreen> with SingleTickerProvid
               return Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  _buildThemeRadioOption(context, ThemeMode.light, 'Light Mode (White & Pink)', Icons.light_mode_rounded, currentMode, isDark),
+                  _buildThemeRadioOption(context, ThemeMode.light, 'Light Mode (White & Electric Blue)', Icons.light_mode_rounded, currentMode, isDark),
                   _buildThemeRadioOption(context, ThemeMode.dark, 'Dark Mode (OLED)', Icons.dark_mode_rounded, currentMode, isDark),
                   _buildThemeRadioOption(context, ThemeMode.system, 'System Default', Icons.brightness_auto_rounded, currentMode, isDark),
                 ],
@@ -381,31 +381,31 @@ class _SettingsScreenState extends State<SettingsScreen> with SingleTickerProvid
         margin: const EdgeInsets.symmetric(vertical: 4),
         decoration: BoxDecoration(
           color: isSelected
-              ? const Color(0xFFEC4899).withValues(alpha: 0.12)
+              ? const Color(0xFF2563EB).withValues(alpha: 0.12)
               : Colors.transparent,
           borderRadius: BorderRadius.circular(12),
           border: isSelected
-              ? Border.all(color: const Color(0xFFEC4899).withValues(alpha: 0.4))
+              ? Border.all(color: const Color(0xFF2563EB).withValues(alpha: 0.4))
               : null,
         ),
         child: Row(
           children: [
-            Icon(icon, color: isSelected ? const Color(0xFFEC4899) : (isDark ? Colors.white60 : const Color(0xFF64748B)), size: 20),
+            Icon(icon, color: isSelected ? const Color(0xFF2563EB) : (isDark ? Colors.white60 : const Color(0xFF64748B)), size: 20),
             const SizedBox(width: 12),
             Expanded(
               child: Text(
                 title,
                 style: TextStyle(
                   color: isSelected
-                      ? const Color(0xFFEC4899)
-                      : (isDark ? Colors.white : const Color(0xFF1E293B)),
+                      ? const Color(0xFF2563EB)
+                      : (isDark ? Colors.white : const Color(0xFF0F172A)),
                   fontWeight: isSelected ? FontWeight.w800 : FontWeight.w600,
                   fontSize: 14,
                 ),
               ),
             ),
             if (isSelected)
-              const Icon(Icons.check_circle_rounded, color: Color(0xFFEC4899), size: 18),
+              const Icon(Icons.check_circle_rounded, color: Color(0xFF2563EB), size: 18),
           ],
         ),
       ),
@@ -445,14 +445,14 @@ class _SettingsScreenState extends State<SettingsScreen> with SingleTickerProvid
     return Container(
       padding: const EdgeInsets.all(18),
       decoration: BoxDecoration(
-        color: isDark ? const Color(0xFF1B0C24) : Colors.white,
+        color: isDark ? const Color(0xFF131C2E) : Colors.white,
         borderRadius: BorderRadius.circular(20),
-        border: Border.all(color: isDark ? Colors.white.withValues(alpha: 0.06) : const Color(0xFFFCE7F3)),
+        border: Border.all(color: isDark ? Colors.white.withValues(alpha: 0.06) : const Color(0xFFE2E8F0)),
         boxShadow: isDark
             ? []
             : [
                 BoxShadow(
-                  color: const Color(0xFFEC4899).withValues(alpha: 0.08),
+                  color: const Color(0xFF2563EB).withValues(alpha: 0.08),
                   blurRadius: 16,
                   offset: const Offset(0, 4),
                 ),
@@ -465,8 +465,8 @@ class _SettingsScreenState extends State<SettingsScreen> with SingleTickerProvid
             decoration: BoxDecoration(
               gradient: LinearGradient(
                 colors: isPro
-                    ? [const Color(0xFFF59E0B), const Color(0xFFEC4899)]
-                    : [const Color(0xFFEC4899), const Color(0xFFF43F5E)],
+                    ? [const Color(0xFFF59E0B), const Color(0xFF2563EB)]
+                    : [const Color(0xFF2563EB), const Color(0xFF38BDF8)],
               ),
               shape: BoxShape.circle,
             ),
@@ -488,7 +488,7 @@ class _SettingsScreenState extends State<SettingsScreen> with SingleTickerProvid
                         name,
                         overflow: TextOverflow.ellipsis,
                         style: TextStyle(
-                          color: isDark ? Colors.white : const Color(0xFF1E293B),
+                          color: isDark ? Colors.white : const Color(0xFF0F172A),
                           fontWeight: FontWeight.w800,
                           fontSize: 15,
                         ),
@@ -499,15 +499,15 @@ class _SettingsScreenState extends State<SettingsScreen> with SingleTickerProvid
                       padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
                       decoration: BoxDecoration(
                         gradient: isPro
-                            ? const LinearGradient(colors: [Color(0xFFF59E0B), Color(0xFFEC4899)])
+                            ? const LinearGradient(colors: [Color(0xFFF59E0B), Color(0xFF2563EB)])
                             : null,
-                        color: isPro ? null : const Color(0xFFEC4899).withValues(alpha: 0.12),
+                        color: isPro ? null : const Color(0xFF2563EB).withValues(alpha: 0.12),
                         borderRadius: BorderRadius.circular(6),
                       ),
                       child: Text(
                         isPro ? 'PRO' : 'FREE',
                         style: TextStyle(
-                          color: isPro ? Colors.white : const Color(0xFFEC4899),
+                          color: isPro ? Colors.white : const Color(0xFF2563EB),
                           fontSize: 9,
                           fontWeight: FontWeight.w900,
                         ),
@@ -527,12 +527,12 @@ class _SettingsScreenState extends State<SettingsScreen> with SingleTickerProvid
           Container(
             decoration: BoxDecoration(
               gradient: const LinearGradient(
-                colors: [Color(0xFFEC4899), Color(0xFFF43F5E)],
+                colors: [Color(0xFF2563EB), Color(0xFF38BDF8)],
               ),
               borderRadius: BorderRadius.circular(12),
               boxShadow: [
                 BoxShadow(
-                  color: const Color(0xFFEC4899).withValues(alpha: 0.3),
+                  color: const Color(0xFF2563EB).withValues(alpha: 0.3),
                   blurRadius: 8,
                   offset: const Offset(0, 2),
                 ),
@@ -568,14 +568,14 @@ class _SettingsScreenState extends State<SettingsScreen> with SingleTickerProvid
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: isDark ? const Color(0xFF1B0C24) : Colors.white,
+        color: isDark ? const Color(0xFF131C2E) : Colors.white,
         borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: isDark ? Colors.white.withValues(alpha: 0.06) : const Color(0xFFFCE7F3)),
+        border: Border.all(color: isDark ? Colors.white.withValues(alpha: 0.06) : const Color(0xFFE2E8F0)),
         boxShadow: isDark
             ? []
             : [
                 BoxShadow(
-                  color: const Color(0xFFEC4899).withValues(alpha: 0.06),
+                  color: const Color(0xFF2563EB).withValues(alpha: 0.06),
                   blurRadius: 12,
                   offset: const Offset(0, 4),
                 ),
@@ -590,14 +590,14 @@ class _SettingsScreenState extends State<SettingsScreen> with SingleTickerProvid
               Text(
                 'Free Neural Inpaint Credits',
                 style: TextStyle(
-                  color: isDark ? Colors.white : const Color(0xFF1E293B),
+                  color: isDark ? Colors.white : const Color(0xFF0F172A),
                   fontWeight: FontWeight.w800,
                   fontSize: 13,
                 ),
               ),
               Text(
                 '$_credits of 3 remaining',
-                style: const TextStyle(color: Color(0xFFEC4899), fontWeight: FontWeight.w700, fontSize: 12),
+                style: const TextStyle(color: Color(0xFF2563EB), fontWeight: FontWeight.w700, fontSize: 12),
               ),
             ],
           ),
@@ -607,8 +607,8 @@ class _SettingsScreenState extends State<SettingsScreen> with SingleTickerProvid
             child: LinearProgressIndicator(
               value: fraction,
               minHeight: 6,
-              backgroundColor: isDark ? Colors.white.withValues(alpha: 0.08) : const Color(0xFFFDF2F8),
-              valueColor: const AlwaysStoppedAnimation<Color>(Color(0xFFEC4899)),
+              backgroundColor: isDark ? Colors.white.withValues(alpha: 0.08) : const Color(0xFFF0F9FF),
+              valueColor: const AlwaysStoppedAnimation<Color>(Color(0xFF2563EB)),
             ),
           ),
         ],
@@ -629,14 +629,14 @@ class _SettingsScreenState extends State<SettingsScreen> with SingleTickerProvid
     return Container(
       margin: const EdgeInsets.only(bottom: 8),
       decoration: BoxDecoration(
-        color: isDark ? const Color(0xFF1B0C24) : Colors.white,
+        color: isDark ? const Color(0xFF131C2E) : Colors.white,
         borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: isDark ? Colors.white.withValues(alpha: 0.06) : const Color(0xFFFCE7F3)),
+        border: Border.all(color: isDark ? Colors.white.withValues(alpha: 0.06) : const Color(0xFFE2E8F0)),
         boxShadow: isDark
             ? []
             : [
                 BoxShadow(
-                  color: const Color(0xFFEC4899).withValues(alpha: 0.04),
+                  color: const Color(0xFF2563EB).withValues(alpha: 0.04),
                   blurRadius: 8,
                   offset: const Offset(0, 2),
                 ),
@@ -655,7 +655,7 @@ class _SettingsScreenState extends State<SettingsScreen> with SingleTickerProvid
         title: Text(
           title,
           style: TextStyle(
-            color: titleColor ?? (isDark ? Colors.white : const Color(0xFF1E293B)),
+            color: titleColor ?? (isDark ? Colors.white : const Color(0xFF0F172A)),
             fontWeight: FontWeight.w700,
             fontSize: 14,
           ),

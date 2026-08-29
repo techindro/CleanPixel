@@ -27,7 +27,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> with TickerProvider
     },
     {
       'icon': Icons.person_remove_rounded,
-      'gradient': const [Color(0xFFEC4899), Color(0xFFF43F5E)],
+      'gradient': const [Color(0xFF0284C7), Color(0xFF0EA5E9)],
       'title': 'Magic Object & People Eraser',
       'subtitle': 'Erase photobombers, wires, power lines, and clutter with zero blur and pure clarity.',
       'badge': 'DEEP DIFFUSION'
@@ -86,7 +86,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> with TickerProvider
     final isDark = Theme.of(context).brightness == Brightness.dark;
 
     return Scaffold(
-      backgroundColor: isDark ? const Color(0xFF0F0715) : const Color(0xFFFAF5FF),
+      backgroundColor: isDark ? const Color(0xFF0B0F19) : const Color(0xFFF8FAFC),
       body: SafeArea(
         child: Column(
           children: [
@@ -113,7 +113,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> with TickerProvider
                       Text(
                         'CleanPixel AI',
                         style: TextStyle(
-                          color: isDark ? Colors.white : const Color(0xFF1E293B),
+                          color: isDark ? Colors.white : const Color(0xFF0F172A),
                           fontWeight: FontWeight.w800,
                           fontSize: 16,
                           letterSpacing: -0.3,
@@ -197,14 +197,14 @@ class _OnboardingScreenState extends State<OnboardingScreen> with TickerProvider
                             Container(
                               padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
                               decoration: BoxDecoration(
-                                color: const Color(0xFFEC4899).withValues(alpha: isDark ? 0.2 : 0.12),
+                                color: const Color(0xFF2563EB).withValues(alpha: isDark ? 0.2 : 0.12),
                                 borderRadius: BorderRadius.circular(20),
-                                border: Border.all(color: const Color(0xFFEC4899).withValues(alpha: 0.3)),
+                                border: Border.all(color: const Color(0xFF2563EB).withValues(alpha: 0.3)),
                               ),
                               child: Text(
                                 slide['badge'] as String,
                                 style: const TextStyle(
-                                  color: Color(0xFFEC4899),
+                                  color: Color(0xFF2563EB),
                                   fontSize: 10,
                                   fontWeight: FontWeight.w900,
                                   letterSpacing: 1.2,
@@ -217,7 +217,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> with TickerProvider
                               slide['title'] as String,
                               textAlign: TextAlign.center,
                               style: TextStyle(
-                                color: isDark ? Colors.white : const Color(0xFF1E293B),
+                                color: isDark ? Colors.white : const Color(0xFF0F172A),
                                 fontSize: 24,
                                 fontWeight: FontWeight.w800,
                                 letterSpacing: -0.4,
@@ -254,7 +254,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> with TickerProvider
                   height: 8,
                   decoration: BoxDecoration(
                     color: isSelected
-                        ? const Color(0xFFEC4899)
+                        ? const Color(0xFF2563EB)
                         : (isDark ? Colors.white24 : const Color(0xFFCBD5E1)),
                     borderRadius: BorderRadius.circular(4),
                   ),
@@ -273,11 +273,11 @@ class _OnboardingScreenState extends State<OnboardingScreen> with TickerProvider
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(14),
                     gradient: const LinearGradient(
-                      colors: [Color(0xFFEC4899), Color(0xFFF43F5E)],
+                      colors: [Color(0xFF2563EB), Color(0xFF38BDF8)],
                     ),
                     boxShadow: [
                       BoxShadow(
-                        color: const Color(0xFFEC4899).withValues(alpha: 0.35),
+                        color: const Color(0xFF2563EB).withValues(alpha: 0.35),
                         blurRadius: 16,
                         offset: const Offset(0, 4),
                       ),

@@ -75,12 +75,12 @@ class _StepperCtaButtonState extends State<StepperCtaButton> with TickerProvider
                 borderRadius: BorderRadius.circular(16),
                 gradient: widget.isEnabled
                     ? const LinearGradient(
-                        colors: [Color(0xFFEC4899), Color(0xFFF43F5E), Color(0xFFE11D48)],
+                        colors: [Color(0xFF2563EB), Color(0xFF38BDF8), Color(0xFF1D4ED8)],
                       )
                     : null,
                 color: widget.isEnabled
                     ? null
-                    : (isDark ? const Color(0xFF1B0C24) : const Color(0xFFF1F5F9)),
+                    : (isDark ? const Color(0xFF131C2E) : const Color(0xFFF1F5F9)),
                 border: widget.isEnabled
                     ? null
                     : Border.all(
@@ -89,7 +89,7 @@ class _StepperCtaButtonState extends State<StepperCtaButton> with TickerProvider
                 boxShadow: widget.isEnabled && !widget.isProcessing
                     ? [
                         BoxShadow(
-                          color: const Color(0xFFEC4899).withValues(alpha: 0.35),
+                          color: const Color(0xFF2563EB).withValues(alpha: 0.35),
                           blurRadius: 18,
                           offset: const Offset(0, 6),
                         ),
@@ -206,7 +206,7 @@ class _StepperCtaButtonState extends State<StepperCtaButton> with TickerProvider
                                         Icons.bolt_rounded,
                                         size: 14,
                                         color: widget.isEnabled
-                                            ? const Color(0xFFFDF2F8)
+                                            ? Colors.white
                                             : (isDark ? Colors.white24 : const Color(0xFF64748B)),
                                       ),
                                       const SizedBox(width: 2),
@@ -214,7 +214,7 @@ class _StepperCtaButtonState extends State<StepperCtaButton> with TickerProvider
                                         '1 Credit',
                                         style: TextStyle(
                                           color: widget.isEnabled
-                                              ? const Color(0xFFFDF2F8)
+                                              ? Colors.white
                                               : (isDark ? Colors.white24 : const Color(0xFF64748B)),
                                           fontSize: 11,
                                           fontWeight: FontWeight.w800,

@@ -47,14 +47,14 @@ class _ExportSheetDialogState extends State<ExportSheetDialog> {
     return Container(
       padding: const EdgeInsets.all(24),
       decoration: BoxDecoration(
-        color: isDark ? const Color(0xFF1B0C24) : Colors.white,
+        color: isDark ? const Color(0xFF131C2E) : Colors.white,
         borderRadius: const BorderRadius.vertical(top: Radius.circular(28)),
         border: Border.all(
-          color: isDark ? Colors.white.withValues(alpha: 0.06) : const Color(0xFFFCE7F3),
+          color: isDark ? Colors.white.withValues(alpha: 0.06) : const Color(0xFFE2E8F0),
         ),
         boxShadow: [
           BoxShadow(
-            color: isDark ? Colors.black54 : const Color(0xFFEC4899).withValues(alpha: 0.12),
+            color: isDark ? Colors.black54 : const Color(0xFF2563EB).withValues(alpha: 0.12),
             blurRadius: 32,
             offset: const Offset(0, -8),
           ),
@@ -87,7 +87,7 @@ class _ExportSheetDialogState extends State<ExportSheetDialog> {
                   Text(
                     'Export Cleaned Asset',
                     style: TextStyle(
-                      color: isDark ? Colors.white : const Color(0xFF1E293B),
+                      color: isDark ? Colors.white : const Color(0xFF0F172A),
                       fontSize: 19,
                       fontWeight: FontWeight.w800,
                       letterSpacing: -0.3,
@@ -191,11 +191,11 @@ class _ExportSheetDialogState extends State<ExportSheetDialog> {
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(14),
                 gradient: const LinearGradient(
-                  colors: [Color(0xFFEC4899), Color(0xFFF43F5E)],
+                  colors: [Color(0xFF2563EB), Color(0xFF38BDF8)],
                 ),
                 boxShadow: [
                   BoxShadow(
-                    color: const Color(0xFFEC4899).withValues(alpha: 0.35),
+                    color: const Color(0xFF2563EB).withValues(alpha: 0.35),
                     blurRadius: 16,
                     offset: const Offset(0, 4),
                   ),
@@ -248,13 +248,13 @@ class _ExportSheetDialogState extends State<ExportSheetDialog> {
           padding: const EdgeInsets.symmetric(vertical: 10),
           decoration: BoxDecoration(
             color: isSelected
-                ? const Color(0xFFEC4899).withValues(alpha: isDark ? 0.25 : 0.12)
-                : (isDark ? const Color(0xFF110817) : const Color(0xFFFDF2F8)),
+                ? const Color(0xFF2563EB).withValues(alpha: isDark ? 0.25 : 0.12)
+                : (isDark ? const Color(0xFF110817) : const Color(0xFFF0F9FF)),
             borderRadius: BorderRadius.circular(12),
             border: Border.all(
               color: isSelected
-                  ? const Color(0xFFEC4899)
-                  : (isDark ? Colors.white.withValues(alpha: 0.06) : const Color(0xFFFCE7F3)),
+                  ? const Color(0xFF2563EB)
+                  : (isDark ? Colors.white.withValues(alpha: 0.06) : const Color(0xFFE0F2FE)),
               width: isSelected ? 1.5 : 1,
             ),
           ),
@@ -263,8 +263,8 @@ class _ExportSheetDialogState extends State<ExportSheetDialog> {
             textAlign: TextAlign.center,
             style: TextStyle(
               color: isSelected
-                  ? const Color(0xFFEC4899)
-                  : (isDark ? Colors.white : const Color(0xFF1E293B)),
+                  ? const Color(0xFF2563EB)
+                  : (isDark ? Colors.white : const Color(0xFF0F172A)),
               fontWeight: isSelected ? FontWeight.w800 : FontWeight.w600,
               fontSize: 11,
             ),
@@ -293,13 +293,13 @@ class _ExportSheetDialogState extends State<ExportSheetDialog> {
         padding: const EdgeInsets.all(12),
         decoration: BoxDecoration(
           color: isSelected
-              ? const Color(0xFFEC4899).withValues(alpha: isDark ? 0.2 : 0.08)
-              : (isDark ? const Color(0xFF110817) : const Color(0xFFFDF2F8)),
+              ? const Color(0xFF2563EB).withValues(alpha: isDark ? 0.2 : 0.08)
+              : (isDark ? const Color(0xFF110817) : const Color(0xFFF0F9FF)),
           borderRadius: BorderRadius.circular(14),
           border: Border.all(
             color: isSelected
-                ? const Color(0xFFEC4899)
-                : (isDark ? Colors.white.withValues(alpha: 0.06) : const Color(0xFFFCE7F3)),
+                ? const Color(0xFF2563EB)
+                : (isDark ? Colors.white.withValues(alpha: 0.06) : const Color(0xFFE0F2FE)),
             width: isSelected ? 1.5 : 1,
           ),
         ),
@@ -311,10 +311,10 @@ class _ExportSheetDialogState extends State<ExportSheetDialog> {
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
                 border: Border.all(
-                  color: isSelected ? const Color(0xFFEC4899) : (isDark ? Colors.white38 : const Color(0xFFCBD5E1)),
+                  color: isSelected ? const Color(0xFF2563EB) : (isDark ? Colors.white38 : const Color(0xFFCBD5E1)),
                   width: 2,
                 ),
-                color: isSelected ? const Color(0xFFEC4899) : Colors.transparent,
+                color: isSelected ? const Color(0xFF2563EB) : Colors.transparent,
               ),
               child: isSelected ? const Icon(Icons.check, size: 10, color: Colors.white) : null,
             ),
@@ -328,7 +328,7 @@ class _ExportSheetDialogState extends State<ExportSheetDialog> {
                       Text(
                         title,
                         style: TextStyle(
-                          color: isDark ? Colors.white : const Color(0xFF1E293B),
+                          color: isDark ? Colors.white : const Color(0xFF0F172A),
                           fontWeight: FontWeight.w800,
                           fontSize: 13,
                         ),
@@ -339,7 +339,7 @@ class _ExportSheetDialogState extends State<ExportSheetDialog> {
                           padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 2),
                           decoration: BoxDecoration(
                             gradient: const LinearGradient(
-                              colors: [Color(0xFFEC4899), Color(0xFFF43F5E)],
+                              colors: [Color(0xFF2563EB), Color(0xFF38BDF8)],
                             ),
                             borderRadius: BorderRadius.circular(4),
                           ),

@@ -26,14 +26,14 @@ class PermissionPrimerDialog extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(24),
       decoration: BoxDecoration(
-        color: isDark ? const Color(0xFF1B0C24) : Colors.white,
+        color: isDark ? const Color(0xFF131C2E) : Colors.white,
         borderRadius: const BorderRadius.vertical(top: Radius.circular(28)),
         border: Border.all(
-          color: isDark ? Colors.white.withValues(alpha: 0.06) : const Color(0xFFFCE7F3),
+          color: isDark ? Colors.white.withValues(alpha: 0.06) : const Color(0xFFE2E8F0),
         ),
         boxShadow: [
           BoxShadow(
-            color: isDark ? Colors.black45 : const Color(0xFFEC4899).withValues(alpha: 0.12),
+            color: isDark ? Colors.black45 : const Color(0xFF2563EB).withValues(alpha: 0.12),
             blurRadius: 32,
             offset: const Offset(0, -8),
           ),
@@ -59,10 +59,10 @@ class PermissionPrimerDialog extends StatelessWidget {
               Container(
                 padding: const EdgeInsets.all(12),
                 decoration: BoxDecoration(
-                  color: const Color(0xFFEC4899).withValues(alpha: isDark ? 0.2 : 0.12),
+                  color: const Color(0xFF2563EB).withValues(alpha: isDark ? 0.2 : 0.12),
                   borderRadius: BorderRadius.circular(12),
                 ),
-                child: const Icon(Icons.add_photo_alternate_rounded, color: Color(0xFFEC4899), size: 24),
+                child: const Icon(Icons.add_photo_alternate_rounded, color: Color(0xFF2563EB), size: 24),
               ),
               const SizedBox(width: 14),
               Column(
@@ -71,7 +71,7 @@ class PermissionPrimerDialog extends StatelessWidget {
                   Text(
                     'Import Watermarked Media',
                     style: TextStyle(
-                      color: isDark ? Colors.white : const Color(0xFF1E293B),
+                      color: isDark ? Colors.white : const Color(0xFF0F172A),
                       fontSize: 18,
                       fontWeight: FontWeight.w800,
                       letterSpacing: -0.3,
@@ -95,7 +95,7 @@ class PermissionPrimerDialog extends StatelessWidget {
           _buildSourceTile(
             context,
             icon: Icons.photo_library_rounded,
-            iconColor: const Color(0xFFEC4899),
+            iconColor: const Color(0xFF2563EB),
             title: 'Choose from Gallery',
             subtitle: 'PNG, JPG, WebP, HEIC photos',
             badge: 'RECOMMENDED',
@@ -141,10 +141,10 @@ class PermissionPrimerDialog extends StatelessWidget {
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
             decoration: BoxDecoration(
-              color: isDark ? Colors.white.withValues(alpha: 0.04) : const Color(0xFFFDF2F8),
+              color: isDark ? Colors.white.withValues(alpha: 0.04) : const Color(0xFFF0F9FF),
               borderRadius: BorderRadius.circular(10),
               border: Border.all(
-                color: isDark ? Colors.white.withValues(alpha: 0.06) : const Color(0xFFFCE7F3),
+                color: isDark ? Colors.white.withValues(alpha: 0.06) : const Color(0xFFE0F2FE),
               ),
             ),
             child: Row(
@@ -181,10 +181,10 @@ class PermissionPrimerDialog extends StatelessWidget {
   }) {
     return Container(
       decoration: BoxDecoration(
-        color: isDark ? const Color(0xFF110817) : const Color(0xFFFDF2F8),
+        color: isDark ? const Color(0xFF110817) : const Color(0xFFF0F9FF),
         borderRadius: BorderRadius.circular(14),
         border: Border.all(
-          color: isDark ? Colors.white.withValues(alpha: 0.06) : const Color(0xFFFCE7F3),
+          color: isDark ? Colors.white.withValues(alpha: 0.06) : const Color(0xFFE0F2FE),
         ),
       ),
       child: Material(
@@ -214,7 +214,7 @@ class PermissionPrimerDialog extends StatelessWidget {
                           Text(
                             title,
                             style: TextStyle(
-                              color: isDark ? Colors.white : const Color(0xFF1E293B),
+                              color: isDark ? Colors.white : const Color(0xFF0F172A),
                               fontSize: 14,
                               fontWeight: FontWeight.w800,
                             ),
@@ -225,7 +225,7 @@ class PermissionPrimerDialog extends StatelessWidget {
                               padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
                               decoration: BoxDecoration(
                                 gradient: const LinearGradient(
-                                  colors: [Color(0xFFEC4899), Color(0xFFF43F5E)],
+                                  colors: [Color(0xFF2563EB), Color(0xFF38BDF8)],
                                 ),
                                 borderRadius: BorderRadius.circular(4),
                               ),

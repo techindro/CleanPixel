@@ -40,17 +40,17 @@ class ContextualToolbar extends StatelessWidget {
           padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
           decoration: BoxDecoration(
             color: isDark
-                ? const Color(0xFF0F0715).withValues(alpha: 0.85)
+                ? const Color(0xFF0B0F19).withValues(alpha: 0.85)
                 : Colors.white.withValues(alpha: 0.94),
             borderRadius: BorderRadius.circular(999),
             border: Border.all(
-              color: isDark ? Colors.white.withValues(alpha: 0.1) : const Color(0xFFFCE7F3),
+              color: isDark ? Colors.white.withValues(alpha: 0.1) : const Color(0xFFE2E8F0),
             ),
             boxShadow: [
               BoxShadow(
                 color: isDark
                     ? Colors.black.withValues(alpha: 0.4)
-                    : const Color(0xFFEC4899).withValues(alpha: 0.12),
+                    : const Color(0xFF2563EB).withValues(alpha: 0.12),
                 blurRadius: 24,
                 offset: const Offset(0, 10),
               ),
@@ -64,7 +64,7 @@ class ContextualToolbar extends StatelessWidget {
                 _ToolButton(
                   icon: Icons.auto_awesome_rounded,
                   isActive: true,
-                  color: const Color(0xFFEC4899),
+                  color: const Color(0xFF2563EB),
                   onTap: onAutoDetect!,
                   tooltip: 'Auto Detect',
                 ),
@@ -77,7 +77,7 @@ class ContextualToolbar extends StatelessWidget {
               _ToolButton(
                 icon: isBrush ? Icons.brush_rounded : Icons.auto_fix_high_rounded,
                 isActive: true,
-                color: const Color(0xFFEC4899),
+                color: const Color(0xFF2563EB),
                 onTap: onToggleTool,
                 tooltip: isBrush ? 'Brush' : 'Eraser',
               ),
@@ -90,14 +90,14 @@ class ContextualToolbar extends StatelessWidget {
                 width: 80,
                 child: SliderTheme(
                   data: SliderTheme.of(context).copyWith(
-                    activeTrackColor: const Color(0xFFEC4899),
+                    activeTrackColor: const Color(0xFF2563EB),
                     inactiveTrackColor: isDark
                         ? Colors.white.withValues(alpha: 0.12)
-                        : const Color(0xFFFCE7F3),
-                    thumbColor: isDark ? Colors.white : const Color(0xFFEC4899),
+                        : const Color(0xFFE0F2FE),
+                    thumbColor: isDark ? Colors.white : const Color(0xFF2563EB),
                     thumbShape: const RoundSliderThumbShape(enabledThumbRadius: 6),
                     overlayShape: const RoundSliderOverlayShape(overlayRadius: 12),
-                    overlayColor: const Color(0xFFEC4899).withValues(alpha: 0.2),
+                    overlayColor: const Color(0xFF2563EB).withValues(alpha: 0.2),
                     trackHeight: 3,
                   ),
                   child: Slider(
@@ -170,7 +170,7 @@ class _ToolButton extends StatelessWidget {
   Widget build(BuildContext context) {
     final effectiveColor = color ??
         (isActive
-            ? (isDark ? Colors.white : const Color(0xFF1E293B))
+            ? (isDark ? Colors.white : const Color(0xFF0F172A))
             : (isDark ? Colors.white.withValues(alpha: 0.25) : const Color(0xFFCBD5E1)));
 
     return Tooltip(
@@ -208,7 +208,7 @@ class _Divider extends StatelessWidget {
     return Container(
       width: 1,
       height: 18,
-      color: isDark ? Colors.white.withValues(alpha: 0.1) : const Color(0xFFFCE7F3),
+      color: isDark ? Colors.white.withValues(alpha: 0.1) : const Color(0xFFE2E8F0),
     );
   }
 }

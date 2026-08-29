@@ -102,10 +102,10 @@ class _ComparisonSliderState extends State<ComparisonSlider> {
                           decoration: BoxDecoration(
                             shape: BoxShape.circle,
                             color: Colors.white,
-                            border: Border.all(color: const Color(0xFFEC4899), width: 2),
+                            border: Border.all(color: const Color(0xFF2563EB), width: 2),
                             boxShadow: [
                               BoxShadow(
-                                color: const Color(0xFFEC4899).withValues(alpha: 0.35),
+                                color: const Color(0xFF2563EB).withValues(alpha: 0.35),
                                 blurRadius: 10,
                                 spreadRadius: 2,
                               ),
@@ -114,8 +114,8 @@ class _ComparisonSliderState extends State<ComparisonSlider> {
                           child: const Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              Icon(Icons.chevron_left_rounded, size: 14, color: Color(0xFF1E293B)),
-                              Icon(Icons.chevron_right_rounded, size: 14, color: Color(0xFF1E293B)),
+                              Icon(Icons.chevron_left_rounded, size: 14, color: Color(0xFF0F172A)),
+                              Icon(Icons.chevron_right_rounded, size: 14, color: Color(0xFF0F172A)),
                             ],
                           ),
                         ),
@@ -158,14 +158,17 @@ class _ComparisonSliderState extends State<ComparisonSlider> {
 }
 
 class _HorizontalClipper extends CustomClipper<Rect> {
-  final double fraction;
-  _HorizontalClipper(this.fraction);
+  final double position;
+
+  _HorizontalClipper(this.position);
 
   @override
   Rect getClip(Size size) {
-    return Rect.fromLTRB(0, 0, size.width * fraction, size.height);
+    return Rect.fromLTRB(0, 0, size.width * position, size.height);
   }
 
   @override
-  bool shouldReclip(covariant _HorizontalClipper oldClipper) => oldClipper.fraction != fraction;
+  bool shouldReclip(_HorizontalClipper oldClipper) {
+    return oldClipper.position != position;
+  }
 }

@@ -3,7 +3,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class ThemeService {
   static const String _prefKey = 'cleanpixel_theme_mode';
-  // Default to pure White & Pink theme
+  // Default to Pure White & Electric Blue theme
   static final ValueNotifier<ThemeMode> themeModeNotifier = ValueNotifier<ThemeMode>(ThemeMode.light);
 
   static Future<void> init() async {
@@ -34,7 +34,7 @@ class ThemeService {
       case ThemeMode.system:
         return 'System Default';
       case ThemeMode.light:
-        return 'Light Mode (White & Pink)';
+        return 'Light Mode (Pure White & Electric Blue)';
     }
   }
 }

@@ -12,9 +12,9 @@ class ToolsHubScreen extends StatelessWidget {
     final isDark = Theme.of(context).brightness == Brightness.dark;
 
     return Scaffold(
-      backgroundColor: isDark ? const Color(0xFF0F0715) : const Color(0xFFFAF5FF),
+      backgroundColor: isDark ? const Color(0xFF0B0F19) : const Color(0xFFF8FAFC),
       appBar: AppBar(
-        backgroundColor: isDark ? const Color(0xFF0F0715) : Colors.white,
+        backgroundColor: isDark ? const Color(0xFF0B0F19) : Colors.white,
         elevation: 0,
         title: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -24,13 +24,13 @@ class ToolsHubScreen extends StatelessWidget {
               style: TextStyle(
                 fontWeight: FontWeight.w800,
                 fontSize: 20,
-                color: isDark ? Colors.white : const Color(0xFF1E293B),
+                color: isDark ? Colors.white : const Color(0xFF0F172A),
                 letterSpacing: -0.3,
               ),
             ),
             const Text(
               'Select an AI neural model for your media',
-              style: TextStyle(fontSize: 11, fontWeight: FontWeight.w600, color: Color(0xFFEC4899)),
+              style: TextStyle(fontSize: 11, fontWeight: FontWeight.w700, color: Color(0xFF2563EB)),
             ),
           ],
         ),
@@ -42,7 +42,7 @@ class ToolsHubScreen extends StatelessWidget {
           _buildToolCard(
             context,
             icon: Icons.auto_fix_high_rounded,
-            gradient: const [Color(0xFFEC4899), Color(0xFFF43F5E)],
+            gradient: const [Color(0xFF2563EB), Color(0xFF38BDF8)],
             title: 'Watermark & Text Remover',
             description: 'Brush over copyright stamps, logos, subtitles, and TikTok stamps to erase in 1-tap.',
             badge: 'POPULAR',
@@ -57,7 +57,7 @@ class ToolsHubScreen extends StatelessWidget {
           _buildToolCard(
             context,
             icon: Icons.person_remove_rounded,
-            gradient: const [Color(0xFFFB7185), Color(0xFFE11D48)],
+            gradient: const [Color(0xFF0284C7), Color(0xFF0EA5E9)],
             title: 'Magic Object & People Eraser',
             description: 'Erase photobombers, power lines, trash, and unwanted background distractions.',
             badge: 'AI NEURAL',
@@ -102,7 +102,7 @@ class ToolsHubScreen extends StatelessWidget {
           _buildToolCard(
             context,
             icon: Icons.videocam_rounded,
-            gradient: const [Color(0xFFA855F7), Color(0xFFEC4899)],
+            gradient: const [Color(0xFF2563EB), Color(0xFF8B5CF6)],
             title: 'Temporal Video Inpainter',
             description: 'Erase moving watermarks and objects across 60 FPS video tracks with keyframe propagation.',
             badge: 'PRO TIER',
@@ -138,17 +138,17 @@ class ToolsHubScreen extends StatelessWidget {
       child: Container(
         padding: const EdgeInsets.all(16),
         decoration: BoxDecoration(
-          color: isDark ? const Color(0xFF1B0C24) : Colors.white,
+          color: isDark ? const Color(0xFF131C2E) : Colors.white,
           borderRadius: BorderRadius.circular(20),
           border: Border.all(
-            color: isDark ? Colors.white.withValues(alpha: 0.06) : const Color(0xFFFCE7F3),
+            color: isDark ? Colors.white.withValues(alpha: 0.06) : const Color(0xFFE2E8F0),
             width: 1,
           ),
           boxShadow: isDark
               ? []
               : [
                   BoxShadow(
-                    color: const Color(0xFFEC4899).withValues(alpha: 0.08),
+                    color: const Color(0xFF2563EB).withValues(alpha: 0.08),
                     blurRadius: 14,
                     offset: const Offset(0, 4),
                   ),
@@ -188,7 +188,7 @@ class ToolsHubScreen extends StatelessWidget {
                         child: Text(
                           title,
                           style: TextStyle(
-                            color: isDark ? Colors.white : const Color(0xFF1E293B),
+                            color: isDark ? Colors.white : const Color(0xFF0F172A),
                             fontSize: 15,
                             fontWeight: FontWeight.w800,
                             letterSpacing: -0.2,
@@ -199,18 +199,18 @@ class ToolsHubScreen extends StatelessWidget {
                         padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
                         decoration: BoxDecoration(
                           color: isPro
-                              ? const Color(0xFFEC4899)
-                              : (isDark ? Colors.white.withValues(alpha: 0.08) : const Color(0xFFFDF2F8)),
+                              ? const Color(0xFF2563EB)
+                              : (isDark ? Colors.white.withValues(alpha: 0.08) : const Color(0xFFF0F9FF)),
                           borderRadius: BorderRadius.circular(6),
                           border: isPro
                               ? null
                               : Border.all(
-                                  color: isDark ? Colors.white.withValues(alpha: 0.1) : const Color(0xFFFCE7F3)),
+                                  color: isDark ? Colors.white.withValues(alpha: 0.1) : const Color(0xFFE0F2FE)),
                         ),
                         child: Text(
                           badge,
                           style: TextStyle(
-                            color: isPro ? Colors.white : const Color(0xFFEC4899),
+                            color: isPro ? Colors.white : const Color(0xFF2563EB),
                             fontSize: 9,
                             fontWeight: FontWeight.w900,
                             letterSpacing: 0.4,

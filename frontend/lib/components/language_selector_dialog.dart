@@ -40,14 +40,14 @@ class _LanguageSelectorDialogState extends State<LanguageSelectorDialog> {
       height: MediaQuery.of(context).size.height * 0.75,
       padding: const EdgeInsets.fromLTRB(20, 16, 20, 20),
       decoration: BoxDecoration(
-        color: isDark ? const Color(0xFF1B0C24) : Colors.white,
+        color: isDark ? const Color(0xFF131C2E) : Colors.white,
         borderRadius: const BorderRadius.vertical(top: Radius.circular(28)),
         border: Border.all(
-          color: isDark ? Colors.white.withValues(alpha: 0.06) : const Color(0xFFFCE7F3),
+          color: isDark ? Colors.white.withValues(alpha: 0.06) : const Color(0xFFE2E8F0),
         ),
         boxShadow: [
           BoxShadow(
-            color: isDark ? Colors.black54 : const Color(0xFFEC4899).withValues(alpha: 0.12),
+            color: isDark ? Colors.black54 : const Color(0xFF2563EB).withValues(alpha: 0.12),
             blurRadius: 32,
             offset: const Offset(0, -8),
           ),
@@ -75,10 +75,10 @@ class _LanguageSelectorDialogState extends State<LanguageSelectorDialog> {
               Container(
                 padding: const EdgeInsets.all(8),
                 decoration: BoxDecoration(
-                  color: const Color(0xFFEC4899).withValues(alpha: isDark ? 0.2 : 0.12),
+                  color: const Color(0xFF2563EB).withValues(alpha: isDark ? 0.2 : 0.12),
                   borderRadius: BorderRadius.circular(10),
                 ),
-                child: const Icon(Icons.translate_rounded, color: Color(0xFFEC4899), size: 20),
+                child: const Icon(Icons.translate_rounded, color: Color(0xFF2563EB), size: 20),
               ),
               const SizedBox(width: 10),
               Column(
@@ -87,7 +87,7 @@ class _LanguageSelectorDialogState extends State<LanguageSelectorDialog> {
                   Text(
                     'Select App Language',
                     style: TextStyle(
-                      color: isDark ? Colors.white : const Color(0xFF1E293B),
+                      color: isDark ? Colors.white : const Color(0xFF0F172A),
                       fontSize: 18,
                       fontWeight: FontWeight.w800,
                       letterSpacing: -0.3,
@@ -110,35 +110,35 @@ class _LanguageSelectorDialogState extends State<LanguageSelectorDialog> {
           TextField(
             onChanged: (v) => setState(() => _searchQuery = v),
             style: TextStyle(
-              color: isDark ? Colors.white : const Color(0xFF1E293B),
+              color: isDark ? Colors.white : const Color(0xFF0F172A),
               fontSize: 14,
               fontWeight: FontWeight.w600,
             ),
             decoration: InputDecoration(
               filled: true,
-              fillColor: isDark ? const Color(0xFF110817) : const Color(0xFFFDF2F8),
+              fillColor: isDark ? const Color(0xFF110817) : const Color(0xFFF0F9FF),
               hintText: 'Search language / भाषा खोजें...',
               hintStyle: TextStyle(
                 color: isDark ? const Color(0xFF64748B) : const Color(0xFF94A3B8),
                 fontSize: 13,
               ),
-              prefixIcon: const Icon(Icons.search_rounded, color: Color(0xFFEC4899), size: 20),
+              prefixIcon: const Icon(Icons.search_rounded, color: Color(0xFF2563EB), size: 20),
               contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(12),
                 borderSide: BorderSide(
-                  color: isDark ? Colors.white.withValues(alpha: 0.08) : const Color(0xFFFCE7F3),
+                  color: isDark ? Colors.white.withValues(alpha: 0.08) : const Color(0xFFE0F2FE),
                 ),
               ),
               enabledBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(12),
                 borderSide: BorderSide(
-                  color: isDark ? Colors.white.withValues(alpha: 0.08) : const Color(0xFFFCE7F3),
+                  color: isDark ? Colors.white.withValues(alpha: 0.08) : const Color(0xFFE0F2FE),
                 ),
               ),
               focusedBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(12),
-                borderSide: const BorderSide(color: Color(0xFFEC4899), width: 1.5),
+                borderSide: const BorderSide(color: Color(0xFF2563EB), width: 1.5),
               ),
             ),
           ),
@@ -168,20 +168,20 @@ class _LanguageSelectorDialogState extends State<LanguageSelectorDialog> {
                   margin: const EdgeInsets.only(bottom: 8),
                   decoration: BoxDecoration(
                     color: isSelected
-                        ? const Color(0xFFEC4899).withValues(alpha: isDark ? 0.2 : 0.1)
+                        ? const Color(0xFF2563EB).withValues(alpha: isDark ? 0.2 : 0.1)
                         : (isDark ? const Color(0xFF110817) : Colors.white),
                     borderRadius: BorderRadius.circular(14),
                     border: Border.all(
                       color: isSelected
-                          ? const Color(0xFFEC4899)
-                          : (isDark ? Colors.white.withValues(alpha: 0.04) : const Color(0xFFFCE7F3)),
+                          ? const Color(0xFF2563EB)
+                          : (isDark ? Colors.white.withValues(alpha: 0.04) : const Color(0xFFE2E8F0)),
                       width: isSelected ? 1.5 : 1,
                     ),
                     boxShadow: isDark || isSelected
                         ? []
                         : [
                             BoxShadow(
-                              color: const Color(0xFFEC4899).withValues(alpha: 0.04),
+                              color: const Color(0xFF2563EB).withValues(alpha: 0.04),
                               blurRadius: 8,
                               offset: const Offset(0, 2),
                             ),
@@ -206,13 +206,13 @@ class _LanguageSelectorDialogState extends State<LanguageSelectorDialog> {
                               height: 38,
                               decoration: BoxDecoration(
                                 color: isSelected
-                                    ? const Color(0xFFEC4899).withValues(alpha: 0.2)
-                                    : (isDark ? Colors.white.withValues(alpha: 0.06) : const Color(0xFFFDF2F8)),
+                                    ? const Color(0xFF2563EB).withValues(alpha: 0.2)
+                                    : (isDark ? Colors.white.withValues(alpha: 0.06) : const Color(0xFFF0F9FF)),
                                 borderRadius: BorderRadius.circular(10),
                                 border: Border.all(
                                   color: isSelected
-                                      ? const Color(0xFFEC4899)
-                                      : (isDark ? Colors.white.withValues(alpha: 0.1) : const Color(0xFFFCE7F3)),
+                                      ? const Color(0xFF2563EB)
+                                      : (isDark ? Colors.white.withValues(alpha: 0.1) : const Color(0xFFE0F2FE)),
                                 ),
                               ),
                               alignment: Alignment.center,
@@ -230,8 +230,8 @@ class _LanguageSelectorDialogState extends State<LanguageSelectorDialog> {
                                     lang.nativeName,
                                     style: TextStyle(
                                       color: isSelected
-                                          ? const Color(0xFFEC4899)
-                                          : (isDark ? Colors.white : const Color(0xFF1E293B)),
+                                          ? const Color(0xFF2563EB)
+                                          : (isDark ? Colors.white : const Color(0xFF0F172A)),
                                       fontWeight: FontWeight.w700,
                                       fontSize: 15,
                                     ),
@@ -251,7 +251,7 @@ class _LanguageSelectorDialogState extends State<LanguageSelectorDialog> {
                                 padding: const EdgeInsets.all(4),
                                 decoration: const BoxDecoration(
                                   shape: BoxShape.circle,
-                                  color: Color(0xFFEC4899),
+                                  color: Color(0xFF2563EB),
                                 ),
                                 child: const Icon(Icons.check_rounded, color: Colors.white, size: 14),
                               ),
@@ -283,20 +283,20 @@ class _LanguageSelectorDialogState extends State<LanguageSelectorDialog> {
         padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
         decoration: BoxDecoration(
           color: isSelected
-              ? const Color(0xFFEC4899).withValues(alpha: isDark ? 0.25 : 0.12)
-              : (isDark ? const Color(0xFF110817) : const Color(0xFFFDF2F8)),
+              ? const Color(0xFF2563EB).withValues(alpha: isDark ? 0.25 : 0.12)
+              : (isDark ? const Color(0xFF110817) : const Color(0xFFF0F9FF)),
           borderRadius: BorderRadius.circular(8),
           border: Border.all(
             color: isSelected
-                ? const Color(0xFFEC4899)
-                : (isDark ? Colors.white.withValues(alpha: 0.08) : const Color(0xFFFCE7F3)),
+                ? const Color(0xFF2563EB)
+                : (isDark ? Colors.white.withValues(alpha: 0.08) : const Color(0xFFE0F2FE)),
           ),
         ),
         child: Text(
           label,
           style: TextStyle(
             color: isSelected
-                ? const Color(0xFFEC4899)
+                ? const Color(0xFF2563EB)
                 : (isDark ? const Color(0xFF94A3B8) : const Color(0xFF64748B)),
             fontSize: 11,
             fontWeight: isSelected ? FontWeight.w800 : FontWeight.w600,

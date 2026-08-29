@@ -204,7 +204,7 @@ class _SplashScreenState extends State<SplashScreen> with TickerProviderStateMix
                   opacity: _subtitleOpacity.value,
                   child: ShaderMask(
                     shaderCallback: (bounds) => const LinearGradient(
-                      colors: [Color(0xFFEC4899), Color(0xFFF43F5E), Color(0xFFFB7185)],
+                      colors: [Color(0xFF38BDF8), Color(0xFF2563EB), Color(0xFF60A5FA)],
                     ).createShader(bounds),
                     child: const Text(
                       'Neural Watermark & Object Remover',

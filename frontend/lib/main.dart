@@ -20,7 +20,7 @@ void main() async {
     // Custom Graceful Error Widget
     ErrorWidget.builder = (FlutterErrorDetails details) {
       return Material(
-        color: const Color(0xFFFDF2F8),
+        color: const Color(0xFFF0F9FF),
         child: Center(
           child: Padding(
             padding: const EdgeInsets.all(24.0),
@@ -30,15 +30,15 @@ void main() async {
                 Container(
                   padding: const EdgeInsets.all(16),
                   decoration: BoxDecoration(
-                    color: const Color(0xFFEC4899).withValues(alpha: 0.1),
+                    color: const Color(0xFF2563EB).withValues(alpha: 0.1),
                     shape: BoxShape.circle,
                   ),
-                  child: const Icon(Icons.auto_fix_high_rounded, color: Color(0xFFEC4899), size: 36),
+                  child: const Icon(Icons.auto_fix_high_rounded, color: Color(0xFF2563EB), size: 36),
                 ),
                 const SizedBox(height: 16),
                 const Text(
                   'CleanPixel AI is restoring view...',
-                  style: TextStyle(color: Color(0xFF831843), fontWeight: FontWeight.bold, fontSize: 16),
+                  style: TextStyle(color: Color(0xFF1E3A8A), fontWeight: FontWeight.bold, fontSize: 16),
                 ),
               ],
             ),
@@ -51,7 +51,7 @@ void main() async {
     await LocaleService.init();
     await ThemeService.init();
 
-    // Immersive system UI overlay with White & Pink styling
+    // Immersive system UI overlay with Pure White & Electric Blue styling
     SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
       statusBarColor: Colors.transparent,
       statusBarIconBrightness: Brightness.dark,
@@ -80,28 +80,28 @@ class CleanPixelApp extends StatelessWidget {
               title: 'CleanPixel AI',
               debugShowCheckedModeBanner: false,
               themeMode: themeMode,
-              // 🌸 Sleek Luxury White & Rose Pink Theme
+              // 🔷 Sleek Luxury Pure White & Electric Blue Theme
               theme: ThemeData(
                 brightness: Brightness.light,
-                scaffoldBackgroundColor: const Color(0xFFFAF5FF),
+                scaffoldBackgroundColor: const Color(0xFFF8FAFC),
                 cardColor: Colors.white,
-                primaryColor: const Color(0xFFEC4899),
+                primaryColor: const Color(0xFF2563EB),
                 textTheme: GoogleFonts.plusJakartaSansTextTheme(
                   ThemeData(brightness: Brightness.light).textTheme,
                 ),
                 colorScheme: const ColorScheme.light(
-                  primary: Color(0xFFEC4899),
-                  secondary: Color(0xFFF43F5E),
+                  primary: Color(0xFF2563EB),
+                  secondary: Color(0xFF38BDF8),
                   surface: Colors.white,
-                  surfaceTint: Color(0xFFFDF2F8),
+                  surfaceTint: Color(0xFFF0F9FF),
                   onPrimary: Colors.white,
                 ),
                 appBarTheme: const AppBarTheme(
                   backgroundColor: Colors.white,
                   elevation: 0,
-                  iconTheme: IconThemeData(color: Color(0xFF1E293B)),
+                  iconTheme: IconThemeData(color: Color(0xFF0F172A)),
                   titleTextStyle: TextStyle(
-                    color: Color(0xFF1E293B),
+                    color: Color(0xFF0F172A),
                     fontSize: 20,
                     fontWeight: FontWeight.w800,
                   ),
@@ -113,24 +113,24 @@ class CleanPixelApp extends StatelessWidget {
                   },
                 ),
               ),
-              // 🌸 Deep Velvet Night & Neon Pink Theme
+              // 🌙 Deep Sapphire Night Theme
               darkTheme: ThemeData(
                 brightness: Brightness.dark,
-                scaffoldBackgroundColor: const Color(0xFF0F0715),
-                cardColor: const Color(0xFF1B0C24),
-                primaryColor: const Color(0xFFEC4899),
+                scaffoldBackgroundColor: const Color(0xFF0B0F19),
+                cardColor: const Color(0xFF131C2E),
+                primaryColor: const Color(0xFF38BDF8),
                 textTheme: GoogleFonts.plusJakartaSansTextTheme(
                   ThemeData(brightness: Brightness.dark).textTheme,
                 ),
                 colorScheme: const ColorScheme.dark(
-                  primary: Color(0xFFEC4899),
-                  secondary: Color(0xFFF43F5E),
-                  surface: Color(0xFF1B0C24),
-                  surfaceTint: Color(0xFF2D123A),
+                  primary: Color(0xFF38BDF8),
+                  secondary: Color(0xFF2563EB),
+                  surface: Color(0xFF131C2E),
+                  surfaceTint: Color(0xFF1E293B),
                   onPrimary: Colors.white,
                 ),
                 appBarTheme: const AppBarTheme(
-                  backgroundColor: Color(0xFF0F0715),
+                  backgroundColor: Color(0xFF0B0F19),
                   elevation: 0,
                   iconTheme: IconThemeData(color: Colors.white),
                   titleTextStyle: TextStyle(

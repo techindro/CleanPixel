@@ -98,9 +98,9 @@ class _AuthScreenState extends State<AuthScreen> with SingleTickerProviderStateM
           margin: const EdgeInsets.all(16),
           content: const Row(
             children: [
-              Icon(Icons.check_circle_outline_rounded, color: Colors.white, size: 18),
+              Icon(Icons.check_circle_rounded, color: Colors.white, size: 18),
               SizedBox(width: 8),
-              Text('OTP sent successfully! Enter code below'),
+              Text('OTP sent successfully (Demo: 123456)'),
             ],
           ),
         ),
@@ -111,12 +111,12 @@ class _AuthScreenState extends State<AuthScreen> with SingleTickerProviderStateM
   Future<void> _handleVerifyOtp() async {
     if (_otpController.text.trim().length < 4) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Please enter valid 6-digit OTP code')),
+        const SnackBar(content: Text('Please enter a valid OTP')),
       );
       return;
     }
 
-    HapticFeedback.mediumImpact();
+    HapticFeedback.heavyImpact();
     setState(() => _isLoading = true);
 
     final success = await AuthService.verifyPhoneOtp(
@@ -128,14 +128,13 @@ class _AuthScreenState extends State<AuthScreen> with SingleTickerProviderStateM
     setState(() => _isLoading = false);
 
     if (success && mounted) {
-      HapticFeedback.heavyImpact();
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(builder: (context) => const HomeShellScreen()),
       );
     } else if (mounted) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Invalid code. Please try again.')),
+        const SnackBar(content: Text('Invalid verification code. Try again.')),
       );
     }
   }
@@ -143,30 +142,35 @@ class _AuthScreenState extends State<AuthScreen> with SingleTickerProviderStateM
   Future<void> _handleSubmitEmail() async {
     if (!_formKey.currentState!.validate()) return;
 
-    HapticFeedback.mediumImpact();
+    HapticFeedback.heavyImpact();
     setState(() => _isLoading = true);
 
-    bool success;
+    bool success = false;
     if (_isLogin) {
       success = await AuthService.login(
         email: _emailController.text.trim(),
-        password: _passwordController.text.trim(),
+        password: _passwordController.text,
       );
     } else {
       success = await AuthService.register(
-        fullName: _nameController.text.trim().isNotEmpty ? _nameController.text.trim() : 'Creator',
         email: _emailController.text.trim(),
-        password: _passwordController.text.trim(),
+        password: _passwordController.text,
+        fullName: _nameController.text.trim(),
       );
     }
 
     setState(() => _isLoading = false);
 
     if (success && mounted) {
-      HapticFeedback.heavyImpact();
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(builder: (context) => const HomeShellScreen()),
+      );
+    } else if (mounted) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(_isLogin ? 'Login failed. Please check credentials.' : 'Registration failed. Try again.'),
+        ),
       );
     }
   }
@@ -174,11 +178,9 @@ class _AuthScreenState extends State<AuthScreen> with SingleTickerProviderStateM
   Future<void> _handleGoogleAuth() async {
     HapticFeedback.mediumImpact();
     setState(() => _isLoading = true);
-    await AuthService.continueWithGoogle();
+    final success = await AuthService.continueWithGoogle();
     setState(() => _isLoading = false);
-
-    if (mounted) {
-      HapticFeedback.heavyImpact();
+    if (success && mounted) {
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(builder: (context) => const HomeShellScreen()),
@@ -202,7 +204,7 @@ class _AuthScreenState extends State<AuthScreen> with SingleTickerProviderStateM
     final isDark = Theme.of(context).brightness == Brightness.dark;
 
     return Scaffold(
-      backgroundColor: isDark ? const Color(0xFF0F0715) : const Color(0xFFFAF5FF),
+      backgroundColor: isDark ? const Color(0xFF0B0F19) : const Color(0xFFF8FAFC),
       body: Stack(
         children: [
           // Ambient Glow
@@ -219,7 +221,7 @@ class _AuthScreenState extends State<AuthScreen> with SingleTickerProviderStateM
                     shape: BoxShape.circle,
                     gradient: RadialGradient(
                       colors: [
-                        const Color(0xFFEC4899).withValues(alpha: isDark ? 0.18 : 0.12),
+                        const Color(0xFF2563EB).withValues(alpha: isDark ? 0.18 : 0.12),
                         Colors.transparent,
                       ],
                     ),
@@ -252,7 +254,7 @@ class _AuthScreenState extends State<AuthScreen> with SingleTickerProviderStateM
                     Text(
                       'CleanPixel AI',
                       style: TextStyle(
-                        color: isDark ? Colors.white : const Color(0xFF1E293B),
+                        color: isDark ? Colors.white : const Color(0xFF0F172A),
                         fontSize: 24,
                         fontWeight: FontWeight.w800,
                         letterSpacing: -0.5,
@@ -273,14 +275,14 @@ class _AuthScreenState extends State<AuthScreen> with SingleTickerProviderStateM
                     Container(
                       padding: const EdgeInsets.all(4),
                       decoration: BoxDecoration(
-                        color: isDark ? const Color(0xFF1B0C24) : Colors.white,
+                        color: isDark ? const Color(0xFF131C2E) : Colors.white,
                         borderRadius: BorderRadius.circular(14),
-                        border: Border.all(color: isDark ? Colors.white.withValues(alpha: 0.06) : const Color(0xFFFCE7F3)),
+                        border: Border.all(color: isDark ? Colors.white.withValues(alpha: 0.06) : const Color(0xFFE2E8F0)),
                         boxShadow: isDark
                             ? []
                             : [
                                 BoxShadow(
-                                  color: const Color(0xFFEC4899).withValues(alpha: 0.06),
+                                  color: const Color(0xFF2563EB).withValues(alpha: 0.06),
                                   blurRadius: 10,
                                   offset: const Offset(0, 2),
                                 ),
@@ -299,14 +301,14 @@ class _AuthScreenState extends State<AuthScreen> with SingleTickerProviderStateM
                     Container(
                       padding: const EdgeInsets.all(20),
                       decoration: BoxDecoration(
-                        color: isDark ? const Color(0xFF1B0C24) : Colors.white,
+                        color: isDark ? const Color(0xFF131C2E) : Colors.white,
                         borderRadius: BorderRadius.circular(22),
-                        border: Border.all(color: isDark ? Colors.white.withValues(alpha: 0.06) : const Color(0xFFFCE7F3)),
+                        border: Border.all(color: isDark ? Colors.white.withValues(alpha: 0.06) : const Color(0xFFE2E8F0)),
                         boxShadow: isDark
                             ? []
                             : [
                                 BoxShadow(
-                                  color: const Color(0xFFEC4899).withValues(alpha: 0.08),
+                                  color: const Color(0xFF2563EB).withValues(alpha: 0.08),
                                   blurRadius: 20,
                                   offset: const Offset(0, 6),
                                 ),
@@ -354,21 +356,21 @@ class _AuthScreenState extends State<AuthScreen> with SingleTickerProviderStateM
                       child: OutlinedButton(
                         style: OutlinedButton.styleFrom(
                           side: BorderSide(
-                            color: isDark ? Colors.white.withValues(alpha: 0.12) : const Color(0xFFFCE7F3),
+                            color: isDark ? Colors.white.withValues(alpha: 0.12) : const Color(0xFFE2E8F0),
                           ),
-                          backgroundColor: isDark ? const Color(0xFF1B0C24) : Colors.white,
+                          backgroundColor: isDark ? const Color(0xFF131C2E) : Colors.white,
                           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
                         ),
                         onPressed: _isLoading ? null : _handleGoogleAuth,
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            const Icon(Icons.g_mobiledata_rounded, color: Color(0xFFEC4899), size: 28),
+                            const Icon(Icons.g_mobiledata_rounded, color: Color(0xFF2563EB), size: 28),
                             const SizedBox(width: 4),
                             Text(
                               'Continue with Google',
                               style: TextStyle(
-                                color: isDark ? Colors.white : const Color(0xFF1E293B),
+                                color: isDark ? Colors.white : const Color(0xFF0F172A),
                                 fontWeight: FontWeight.w700,
                                 fontSize: 13,
                               ),
@@ -429,10 +431,10 @@ class _AuthScreenState extends State<AuthScreen> with SingleTickerProviderStateM
           padding: const EdgeInsets.symmetric(vertical: 8),
           decoration: BoxDecoration(
             color: isSelected
-                ? const Color(0xFFEC4899).withValues(alpha: isDark ? 0.25 : 0.12)
+                ? const Color(0xFF2563EB).withValues(alpha: isDark ? 0.25 : 0.12)
                 : Colors.transparent,
             borderRadius: BorderRadius.circular(10),
-            border: isSelected ? Border.all(color: const Color(0xFFEC4899).withValues(alpha: 0.4)) : null,
+            border: isSelected ? Border.all(color: const Color(0xFF2563EB).withValues(alpha: 0.4)) : null,
           ),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -440,13 +442,13 @@ class _AuthScreenState extends State<AuthScreen> with SingleTickerProviderStateM
               Icon(
                 icon,
                 size: 16,
-                color: isSelected ? const Color(0xFFEC4899) : (isDark ? const Color(0xFF94A3B8) : const Color(0xFF64748B)),
+                color: isSelected ? const Color(0xFF2563EB) : (isDark ? const Color(0xFF94A3B8) : const Color(0xFF64748B)),
               ),
               const SizedBox(width: 6),
               Text(
                 label,
                 style: TextStyle(
-                  color: isSelected ? const Color(0xFFEC4899) : (isDark ? const Color(0xFF94A3B8) : const Color(0xFF64748B)),
+                  color: isSelected ? const Color(0xFF2563EB) : (isDark ? const Color(0xFF94A3B8) : const Color(0xFF64748B)),
                   fontWeight: FontWeight.w700,
                   fontSize: 12,
                 ),
@@ -477,9 +479,9 @@ class _AuthScreenState extends State<AuthScreen> with SingleTickerProviderStateM
           Container(
             padding: const EdgeInsets.all(3),
             decoration: BoxDecoration(
-              color: isDark ? const Color(0xFF110817) : const Color(0xFFFDF2F8),
+              color: isDark ? const Color(0xFF110817) : const Color(0xFFF0F9FF),
               borderRadius: BorderRadius.circular(10),
-              border: Border.all(color: isDark ? Colors.transparent : const Color(0xFFFCE7F3)),
+              border: Border.all(color: isDark ? Colors.transparent : const Color(0xFFE0F2FE)),
             ),
             child: Row(
               children: [
@@ -534,7 +536,7 @@ class _AuthScreenState extends State<AuthScreen> with SingleTickerProviderStateM
           Text(
             'Enter Mobile Number',
             style: TextStyle(
-              color: isDark ? Colors.white : const Color(0xFF1E293B),
+              color: isDark ? Colors.white : const Color(0xFF0F172A),
               fontWeight: FontWeight.w700,
               fontSize: 14,
             ),
@@ -553,16 +555,16 @@ class _AuthScreenState extends State<AuthScreen> with SingleTickerProviderStateM
               Container(
                 padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 12),
                 decoration: BoxDecoration(
-                  color: isDark ? const Color(0xFF110817) : const Color(0xFFFDF2F8),
+                  color: isDark ? const Color(0xFF110817) : const Color(0xFFF0F9FF),
                   borderRadius: BorderRadius.circular(12),
-                  border: Border.all(color: isDark ? Colors.white.withValues(alpha: 0.08) : const Color(0xFFFCE7F3)),
+                  border: Border.all(color: isDark ? Colors.white.withValues(alpha: 0.08) : const Color(0xFFE0F2FE)),
                 ),
                 child: DropdownButtonHideUnderline(
                   child: DropdownButton<String>(
                     value: _selectedCountryCode,
-                    dropdownColor: isDark ? const Color(0xFF1B0C24) : Colors.white,
+                    dropdownColor: isDark ? const Color(0xFF131C2E) : Colors.white,
                     style: TextStyle(
-                      color: isDark ? Colors.white : const Color(0xFF1E293B),
+                      color: isDark ? Colors.white : const Color(0xFF0F172A),
                       fontWeight: FontWeight.bold,
                       fontSize: 13,
                     ),
@@ -600,14 +602,14 @@ class _AuthScreenState extends State<AuthScreen> with SingleTickerProviderStateM
               Text(
                 'Enter 6-Digit OTP',
                 style: TextStyle(
-                  color: isDark ? Colors.white : const Color(0xFF1E293B),
+                  color: isDark ? Colors.white : const Color(0xFF0F172A),
                   fontWeight: FontWeight.w700,
                   fontSize: 14,
                 ),
               ),
               TextButton(
                 onPressed: () => setState(() => _otpSent = false),
-                child: const Text('Change Number', style: TextStyle(color: Color(0xFFEC4899), fontSize: 11, fontWeight: FontWeight.bold)),
+                child: const Text('Change Number', style: TextStyle(color: Color(0xFF2563EB), fontSize: 11, fontWeight: FontWeight.bold)),
               ),
             ],
           ),
@@ -633,7 +635,7 @@ class _AuthScreenState extends State<AuthScreen> with SingleTickerProviderStateM
               if (_resendTimer == 0)
                 TextButton(
                   onPressed: _handleSendOtp,
-                  child: const Text('Resend Now', style: TextStyle(color: Color(0xFFEC4899), fontSize: 11, fontWeight: FontWeight.bold)),
+                  child: const Text('Resend Now', style: TextStyle(color: Color(0xFF2563EB), fontSize: 11, fontWeight: FontWeight.bold)),
                 ),
             ],
           ),
@@ -654,7 +656,7 @@ class _AuthScreenState extends State<AuthScreen> with SingleTickerProviderStateM
         child: Container(
           padding: const EdgeInsets.symmetric(vertical: 8),
           decoration: BoxDecoration(
-            color: isSelected ? const Color(0xFFEC4899) : Colors.transparent,
+            color: isSelected ? const Color(0xFF2563EB) : Colors.transparent,
             borderRadius: BorderRadius.circular(8),
           ),
           child: Text(
@@ -678,9 +680,9 @@ class _AuthScreenState extends State<AuthScreen> with SingleTickerProviderStateM
       child: Container(
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(12),
-          gradient: const LinearGradient(colors: [Color(0xFFEC4899), Color(0xFFF43F5E)]),
+          gradient: const LinearGradient(colors: [Color(0xFF2563EB), Color(0xFF38BDF8)]),
           boxShadow: [
-            BoxShadow(color: const Color(0xFFEC4899).withValues(alpha: 0.35), blurRadius: 12, offset: const Offset(0, 4)),
+            BoxShadow(color: const Color(0xFF2563EB).withValues(alpha: 0.35), blurRadius: 12, offset: const Offset(0, 4)),
           ],
         ),
         child: ElevatedButton(
@@ -711,26 +713,26 @@ class _AuthScreenState extends State<AuthScreen> with SingleTickerProviderStateM
       controller: controller,
       obscureText: obscureText,
       keyboardType: keyboardType,
-      style: TextStyle(color: isDark ? Colors.white : const Color(0xFF1E293B), fontSize: 13, fontWeight: FontWeight.w600),
+      style: TextStyle(color: isDark ? Colors.white : const Color(0xFF0F172A), fontSize: 13, fontWeight: FontWeight.w600),
       decoration: InputDecoration(
         filled: true,
-        fillColor: isDark ? const Color(0xFF110817) : const Color(0xFFFDF2F8),
+        fillColor: isDark ? const Color(0xFF110817) : const Color(0xFFF0F9FF),
         hintText: hint,
         hintStyle: TextStyle(color: isDark ? const Color(0xFF64748B) : const Color(0xFF94A3B8), fontSize: 12),
-        prefixIcon: Icon(icon, color: const Color(0xFFEC4899), size: 18),
+        prefixIcon: Icon(icon, color: const Color(0xFF2563EB), size: 18),
         suffixIcon: suffixIcon,
         contentPadding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(12),
-          borderSide: BorderSide(color: isDark ? Colors.white.withValues(alpha: 0.08) : const Color(0xFFFCE7F3)),
+          borderSide: BorderSide(color: isDark ? Colors.white.withValues(alpha: 0.08) : const Color(0xFFE0F2FE)),
         ),
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(12),
-          borderSide: BorderSide(color: isDark ? Colors.white.withValues(alpha: 0.08) : const Color(0xFFFCE7F3)),
+          borderSide: BorderSide(color: isDark ? Colors.white.withValues(alpha: 0.08) : const Color(0xFFE0F2FE)),
         ),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(12),
-          borderSide: const BorderSide(color: Color(0xFFEC4899), width: 1.5),
+          borderSide: const BorderSide(color: Color(0xFF2563EB), width: 1.5),
         ),
       ),
     );

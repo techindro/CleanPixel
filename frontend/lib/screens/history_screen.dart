@@ -47,7 +47,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
     showDialog(
       context: context,
       builder: (context) => Dialog(
-        backgroundColor: isDark ? const Color(0xFF1B0C24) : Colors.white,
+        backgroundColor: isDark ? const Color(0xFF131C2E) : Colors.white,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(24)),
         child: Column(
           mainAxisSize: MainAxisSize.min,
@@ -62,8 +62,8 @@ class _HistoryScreenState extends State<HistoryScreen> {
                   else
                     Container(
                       height: 200,
-                      color: isDark ? Colors.black26 : const Color(0xFFFDF2F8),
-                      child: const Center(child: Icon(Icons.broken_image_rounded, color: Color(0xFFEC4899), size: 40)),
+                      color: isDark ? Colors.black26 : const Color(0xFFF0F9FF),
+                      child: const Center(child: Icon(Icons.broken_image_rounded, color: Color(0xFF2563EB), size: 40)),
                     ),
                   Positioned(
                     top: 12,
@@ -71,7 +71,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
                     child: Container(
                       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
                       decoration: BoxDecoration(
-                        gradient: const LinearGradient(colors: [Color(0xFFEC4899), Color(0xFFF43F5E)]),
+                        gradient: const LinearGradient(colors: [Color(0xFF2563EB), Color(0xFF38BDF8)]),
                         borderRadius: BorderRadius.circular(8),
                       ),
                       child: const Text('CLEANED 4K', style: TextStyle(color: Colors.white, fontSize: 10, fontWeight: FontWeight.w800)),
@@ -91,7 +91,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
                       Text(
                         item.mode,
                         style: TextStyle(
-                          color: isDark ? Colors.white : const Color(0xFF1E293B),
+                          color: isDark ? Colors.white : const Color(0xFF0F172A),
                           fontWeight: FontWeight.w800,
                           fontSize: 16,
                         ),
@@ -121,25 +121,32 @@ class _HistoryScreenState extends State<HistoryScreen> {
                       ),
                       const SizedBox(width: 12),
                       Expanded(
-                        child: ElevatedButton.icon(
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: const Color(0xFFEC4899),
-                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                        child: Container(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(12),
+                            gradient: const LinearGradient(colors: [Color(0xFF2563EB), Color(0xFF38BDF8)]),
                           ),
-                          onPressed: () {
-                            Navigator.pop(context);
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              SnackBar(
-                                backgroundColor: const Color(0xFF10B981),
-                                behavior: SnackBarBehavior.floating,
-                                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-                                margin: const EdgeInsets.all(16),
-                                content: const Text('Saved to Gallery!'),
-                              ),
-                            );
-                          },
-                          icon: const Icon(Icons.share_rounded, color: Colors.white, size: 18),
-                          label: const Text('Share', style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
+                          child: ElevatedButton.icon(
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: Colors.transparent,
+                              shadowColor: Colors.transparent,
+                              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                            ),
+                            onPressed: () {
+                              Navigator.pop(context);
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(
+                                  backgroundColor: const Color(0xFF10B981),
+                                  behavior: SnackBarBehavior.floating,
+                                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                                  margin: const EdgeInsets.all(16),
+                                  content: const Text('Saved to Gallery!'),
+                                ),
+                              );
+                            },
+                            icon: const Icon(Icons.share_rounded, color: Colors.white, size: 18),
+                            label: const Text('Share', style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
+                          ),
                         ),
                       ),
                     ],
@@ -158,9 +165,9 @@ class _HistoryScreenState extends State<HistoryScreen> {
     final isDark = Theme.of(context).brightness == Brightness.dark;
 
     return Scaffold(
-      backgroundColor: isDark ? const Color(0xFF0F0715) : const Color(0xFFFAF5FF),
+      backgroundColor: isDark ? const Color(0xFF0B0F19) : const Color(0xFFF8FAFC),
       appBar: AppBar(
-        backgroundColor: isDark ? const Color(0xFF0F0715) : Colors.white,
+        backgroundColor: isDark ? const Color(0xFF0B0F19) : Colors.white,
         elevation: 0,
         title: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -170,13 +177,13 @@ class _HistoryScreenState extends State<HistoryScreen> {
               style: TextStyle(
                 fontWeight: FontWeight.w800,
                 fontSize: 20,
-                color: isDark ? Colors.white : const Color(0xFF1E293B),
+                color: isDark ? Colors.white : const Color(0xFF0F172A),
                 letterSpacing: -0.3,
               ),
             ),
             const Text(
               'Your cleaned photos & 4K exports',
-              style: TextStyle(fontSize: 11, fontWeight: FontWeight.w600, color: Color(0xFFEC4899)),
+              style: TextStyle(fontSize: 11, fontWeight: FontWeight.w700, color: Color(0xFF2563EB)),
             ),
           ],
         ),
@@ -189,9 +196,9 @@ class _HistoryScreenState extends State<HistoryScreen> {
                 final confirm = await showDialog<bool>(
                   context: context,
                   builder: (ctx) => AlertDialog(
-                    backgroundColor: isDark ? const Color(0xFF1B0C24) : Colors.white,
+                    backgroundColor: isDark ? const Color(0xFF131C2E) : Colors.white,
                     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(18)),
-                    title: Text('Clear All History?', style: TextStyle(color: isDark ? Colors.white : const Color(0xFF1E293B))),
+                    title: Text('Clear All History?', style: TextStyle(color: isDark ? Colors.white : const Color(0xFF0F172A))),
                     content: Text('This will delete all locally cached exports.', style: TextStyle(color: isDark ? const Color(0xFF94A3B8) : const Color(0xFF64748B))),
                     actions: [
                       TextButton(onPressed: () => Navigator.pop(ctx, false), child: Text('Cancel', style: TextStyle(color: isDark ? Colors.white60 : const Color(0xFF64748B)))),
@@ -208,12 +215,12 @@ class _HistoryScreenState extends State<HistoryScreen> {
         ],
       ),
       body: _isLoading
-          ? const Center(child: CircularProgressIndicator(color: Color(0xFFEC4899)))
+          ? const Center(child: CircularProgressIndicator(color: Color(0xFF2563EB)))
           : _items.isEmpty
               ? _buildEmptyState(isDark)
               : RefreshIndicator(
                   onRefresh: _loadHistory,
-                  color: const Color(0xFFEC4899),
+                  color: const Color(0xFF2563EB),
                   child: GridView.builder(
                     padding: const EdgeInsets.all(16),
                     gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
@@ -230,16 +237,16 @@ class _HistoryScreenState extends State<HistoryScreen> {
                         onTap: () => _showPreviewModal(item),
                         child: Container(
                           decoration: BoxDecoration(
-                            color: isDark ? const Color(0xFF1B0C24) : Colors.white,
+                            color: isDark ? const Color(0xFF131C2E) : Colors.white,
                             borderRadius: BorderRadius.circular(18),
                             border: Border.all(
-                              color: isDark ? Colors.white.withValues(alpha: 0.06) : const Color(0xFFFCE7F3),
+                              color: isDark ? Colors.white.withValues(alpha: 0.06) : const Color(0xFFE2E8F0),
                             ),
                             boxShadow: isDark
                                 ? []
                                 : [
                                     BoxShadow(
-                                      color: const Color(0xFFEC4899).withValues(alpha: 0.08),
+                                      color: const Color(0xFF2563EB).withValues(alpha: 0.08),
                                       blurRadius: 12,
                                       offset: const Offset(0, 4),
                                     ),
@@ -254,9 +261,9 @@ class _HistoryScreenState extends State<HistoryScreen> {
                                   child: file.existsSync()
                                       ? Image.file(file, width: double.infinity, fit: BoxFit.cover)
                                       : Container(
-                                          color: isDark ? Colors.black26 : const Color(0xFFFDF2F8),
+                                          color: isDark ? Colors.black26 : const Color(0xFFF0F9FF),
                                           child: const Center(
-                                            child: Icon(Icons.broken_image_rounded, color: Color(0xFFEC4899), size: 30),
+                                            child: Icon(Icons.broken_image_rounded, color: Color(0xFF2563EB), size: 30),
                                           ),
                                         ),
                                 ),
@@ -270,7 +277,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
                                         style: TextStyle(
                                           fontWeight: FontWeight.w800,
                                           fontSize: 12,
-                                          color: isDark ? Colors.white : const Color(0xFF1E293B),
+                                          color: isDark ? Colors.white : const Color(0xFF0F172A),
                                         ),
                                         maxLines: 1,
                                         overflow: TextOverflow.ellipsis,
@@ -309,9 +316,9 @@ class _HistoryScreenState extends State<HistoryScreen> {
               height: 90,
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
-                gradient: const LinearGradient(colors: [Color(0xFFEC4899), Color(0xFFF43F5E)]),
+                gradient: const LinearGradient(colors: [Color(0xFF2563EB), Color(0xFF38BDF8)]),
                 boxShadow: [
-                  BoxShadow(color: const Color(0xFFEC4899).withValues(alpha: 0.35), blurRadius: 24, spreadRadius: 4),
+                  BoxShadow(color: const Color(0xFF2563EB).withValues(alpha: 0.35), blurRadius: 24, spreadRadius: 4),
                 ],
               ),
               child: const Icon(Icons.auto_fix_high_rounded, size: 42, color: Colors.white),
@@ -320,7 +327,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
             Text(
               'No Saved Creations Yet',
               style: TextStyle(
-                color: isDark ? Colors.white : const Color(0xFF1E293B),
+                color: isDark ? Colors.white : const Color(0xFF0F172A),
                 fontSize: 20,
                 fontWeight: FontWeight.w800,
               ),
@@ -337,15 +344,25 @@ class _HistoryScreenState extends State<HistoryScreen> {
             ),
             const SizedBox(height: 24),
             if (widget.onOpenStudio != null)
-              ElevatedButton.icon(
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: const Color(0xFFEC4899),
-                  padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 14),
-                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
+              Container(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(14),
+                  gradient: const LinearGradient(colors: [Color(0xFF2563EB), Color(0xFF38BDF8)]),
+                  boxShadow: [
+                    BoxShadow(color: const Color(0xFF2563EB).withValues(alpha: 0.35), blurRadius: 14, offset: const Offset(0, 4)),
+                  ],
                 ),
-                onPressed: widget.onOpenStudio,
-                icon: const Icon(Icons.add_photo_alternate_rounded, color: Colors.white, size: 20),
-                label: const Text('Open Inpaint Studio', style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
+                child: ElevatedButton.icon(
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.transparent,
+                    shadowColor: Colors.transparent,
+                    padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 14),
+                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
+                  ),
+                  onPressed: widget.onOpenStudio,
+                  icon: const Icon(Icons.add_photo_alternate_rounded, color: Colors.white, size: 20),
+                  label: const Text('Open Inpaint Studio', style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
+                ),
               ),
           ],
         ),

@@ -313,7 +313,7 @@ class _WorkspaceScreenState extends State<WorkspaceScreen> with TickerProviderSt
     _saveHistory();
     setState(() {
       final paint = Paint()
-        ..color = const Color(0xFFEC4899).withValues(alpha: 0.65)
+        ..color = const Color(0xFF38BDF8).withValues(alpha: 0.65)
         ..strokeCap = StrokeCap.round
         ..strokeWidth = 28.0;
 
@@ -329,7 +329,7 @@ class _WorkspaceScreenState extends State<WorkspaceScreen> with TickerProviderSt
 
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
-        backgroundColor: const Color(0xFFEC4899),
+        backgroundColor: const Color(0xFF2563EB),
         behavior: SnackBarBehavior.floating,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
         margin: const EdgeInsets.all(16),
@@ -354,7 +354,7 @@ class _WorkspaceScreenState extends State<WorkspaceScreen> with TickerProviderSt
     HapticFeedback.mediumImpact();
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
-        backgroundColor: const Color(0xFFEC4899),
+        backgroundColor: const Color(0xFF2563EB),
         behavior: SnackBarBehavior.floating,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
         margin: const EdgeInsets.all(16),
@@ -410,9 +410,9 @@ class _WorkspaceScreenState extends State<WorkspaceScreen> with TickerProviderSt
     final isDark = Theme.of(context).brightness == Brightness.dark;
 
     return Scaffold(
-      backgroundColor: isDark ? const Color(0xFF0F0715) : const Color(0xFFFAF5FF),
+      backgroundColor: isDark ? const Color(0xFF0B0F19) : const Color(0xFFF8FAFC),
       appBar: AppBar(
-        backgroundColor: isDark ? const Color(0xFF0F0715) : Colors.white,
+        backgroundColor: isDark ? const Color(0xFF0B0F19) : Colors.white,
         elevation: 0,
         title: Row(
           children: [
@@ -434,13 +434,13 @@ class _WorkspaceScreenState extends State<WorkspaceScreen> with TickerProviderSt
                   style: TextStyle(
                     fontSize: 17,
                     fontWeight: FontWeight.w800,
-                    color: isDark ? Colors.white : const Color(0xFF1E293B),
+                    color: isDark ? Colors.white : const Color(0xFF0F172A),
                     letterSpacing: -0.3,
                   ),
                 ),
                 const Text(
                   'Neural Inpaint Studio',
-                  style: TextStyle(fontSize: 10, fontWeight: FontWeight.w600, color: Color(0xFFEC4899)),
+                  style: TextStyle(fontSize: 10, fontWeight: FontWeight.w700, color: Color(0xFF2563EB)),
                 ),
               ],
             ),
@@ -476,7 +476,7 @@ class _WorkspaceScreenState extends State<WorkspaceScreen> with TickerProviderSt
                     _state = StudioState.drawing;
                     for (final box in targetBoxes) {
                       final paint = Paint()
-                        ..color = const Color(0xFFEC4899).withValues(alpha: 0.65)
+                        ..color = const Color(0xFF2563EB).withValues(alpha: 0.65)
                         ..strokeCap = StrokeCap.round
                         ..strokeWidth = 32.0;
 
@@ -523,9 +523,9 @@ class _WorkspaceScreenState extends State<WorkspaceScreen> with TickerProviderSt
             icon: Container(
               padding: const EdgeInsets.all(6),
               decoration: BoxDecoration(
-                color: isDark ? Colors.white.withValues(alpha: 0.08) : const Color(0xFFFDF2F8),
+                color: isDark ? Colors.white.withValues(alpha: 0.08) : const Color(0xFFF0F9FF),
                 borderRadius: BorderRadius.circular(10),
-                border: Border.all(color: isDark ? Colors.transparent : const Color(0xFFFCE7F3)),
+                border: Border.all(color: isDark ? Colors.transparent : const Color(0xFFE0F2FE)),
               ),
               child: Icon(
                 Icons.settings_outlined,
@@ -558,16 +558,16 @@ class _WorkspaceScreenState extends State<WorkspaceScreen> with TickerProviderSt
                   builder: (context, constraints) {
                     return Container(
                       decoration: BoxDecoration(
-                        color: isDark ? const Color(0xFF1B0C24) : Colors.white,
+                        color: isDark ? const Color(0xFF131C2E) : Colors.white,
                         borderRadius: BorderRadius.circular(20),
                         border: Border.all(
-                          color: isDark ? Colors.white.withValues(alpha: 0.06) : const Color(0xFFFCE7F3),
+                          color: isDark ? Colors.white.withValues(alpha: 0.06) : const Color(0xFFE2E8F0),
                         ),
                         boxShadow: isDark
                             ? []
                             : [
                                 BoxShadow(
-                                  color: const Color(0xFFEC4899).withValues(alpha: 0.08),
+                                  color: const Color(0xFF2563EB).withValues(alpha: 0.08),
                                   blurRadius: 18,
                                   offset: const Offset(0, 6),
                                 ),
@@ -693,15 +693,15 @@ class _WorkspaceScreenState extends State<WorkspaceScreen> with TickerProviderSt
                           height: 48,
                           child: OutlinedButton.icon(
                             style: OutlinedButton.styleFrom(
-                              side: const BorderSide(color: Color(0xFFEC4899), width: 1.5),
+                              side: const BorderSide(color: Color(0xFF2563EB), width: 1.5),
                               shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
-                              backgroundColor: const Color(0xFFEC4899).withValues(alpha: 0.08),
+                              backgroundColor: const Color(0xFF2563EB).withValues(alpha: 0.08),
                             ),
                             onPressed: _runAiEnhance,
-                            icon: const Icon(Icons.auto_awesome_rounded, size: 18, color: Color(0xFFEC4899)),
+                            icon: const Icon(Icons.auto_awesome_rounded, size: 18, color: Color(0xFF2563EB)),
                             label: const Text(
                               '✨ AI 1-Tap HDR Enhance & Sharpen',
-                              style: TextStyle(color: Color(0xFFEC4899), fontWeight: FontWeight.bold, fontSize: 13),
+                              style: TextStyle(color: Color(0xFF2563EB), fontWeight: FontWeight.bold, fontSize: 13),
                             ),
                           ),
                         ),
@@ -734,7 +734,7 @@ class _WorkspaceScreenState extends State<WorkspaceScreen> with TickerProviderSt
                                   label: Text(
                                     'Edit Again',
                                     style: TextStyle(
-                                      color: Theme.of(context).brightness == Brightness.dark ? Colors.white : const Color(0xFF1E293B),
+                                      color: Theme.of(context).brightness == Brightness.dark ? Colors.white : const Color(0xFF0F172A),
                                       fontWeight: FontWeight.w700,
                                     ),
                                   ),
@@ -750,11 +750,11 @@ class _WorkspaceScreenState extends State<WorkspaceScreen> with TickerProviderSt
                                   decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(14),
                                     gradient: const LinearGradient(
-                                      colors: [Color(0xFFEC4899), Color(0xFFF43F5E), Color(0xFFE11D48)],
+                                      colors: [Color(0xFF2563EB), Color(0xFF38BDF8)],
                                     ),
                                     boxShadow: [
                                       BoxShadow(
-                                        color: const Color(0xFFEC4899).withValues(alpha: 0.35),
+                                        color: const Color(0xFF2563EB).withValues(alpha: 0.35),
                                         blurRadius: 14,
                                         offset: const Offset(0, 4),
                                       ),
@@ -801,7 +801,7 @@ class _WorkspaceScreenState extends State<WorkspaceScreen> with TickerProviderSt
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(14),
                       gradient: const LinearGradient(
-                        colors: [Color(0xFFF59E0B), Color(0xFFEC4899), Color(0xFF8B5CF6)],
+                        colors: [Color(0xFF2563EB), Color(0xFF38BDF8), Color(0xFF0284C7)],
                       ),
                     ),
                     child: ElevatedButton.icon(
@@ -836,17 +836,17 @@ class _WorkspaceScreenState extends State<WorkspaceScreen> with TickerProviderSt
     return Container(
       padding: const EdgeInsets.all(4),
       decoration: BoxDecoration(
-        color: isDark ? const Color(0xFF1B0C24) : Colors.white,
+        color: isDark ? const Color(0xFF131C2E) : Colors.white,
         borderRadius: BorderRadius.circular(14),
         border: Border.all(
-          color: isDark ? Colors.white.withValues(alpha: 0.04) : const Color(0xFFFCE7F3),
+          color: isDark ? Colors.white.withValues(alpha: 0.04) : const Color(0xFFE2E8F0),
           width: 1,
         ),
         boxShadow: isDark
             ? []
             : [
                 BoxShadow(
-                  color: const Color(0xFFEC4899).withValues(alpha: 0.06),
+                  color: const Color(0xFF2563EB).withValues(alpha: 0.06),
                   blurRadius: 10,
                   offset: const Offset(0, 2),
                 ),
@@ -877,11 +877,11 @@ class _WorkspaceScreenState extends State<WorkspaceScreen> with TickerProviderSt
           padding: const EdgeInsets.symmetric(vertical: 8),
           decoration: BoxDecoration(
             color: isSelected
-                ? const Color(0xFFEC4899).withValues(alpha: isDark ? 0.25 : 0.12)
+                ? const Color(0xFF2563EB).withValues(alpha: isDark ? 0.25 : 0.12)
                 : Colors.transparent,
             borderRadius: BorderRadius.circular(10),
             border: isSelected
-                ? Border.all(color: const Color(0xFFEC4899).withValues(alpha: 0.4))
+                ? Border.all(color: const Color(0xFF2563EB).withValues(alpha: 0.4))
                 : null,
           ),
           child: Row(
@@ -891,7 +891,7 @@ class _WorkspaceScreenState extends State<WorkspaceScreen> with TickerProviderSt
                 icon,
                 size: 15,
                 color: isSelected
-                    ? const Color(0xFFEC4899)
+                    ? const Color(0xFF2563EB)
                     : (isDark ? const Color(0xFF94A3B8) : const Color(0xFF64748B)),
               ),
               const SizedBox(width: 5),
@@ -899,7 +899,7 @@ class _WorkspaceScreenState extends State<WorkspaceScreen> with TickerProviderSt
                 label,
                 style: TextStyle(
                   color: isSelected
-                      ? const Color(0xFFEC4899)
+                      ? const Color(0xFF2563EB)
                       : (isDark ? const Color(0xFF94A3B8) : const Color(0xFF64748B)),
                   fontWeight: isSelected ? FontWeight.w800 : FontWeight.w600,
                   fontSize: 12,
@@ -910,7 +910,7 @@ class _WorkspaceScreenState extends State<WorkspaceScreen> with TickerProviderSt
                 Container(
                   padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 1),
                   decoration: BoxDecoration(
-                    color: const Color(0xFFEC4899),
+                    color: const Color(0xFF2563EB),
                     borderRadius: BorderRadius.circular(4),
                   ),
                   child: Text(
@@ -1058,13 +1058,13 @@ class _WorkspaceScreenState extends State<WorkspaceScreen> with TickerProviderSt
           padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
           decoration: BoxDecoration(
             color: isAccent
-                ? const Color(0xFFEC4899).withValues(alpha: isDark ? 0.2 : 0.12)
-                : (isDark ? const Color(0xFF1E293B).withValues(alpha: 0.8) : const Color(0xFFFDF2F8)),
+                ? const Color(0xFF2563EB).withValues(alpha: isDark ? 0.2 : 0.12)
+                : (isDark ? const Color(0xFF1E293B).withValues(alpha: 0.8) : const Color(0xFFF0F9FF)),
             borderRadius: BorderRadius.circular(12),
             border: Border.all(
               color: isAccent
-                  ? const Color(0xFFEC4899).withValues(alpha: 0.4)
-                  : (isDark ? Colors.white.withValues(alpha: 0.08) : const Color(0xFFFCE7F3)),
+                  ? const Color(0xFF2563EB).withValues(alpha: 0.4)
+                  : (isDark ? Colors.white.withValues(alpha: 0.08) : const Color(0xFFE0F2FE)),
             ),
           ),
           child: Row(
@@ -1073,13 +1073,13 @@ class _WorkspaceScreenState extends State<WorkspaceScreen> with TickerProviderSt
               Icon(
                 icon,
                 size: 16,
-                color: isAccent ? const Color(0xFFEC4899) : (isDark ? Colors.white : const Color(0xFF1E293B)),
+                color: isAccent ? const Color(0xFF2563EB) : (isDark ? Colors.white : const Color(0xFF0F172A)),
               ),
               const SizedBox(width: 6),
               Text(
                 label,
                 style: TextStyle(
-                  color: isAccent ? const Color(0xFFEC4899) : (isDark ? Colors.white : const Color(0xFF1E293B)),
+                  color: isAccent ? const Color(0xFF2563EB) : (isDark ? Colors.white : const Color(0xFF0F172A)),
                   fontWeight: FontWeight.w700,
                   fontSize: 12,
                 ),
@@ -1120,9 +1120,9 @@ class _WorkspaceScreenState extends State<WorkspaceScreen> with TickerProviderSt
               padding: const EdgeInsets.all(20),
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
-                gradient: const LinearGradient(colors: [Color(0xFFEC4899), Color(0xFF8B5CF6)]),
+                gradient: const LinearGradient(colors: [Color(0xFF2563EB), Color(0xFF38BDF8)]),
                 boxShadow: [
-                  BoxShadow(color: const Color(0xFFEC4899).withValues(alpha: 0.35), blurRadius: 24),
+                  BoxShadow(color: const Color(0xFF2563EB).withValues(alpha: 0.35), blurRadius: 24),
                 ],
               ),
               child: const Icon(Icons.videocam_rounded, size: 40, color: Colors.white),
@@ -1131,7 +1131,7 @@ class _WorkspaceScreenState extends State<WorkspaceScreen> with TickerProviderSt
             Text(
               'Deep Diffusion Video Tracking',
               style: TextStyle(
-                color: isDark ? Colors.white : const Color(0xFF1E293B),
+                color: isDark ? Colors.white : const Color(0xFF0F172A),
                 fontSize: 18,
                 fontWeight: FontWeight.w800,
               ),
@@ -1150,9 +1150,9 @@ class _WorkspaceScreenState extends State<WorkspaceScreen> with TickerProviderSt
             Container(
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(14),
-                gradient: const LinearGradient(colors: [Color(0xFFEC4899), Color(0xFFF43F5E)]),
+                gradient: const LinearGradient(colors: [Color(0xFF2563EB), Color(0xFF38BDF8)]),
                 boxShadow: [
-                  BoxShadow(color: const Color(0xFFEC4899).withValues(alpha: 0.35), blurRadius: 12, offset: const Offset(0, 4)),
+                  BoxShadow(color: const Color(0xFF2563EB).withValues(alpha: 0.35), blurRadius: 12, offset: const Offset(0, 4)),
                 ],
               ),
               child: ElevatedButton(
@@ -1196,7 +1196,7 @@ class _WorkspaceScreenState extends State<WorkspaceScreen> with TickerProviderSt
             Text(
               'Bulk Image Batch Inpainter',
               style: TextStyle(
-                color: isDark ? Colors.white : const Color(0xFF1E293B),
+                color: isDark ? Colors.white : const Color(0xFF0F172A),
                 fontSize: 18,
                 fontWeight: FontWeight.w800,
               ),
@@ -1250,15 +1250,15 @@ class _WorkspaceScreenState extends State<WorkspaceScreen> with TickerProviderSt
                   gradient: LinearGradient(
                     colors: [
                       Colors.transparent,
-                      const Color(0xFFEC4899).withValues(alpha: 0.7),
-                      const Color(0xFFEC4899),
-                      const Color(0xFFEC4899).withValues(alpha: 0.7),
+                      const Color(0xFF38BDF8).withValues(alpha: 0.7),
+                      const Color(0xFF38BDF8),
+                      const Color(0xFF38BDF8).withValues(alpha: 0.7),
                       Colors.transparent,
                     ],
                   ),
                   boxShadow: [
                     BoxShadow(
-                      color: const Color(0xFFEC4899).withValues(alpha: 0.5),
+                      color: const Color(0xFF38BDF8).withValues(alpha: 0.5),
                       blurRadius: 16,
                       spreadRadius: 4,
                     ),
@@ -1278,7 +1278,7 @@ class _WorkspaceScreenState extends State<WorkspaceScreen> with TickerProviderSt
                       children: [
                         ShaderMask(
                           shaderCallback: (bounds) => const SweepGradient(
-                            colors: [Color(0xFFEC4899), Color(0xFFF43F5E), Color(0xFF38BDF8), Color(0xFFEC4899)],
+                            colors: [Color(0xFF38BDF8), Color(0xFF2563EB), Color(0xFF0284C7), Color(0xFF38BDF8)],
                           ).createShader(bounds),
                           child: SizedBox(
                             width: 56,
@@ -1291,7 +1291,7 @@ class _WorkspaceScreenState extends State<WorkspaceScreen> with TickerProviderSt
                             ),
                           ),
                         ),
-                        const Icon(Icons.auto_fix_high_rounded, color: Color(0xFFEC4899), size: 22),
+                        const Icon(Icons.auto_fix_high_rounded, color: Color(0xFF38BDF8), size: 22),
                       ],
                     ),
                   ),
@@ -1302,7 +1302,7 @@ class _WorkspaceScreenState extends State<WorkspaceScreen> with TickerProviderSt
                       _stepperStatus,
                       key: ValueKey(_stepperStatus),
                       style: TextStyle(
-                        color: isDark ? Colors.white : const Color(0xFF1E293B),
+                        color: isDark ? Colors.white : const Color(0xFF0F172A),
                         fontWeight: FontWeight.w800,
                         fontSize: 15,
                         letterSpacing: -0.2,
@@ -1316,7 +1316,7 @@ class _WorkspaceScreenState extends State<WorkspaceScreen> with TickerProviderSt
                       _stepperProgress,
                       key: ValueKey(_stepperProgress),
                       style: const TextStyle(
-                        color: Color(0xFFEC4899),
+                        color: Color(0xFF2563EB),
                         fontSize: 12,
                         fontFamily: 'monospace',
                         fontWeight: FontWeight.w700,
