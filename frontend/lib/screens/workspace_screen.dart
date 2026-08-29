@@ -308,8 +308,7 @@ class _WorkspaceScreenState extends State<WorkspaceScreen> with TickerProviderSt
 
   void _autoDetectWatermarks() {
     HapticFeedback.mediumImpact();
-    final size = MediaQuery.of(context).size;
-    final canvasSize = Size(size.width - 28, size.height * 0.55);
+    final canvasSize = _viewportSize;
     final zones = AiToolsService.detectWatermarkZones(canvasSize);
 
     _saveHistory();
@@ -317,16 +316,15 @@ class _WorkspaceScreenState extends State<WorkspaceScreen> with TickerProviderSt
       final paint = Paint()
         ..color = const Color(0xFF38BDF8).withValues(alpha: 0.65)
         ..strokeCap = StrokeCap.round
-        ..strokeWidth = 28.0;
+        ..strokeWidth = 32.0;
 
-      for (final box in zones) {
-        for (double y = box.top + 6; y <= box.bottom - 6; y += 12) {
-          for (double x = box.left + 6; x <= box.right - 6; x += 12) {
-            _points.add(DrawingPoint(offset: Offset(x, y), paint: paint));
-          }
-          _points.add(null);
-        }
+      // Select the primary watermark zone (bottom-right / bottom stamp)
+      final primaryZone = zones.first;
+      final midY = (primaryZone.top + primaryZone.bottom) / 2;
+      for (double x = primaryZone.left + 10; x <= primaryZone.right - 10; x += 14) {
+        _points.add(DrawingPoint(offset: Offset(x, midY), paint: paint));
       }
+      _points.add(null);
     });
 
     ScaffoldMessenger.of(context).showSnackBar(
@@ -341,7 +339,7 @@ class _WorkspaceScreenState extends State<WorkspaceScreen> with TickerProviderSt
             SizedBox(width: 10),
             Expanded(
               child: Text(
-                'AI Auto-Selected 4 watermark zones! Tap Erase.',
+                'AI Auto-Selected watermark! Tap Erase to remove.',
                 style: TextStyle(fontWeight: FontWeight.w700, fontSize: 12),
               ),
             ),
