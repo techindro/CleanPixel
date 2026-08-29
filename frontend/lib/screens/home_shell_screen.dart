@@ -82,7 +82,7 @@ class _HomeShellScreenState extends State<HomeShellScreen> {
         duration: const Duration(milliseconds: 200),
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 6),
         decoration: BoxDecoration(
-          color: isSelected ? const Color(0xFF38BDF8).withValues(alpha: 0.12) : Colors.transparent,
+          color: isSelected ? const Color(0xFFEC4899).withValues(alpha: 0.15) : Colors.transparent,
           borderRadius: BorderRadius.circular(12),
         ),
         child: Column(
@@ -90,16 +90,16 @@ class _HomeShellScreenState extends State<HomeShellScreen> {
           children: [
             Icon(
               icon,
-              color: isSelected ? const Color(0xFF38BDF8) : const Color(0xFF64748B),
+              color: isSelected ? const Color(0xFFEC4899) : const Color(0xFF94A3B8),
               size: 22,
             ),
             const SizedBox(height: 4),
             Text(
               label,
               style: TextStyle(
-                color: isSelected ? Colors.white : const Color(0xFF64748B),
+                color: isSelected ? const Color(0xFFEC4899) : const Color(0xFF94A3B8),
                 fontSize: 11,
-                fontWeight: isSelected ? FontWeight.w700 : FontWeight.w500,
+                fontWeight: isSelected ? FontWeight.w800 : FontWeight.w500,
               ),
             ),
           ],

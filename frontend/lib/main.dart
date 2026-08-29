@@ -20,7 +20,7 @@ void main() async {
     // Custom Graceful Error Widget
     ErrorWidget.builder = (FlutterErrorDetails details) {
       return Material(
-        color: const Color(0xFF0F172A),
+        color: const Color(0xFFFDF2F8),
         child: Center(
           child: Padding(
             padding: const EdgeInsets.all(24.0),
@@ -30,15 +30,15 @@ void main() async {
                 Container(
                   padding: const EdgeInsets.all(16),
                   decoration: BoxDecoration(
-                    color: const Color(0xFF38BDF8).withValues(alpha: 0.1),
+                    color: const Color(0xFFEC4899).withValues(alpha: 0.1),
                     shape: BoxShape.circle,
                   ),
-                  child: const Icon(Icons.auto_fix_high_rounded, color: Color(0xFF38BDF8), size: 36),
+                  child: const Icon(Icons.auto_fix_high_rounded, color: Color(0xFFEC4899), size: 36),
                 ),
                 const SizedBox(height: 16),
                 const Text(
                   'CleanPixel AI is restoring view...',
-                  style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 16),
+                  style: TextStyle(color: Color(0xFF831843), fontWeight: FontWeight.bold, fontSize: 16),
                 ),
               ],
             ),
@@ -51,12 +51,12 @@ void main() async {
     await LocaleService.init();
     await ThemeService.init();
 
-    // Immersive system UI overlay
+    // Immersive system UI overlay with White & Pink styling
     SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
       statusBarColor: Colors.transparent,
-      statusBarIconBrightness: Brightness.light,
-      systemNavigationBarColor: Color(0xFF0B0F19),
-      systemNavigationBarIconBrightness: Brightness.light,
+      statusBarIconBrightness: Brightness.dark,
+      systemNavigationBarColor: Colors.white,
+      systemNavigationBarIconBrightness: Brightness.dark,
     ));
 
     runApp(const CleanPixelApp());
@@ -80,18 +80,31 @@ class CleanPixelApp extends StatelessWidget {
               title: 'CleanPixel AI',
               debugShowCheckedModeBanner: false,
               themeMode: themeMode,
-              // Light Theme
+              // 🌸 Sleek Luxury White & Rose Pink Theme
               theme: ThemeData(
                 brightness: Brightness.light,
-                scaffoldBackgroundColor: const Color(0xFFF8FAFC),
+                scaffoldBackgroundColor: const Color(0xFFFAF5FF),
                 cardColor: Colors.white,
+                primaryColor: const Color(0xFFEC4899),
                 textTheme: GoogleFonts.plusJakartaSansTextTheme(
                   ThemeData(brightness: Brightness.light).textTheme,
                 ),
                 colorScheme: const ColorScheme.light(
-                  primary: Color(0xFF0284C7),
-                  secondary: Color(0xFF2563EB),
+                  primary: Color(0xFFEC4899),
+                  secondary: Color(0xFFF43F5E),
                   surface: Colors.white,
+                  surfaceTint: Color(0xFFFDF2F8),
+                  onPrimary: Colors.white,
+                ),
+                appBarTheme: const AppBarTheme(
+                  backgroundColor: Colors.white,
+                  elevation: 0,
+                  iconTheme: IconThemeData(color: Color(0xFF1E293B)),
+                  titleTextStyle: TextStyle(
+                    color: Color(0xFF1E293B),
+                    fontSize: 20,
+                    fontWeight: FontWeight.w800,
+                  ),
                 ),
                 pageTransitionsTheme: const PageTransitionsTheme(
                   builders: {
@@ -100,18 +113,31 @@ class CleanPixelApp extends StatelessWidget {
                   },
                 ),
               ),
-              // Dark Theme (OLED)
+              // 🌸 Deep Velvet Night & Neon Pink Theme
               darkTheme: ThemeData(
                 brightness: Brightness.dark,
-                scaffoldBackgroundColor: const Color(0xFF0F172A),
-                cardColor: const Color(0xFF1E293B),
+                scaffoldBackgroundColor: const Color(0xFF0F0715),
+                cardColor: const Color(0xFF1B0C24),
+                primaryColor: const Color(0xFFEC4899),
                 textTheme: GoogleFonts.plusJakartaSansTextTheme(
                   ThemeData(brightness: Brightness.dark).textTheme,
                 ),
                 colorScheme: const ColorScheme.dark(
-                  primary: Color(0xFF38BDF8),
-                  secondary: Color(0xFF2563EB),
-                  surface: Color(0xFF1E293B),
+                  primary: Color(0xFFEC4899),
+                  secondary: Color(0xFFF43F5E),
+                  surface: Color(0xFF1B0C24),
+                  surfaceTint: Color(0xFF2D123A),
+                  onPrimary: Colors.white,
+                ),
+                appBarTheme: const AppBarTheme(
+                  backgroundColor: Color(0xFF0F0715),
+                  elevation: 0,
+                  iconTheme: IconThemeData(color: Colors.white),
+                  titleTextStyle: TextStyle(
+                    color: Colors.white,
+                    fontSize: 20,
+                    fontWeight: FontWeight.w800,
+                  ),
                 ),
                 pageTransitionsTheme: const PageTransitionsTheme(
                   builders: {

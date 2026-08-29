@@ -73,18 +73,18 @@ class _StepperCtaButtonState extends State<StepperCtaButton> with TickerProvider
                 borderRadius: BorderRadius.circular(16),
                 gradient: widget.isEnabled
                     ? const LinearGradient(
-                        colors: [Color(0xFF38BDF8), Color(0xFF2563EB), Color(0xFF1D4ED8)],
+                        colors: [Color(0xFFEC4899), Color(0xFFF43F5E), Color(0xFFE11D48)],
                       )
                     : LinearGradient(
                         colors: [
                           const Color(0xFF1E293B),
-                          const Color(0xFF1E293B).withOpacity(0.8),
+                          const Color(0xFF1E293B).withValues(alpha: 0.8),
                         ],
                       ),
                 boxShadow: widget.isEnabled && !widget.isProcessing
                     ? [
                         BoxShadow(
-                          color: const Color(0xFF2563EB).withOpacity(0.35),
+                          color: const Color(0xFFEC4899).withValues(alpha: 0.4),
                           blurRadius: 20,
                           offset: const Offset(0, 8),
                         ),

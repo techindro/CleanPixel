@@ -144,12 +144,12 @@ class _SplashScreenState extends State<SplashScreen> with TickerProviderStateMix
                           shape: BoxShape.circle,
                           boxShadow: [
                             BoxShadow(
-                              color: const Color(0xFF2563EB).withValues(alpha: 0.5),
+                              color: const Color(0xFFEC4899).withValues(alpha: 0.5),
                               blurRadius: _glowRadius.value,
                               spreadRadius: 2,
                             ),
                             BoxShadow(
-                              color: const Color(0xFF38BDF8).withValues(alpha: 0.25),
+                              color: const Color(0xFFF43F5E).withValues(alpha: 0.25),
                               blurRadius: _glowRadius.value * 1.5,
                               spreadRadius: 4,
                             ),
@@ -162,28 +162,36 @@ class _SplashScreenState extends State<SplashScreen> with TickerProviderStateMix
                         child: Transform.scale(
                           scale: _logoScale.value,
                           child: Container(
-                            width: 100,
-                            height: 100,
+                            width: 104,
+                            height: 104,
                             decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(24),
+                              borderRadius: BorderRadius.circular(26),
                               gradient: const LinearGradient(
                                 begin: Alignment.topLeft,
                                 end: Alignment.bottomRight,
-                                colors: [Color(0xFF1E293B), Color(0xFF0F172A)],
+                                colors: [Colors.white, Color(0xFFFDF2F8)],
                               ),
+                              boxShadow: [
+                                BoxShadow(
+                                  color: const Color(0xFFEC4899).withValues(alpha: 0.3),
+                                  blurRadius: 24,
+                                  offset: const Offset(0, 8),
+                                ),
+                              ],
                               border: Border.all(
-                                color: const Color(0xFF38BDF8).withValues(alpha: 0.3),
-                                width: 1.5,
+                                color: const Color(0xFFEC4899).withValues(alpha: 0.4),
+                                width: 2,
                               ),
                             ),
                             child: ClipRRect(
                               borderRadius: BorderRadius.circular(24),
                               child: Image.asset(
                                 'assets/logo.png',
+                                fit: BoxFit.contain,
                                 errorBuilder: (context, error, stackTrace) => const Icon(
                                   Icons.auto_fix_high_rounded,
                                   size: 48,
-                                  color: Color(0xFF38BDF8),
+                                  color: Color(0xFFEC4899),
                                 ),
                               ),
                             ),
@@ -218,14 +226,14 @@ class _SplashScreenState extends State<SplashScreen> with TickerProviderStateMix
                   opacity: _subtitleOpacity.value,
                   child: ShaderMask(
                     shaderCallback: (bounds) => const LinearGradient(
-                      colors: [Color(0xFF38BDF8), Color(0xFF94A3B8)],
+                      colors: [Color(0xFFEC4899), Color(0xFFF43F5E), Color(0xFFFB7185)],
                     ).createShader(bounds),
                     child: const Text(
                       'Neural Watermark & Object Remover',
                       style: TextStyle(
                         color: Colors.white,
                         fontSize: 14,
-                        fontWeight: FontWeight.w500,
+                        fontWeight: FontWeight.w700,
                         letterSpacing: 0.3,
                       ),
                     ),
