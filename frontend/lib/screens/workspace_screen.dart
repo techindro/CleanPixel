@@ -18,6 +18,7 @@ import 'package:cleanpixel_ai/services/history_service.dart';
 import 'package:cleanpixel_ai/services/ai_tools_service.dart';
 import 'package:cleanpixel_ai/screens/premium_screen.dart';
 import 'package:cleanpixel_ai/screens/settings_screen.dart';
+import 'package:cleanpixel_ai/services/locale_service.dart';
 
 enum StudioState { idle, drawing, processing, result }
 enum StudioMode { photo, video, batch }
@@ -407,10 +408,12 @@ class _WorkspaceScreenState extends State<WorkspaceScreen> with TickerProviderSt
         ? MemoryImage(_cleanedImageBytes!)
         : activeImageProvider;
 
-    final isDark = Theme.of(context).brightness == Brightness.dark;
-
-    return Scaffold(
-      backgroundColor: isDark ? const Color(0xFF0B0F19) : const Color(0xFFF8FAFC),
+    return ValueListenableBuilder<String>(
+      valueListenable: LocaleService.currentLocale,
+      builder: (context, _, __) {
+        final isDark = Theme.of(context).brightness == Brightness.dark;
+        return Scaffold(
+          backgroundColor: isDark ? const Color(0xFF0B0F19) : const Color(0xFFF8FAFC),
       appBar: AppBar(
         backgroundColor: isDark ? const Color(0xFF0B0F19) : Colors.white,
         elevation: 0,
@@ -829,7 +832,9 @@ class _WorkspaceScreenState extends State<WorkspaceScreen> with TickerProviderSt
         ),
       ),
     );
-  }
+  },
+);
+}
 
   Widget _buildModeSwitcher() {
     final isDark = Theme.of(context).brightness == Brightness.dark;

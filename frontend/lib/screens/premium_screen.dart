@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:cleanpixel_ai/services/purchase_service.dart';
+import 'package:cleanpixel_ai/components/payment_checkout_sheet.dart';
 
 class PremiumScreen extends StatefulWidget {
   const PremiumScreen({Key? key}) : super(key: key);
@@ -13,6 +14,31 @@ class _PremiumScreenState extends State<PremiumScreen> with TickerProviderStateM
   int _selectedPlan = 0;
   late AnimationController _auroraController;
   late AnimationController _enterController;
+  bool _isRestoring = false;
+
+  final List<Map<String, String>> _planDetails = [
+    {
+      'title': 'Annual Pro Pass',
+      'price': '₹1,999 / year',
+      'subtext': 'Save 60% (Just ₹166/month)',
+      'type': 'yearly',
+      'badge': 'BEST VALUE',
+    },
+    {
+      'title': 'Monthly Pro Subscription',
+      'price': '₹399 / month',
+      'subtext': 'Cancel anytime in Play Store',
+      'type': 'monthly',
+      'badge': 'FLEXIBLE',
+    },
+    {
+      'title': 'Lifetime Founder Pass',
+      'price': '₹4,999',
+      'subtext': 'One-time payment • Lifetime access',
+      'type': 'lifetime',
+      'badge': 'LIFETIME',
+    },
+  ];
 
   @override
   void initState() {
@@ -43,6 +69,46 @@ class _PremiumScreenState extends State<PremiumScreen> with TickerProviderStateM
     {'icon': Icons.science_rounded, 'text': 'Early Access to New AI Models'},
   ];
 
+  Future<void> _openCheckout() async {
+    HapticFeedback.heavyImpact();
+    final plan = _planDetails[_selectedPlan];
+    final success = await PaymentCheckoutSheet.show(
+      context,
+      planTitle: plan['title']!,
+      planPrice: plan['price']!,
+      planType: plan['type']!,
+    );
+
+    if (success == true && mounted) {
+      Navigator.pop(context, true);
+    }
+  }
+
+  Future<void> _handleRestore() async {
+    HapticFeedback.mediumImpact();
+    setState(() => _isRestoring = true);
+    final restored = await PurchaseService.restorePurchases();
+    setState(() => _isRestoring = false);
+
+    if (mounted) {
+      if (restored) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            backgroundColor: Color(0xFF10B981),
+            content: Text('✅ CleanPixel PRO purchases restored successfully!'),
+          ),
+        );
+        Navigator.pop(context, true);
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('No active subscriptions found for this account.'),
+          ),
+        );
+      }
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
@@ -68,6 +134,15 @@ class _PremiumScreenState extends State<PremiumScreen> with TickerProviderStateM
           ),
           onPressed: () => Navigator.pop(context),
         ),
+        actions: [
+          TextButton(
+            onPressed: _isRestoring ? null : _handleRestore,
+            child: _isRestoring
+                ? const SizedBox(width: 16, height: 16, child: CircularProgressIndicator(strokeWidth: 2, color: Color(0xFF2563EB)))
+                : const Text('Restore', style: TextStyle(color: Color(0xFF2563EB), fontWeight: FontWeight.w700, fontSize: 13)),
+          ),
+          const SizedBox(width: 8),
+        ],
       ),
       body: AnimatedBuilder(
         animation: Listenable.merge([_auroraController, _enterController]),
@@ -208,32 +283,21 @@ class _PremiumScreenState extends State<PremiumScreen> with TickerProviderStateM
                     const SizedBox(height: 24),
 
                     // Plans Selector
-                    _buildPlanCard(
-                      index: 0,
-                      title: 'Annual Pass',
-                      price: '₹1,999 / year',
-                      subtext: 'Save 60% (Just ₹166/month)',
-                      badge: 'BEST VALUE',
-                      isDark: isDark,
-                    ),
-                    const SizedBox(height: 12),
-                    _buildPlanCard(
-                      index: 1,
-                      title: 'Monthly Subscription',
-                      price: '₹399 / month',
-                      subtext: 'Cancel anytime in Play Store',
-                      isDark: isDark,
-                    ),
-                    const SizedBox(height: 12),
-                    _buildPlanCard(
-                      index: 2,
-                      title: 'Lifetime Founder Pass',
-                      price: '₹4,999',
-                      subtext: 'One-time payment forever access',
-                      badge: 'LIFETIME',
-                      isDark: isDark,
-                    ),
-                    const SizedBox(height: 28),
+                    ...List.generate(_planDetails.length, (idx) {
+                      final plan = _planDetails[idx];
+                      return Padding(
+                        padding: const EdgeInsets.only(bottom: 12),
+                        child: _buildPlanCard(
+                          index: idx,
+                          title: plan['title']!,
+                          price: plan['price']!,
+                          subtext: plan['subtext']!,
+                          badge: plan['badge'],
+                          isDark: isDark,
+                        ),
+                      );
+                    }),
+                    const SizedBox(height: 16),
 
                     // Subscribe CTA
                     SizedBox(
@@ -259,43 +323,28 @@ class _PremiumScreenState extends State<PremiumScreen> with TickerProviderStateM
                             shadowColor: Colors.transparent,
                             shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
                           ),
-                          onPressed: () async {
-                            HapticFeedback.heavyImpact();
-                            await PurchaseService.processPurchase(
-                              planType: _selectedPlan == 0 ? 'yearly' : _selectedPlan == 1 ? 'monthly' : 'lifetime',
-                            );
-                            if (context.mounted) {
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                SnackBar(
-                                  backgroundColor: const Color(0xFF10B981),
-                                  behavior: SnackBarBehavior.floating,
-                                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-                                  margin: const EdgeInsets.all(16),
-                                  content: const Row(
-                                    children: [
-                                      Icon(Icons.check_circle_rounded, color: Colors.white, size: 18),
-                                      SizedBox(width: 8),
-                                      Text('Connected to Google Play Billing Sandbox!'),
-                                    ],
-                                  ),
+                          onPressed: _openCheckout,
+                          child: const Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Icon(Icons.lock_open_rounded, color: Colors.white, size: 20),
+                              SizedBox(width: 8),
+                              Text(
+                                'Unlock PRO Access Now',
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w800,
                                 ),
-                              );
-                            }
-                          },
-                          child: const Text(
-                            'Start 7-Day Free Trial',
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 16,
-                              fontWeight: FontWeight.w800,
-                            ),
+                              ),
+                            ],
                           ),
                         ),
                       ),
                     ),
                     const SizedBox(height: 12),
                     Text(
-                      'Recurring billing. Cancel anytime from Google Play Settings.',
+                      'UPI, Google Play, Credit Cards & Net Banking supported. Cancel anytime.',
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         color: isDark ? const Color(0xFF64748B) : const Color(0xFF94A3B8),
@@ -375,12 +424,14 @@ class _PremiumScreenState extends State<PremiumScreen> with TickerProviderStateM
                 children: [
                   Row(
                     children: [
-                      Text(
-                        title,
-                        style: TextStyle(
-                          color: isDark ? Colors.white : const Color(0xFF0F172A),
-                          fontWeight: FontWeight.w800,
-                          fontSize: 14,
+                      Flexible(
+                        child: Text(
+                          title,
+                          style: TextStyle(
+                            color: isDark ? Colors.white : const Color(0xFF0F172A),
+                            fontWeight: FontWeight.w800,
+                            fontSize: 14,
+                          ),
                         ),
                       ),
                       if (badge != null) ...[
@@ -416,6 +467,7 @@ class _PremiumScreenState extends State<PremiumScreen> with TickerProviderStateM
                 ],
               ),
             ),
+            const SizedBox(width: 8),
             Text(
               price,
               style: TextStyle(

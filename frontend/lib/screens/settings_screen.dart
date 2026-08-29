@@ -7,6 +7,7 @@ import 'package:cleanpixel_ai/components/language_selector_dialog.dart';
 import 'package:cleanpixel_ai/services/auth_service.dart';
 import 'package:cleanpixel_ai/services/locale_service.dart';
 import 'package:cleanpixel_ai/services/theme_service.dart';
+import 'package:cleanpixel_ai/services/purchase_service.dart';
 import 'package:cleanpixel_ai/services/update_service.dart';
 
 class SettingsScreen extends StatefulWidget {
@@ -78,7 +79,7 @@ class _SettingsScreenState extends State<SettingsScreen> with SingleTickerProvid
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context),
-            child: const Text('Close', style: TextStyle(color: Color(0xFF2563EB), fontWeight: FontWeight.w700)),
+            child: Text(LocaleService.tr('close'), style: const TextStyle(color: Color(0xFF2563EB), fontWeight: FontWeight.w700)),
           ),
         ],
       ),
@@ -89,246 +90,255 @@ class _SettingsScreenState extends State<SettingsScreen> with SingleTickerProvid
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
 
-    return Scaffold(
-      backgroundColor: isDark ? const Color(0xFF0B0F19) : const Color(0xFFF8FAFC),
-      appBar: AppBar(
-        backgroundColor: isDark ? const Color(0xFF0B0F19) : Colors.white,
-        elevation: 0,
-        title: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              'Settings & Account',
-              style: TextStyle(
-                fontWeight: FontWeight.w800,
-                fontSize: 20,
-                color: isDark ? Colors.white : const Color(0xFF0F172A),
-                letterSpacing: -0.3,
+    return ValueListenableBuilder<String>(
+      valueListenable: LocaleService.currentLocale,
+      builder: (context, currentLangCode, _) {
+        return ValueListenableBuilder<bool>(
+          valueListenable: PurchaseService.isProNotifier,
+          builder: (context, isUserPro, __) {
+            return Scaffold(
+              backgroundColor: isDark ? const Color(0xFF0B0F19) : const Color(0xFFF8FAFC),
+              appBar: AppBar(
+                backgroundColor: isDark ? const Color(0xFF0B0F19) : Colors.white,
+                elevation: 0,
+                title: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      LocaleService.tr('settings'),
+                      style: TextStyle(
+                        fontWeight: FontWeight.w800,
+                        fontSize: 20,
+                        color: isDark ? Colors.white : const Color(0xFF0F172A),
+                        letterSpacing: -0.3,
+                      ),
+                    ),
+                    const Text(
+                      'Preferences & Workspace Configuration',
+                      style: TextStyle(fontSize: 11, fontWeight: FontWeight.w700, color: Color(0xFF2563EB)),
+                    ),
+                  ],
+                ),
               ),
-            ),
-            const Text(
-              'Preferences & Workspace Configuration',
-              style: TextStyle(fontSize: 11, fontWeight: FontWeight.w700, color: Color(0xFF2563EB)),
-            ),
-          ],
-        ),
-      ),
-      body: AnimatedBuilder(
-        animation: _enterController,
-        builder: (context, _) {
-          return SingleChildScrollView(
-            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                // 1. User Profile & Pro Upgrade Banner
-                _buildStaggered(0.0, 0.3, child: _buildUserProfileCard(isDark)),
-                const SizedBox(height: 18),
-
-                // 2. Real-time Credit Usage Card
-                _buildStaggered(0.1, 0.4, child: _buildCreditBar(isDark)),
-                const SizedBox(height: 22),
-
-                // 3. Section 1: App Experience
-                _buildStaggered(0.15, 0.45, child: _buildSectionLabel('APPLICATION & CREATOR', isDark)),
-                const SizedBox(height: 10),
-
-                // Theme Switcher Tile
-                ValueListenableBuilder<ThemeMode>(
-                  valueListenable: ThemeService.themeModeNotifier,
-                  builder: (context, currentMode, _) {
-                    final icon = currentMode == ThemeMode.light
-                        ? Icons.light_mode_rounded
-                        : currentMode == ThemeMode.system
-                            ? Icons.brightness_auto_rounded
-                            : Icons.dark_mode_rounded;
-                    return _buildStaggered(0.17, 0.47, child: _buildSettingTile(
-                      icon: icon,
-                      iconColor: const Color(0xFF2563EB),
-                      title: 'Theme Mode',
-                      subtitle: ThemeService.getThemeName(currentMode),
-                      onTap: () => _showThemeSelectorDialog(context),
-                      isDark: isDark,
-                    ));
-                  },
-                ),
-
-                // Language Tile with Country Flags
-                ValueListenableBuilder<String>(
-                  valueListenable: LocaleService.currentLocale,
-                  builder: (context, _, __) {
-                    final currentLang = LocaleService.getCurrentLanguage();
-                    return _buildStaggered(0.19, 0.49, child: _buildSettingTile(
-                      icon: Icons.translate_rounded,
-                      iconColor: const Color(0xFF0284C7),
-                      title: 'App Language',
-                      subtitle: '${currentLang.flag} ${currentLang.nativeName} (${currentLang.name})',
-                      onTap: () => LanguageSelectorDialog.show(context),
-                      isDark: isDark,
-                    ));
-                  },
-                ),
-                _buildStaggered(0.2, 0.5, child: _buildSettingTile(
-                  icon: Icons.star_rate_rounded,
-                  iconColor: const Color(0xFFF59E0B),
-                  title: 'Rate CleanPixel on Play Store',
-                  subtitle: 'Help us grow with a 5-star review',
-                  onTap: () => RatingDialog.show(context),
-                  isDark: isDark,
-                )),
-                _buildStaggered(0.25, 0.55, child: _buildSettingTile(
-                  icon: Icons.share_rounded,
-                  iconColor: const Color(0xFF2563EB),
-                  title: 'Share with Friends & Creators',
-                  subtitle: 'Spread the word about CleanPixel AI',
-                  onTap: () {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(
-                        behavior: SnackBarBehavior.floating,
-                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-                        margin: const EdgeInsets.all(16),
-                        backgroundColor: const Color(0xFF2563EB),
-                        content: const Row(
-                          children: [
-                            Icon(Icons.content_copy_rounded, color: Colors.white, size: 18),
-                            SizedBox(width: 8),
-                            Text('App share link copied to clipboard'),
-                          ],
-                        ),
-                      ),
-                    );
-                  },
-                  isDark: isDark,
-                )),
-                _buildStaggered(0.3, 0.6, child: _buildSettingTile(
-                  icon: Icons.cleaning_services_rounded,
-                  iconColor: const Color(0xFF10B981),
-                  title: 'Clear Cache & Temp Buffers',
-                  subtitle: 'Free up device memory',
-                  onTap: () {
-                    HapticFeedback.mediumImpact();
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(
-                        behavior: SnackBarBehavior.floating,
-                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-                        margin: const EdgeInsets.all(16),
-                        backgroundColor: const Color(0xFF10B981),
-                        content: const Row(
-                          children: [
-                            Icon(Icons.check_circle_outline_rounded, color: Colors.white, size: 18),
-                            SizedBox(width: 8),
-                            Text('Cache successfully cleared'),
-                          ],
-                        ),
-                      ),
-                    );
-                  },
-                  isDark: isDark,
-                )),
-                _buildStaggered(0.32, 0.62, child: _buildSettingTile(
-                  icon: Icons.system_update_rounded,
-                  iconColor: const Color(0xFF8B5CF6),
-                  title: 'Check for Updates',
-                  subtitle: 'Current Version ${UpdateService.currentVersion} (Up to date)',
-                  onTap: () async {
-                    HapticFeedback.mediumImpact();
-                    final update = await UpdateService.checkForUpdate();
-                    if (context.mounted && update != null) {
-                      UpdateService.showUpdateDialog(context, update);
-                    }
-                  },
-                  isDark: isDark,
-                )),
-                const SizedBox(height: 22),
-
-                // 4. Section 2: Privacy & Legal
-                _buildStaggered(0.35, 0.65, child: _buildSectionLabel('PRIVACY & POLICIES', isDark)),
-                const SizedBox(height: 10),
-                _buildStaggered(0.4, 0.7, child: _buildSettingTile(
-                  icon: Icons.privacy_tip_rounded,
-                  iconColor: const Color(0xFF2563EB),
-                  title: 'Privacy Policy',
-                  subtitle: 'How we securely handle your media',
-                  onTap: () {
-                    _showPolicyDialog(
-                      context,
-                      'Privacy Policy',
-                      'CleanPixel AI is committed to your privacy.\n\n1. Media Privacy: Uploaded photos and inpaint masks are processed exclusively in transient RAM buffers and are automatically wiped immediately after completion.\n\n2. No Model Training: We never use personal photos to train models without consent.\n\n3. Data Encryption: All network communications are encrypted with standard TLS 1.3 / SSL.',
-                    );
-                  },
-                  isDark: isDark,
-                )),
-                _buildStaggered(0.45, 0.75, child: _buildSettingTile(
-                  icon: Icons.description_rounded,
-                  iconColor: const Color(0xFF38BDF8),
-                  title: 'Terms of Service',
-                  subtitle: 'Read our service terms',
-                  onTap: () {
-                    _showPolicyDialog(
-                      context,
-                      'Terms of Service',
-                      '1. Acceptance: By using CleanPixel AI, you agree to these Terms.\n\n2. Prohibited Use: You agree not to upload illegal, abusive, or explicitly copyrighted materials.\n\n3. Subscription: Pro features are billed according to your chosen plan with instant cancelation support.',
-                    );
-                  },
-                  isDark: isDark,
-                )),
-                _buildStaggered(0.5, 0.8, child: _buildSettingTile(
-                  icon: Icons.verified_user_rounded,
-                  iconColor: const Color(0xFF10B981),
-                  title: 'Zero-Knowledge Privacy',
-                  subtitle: 'In-memory processing guarantee (Active)',
-                  trailing: const Icon(Icons.check_circle_rounded, color: Color(0xFF10B981), size: 18),
-                  onTap: () {},
-                  isDark: isDark,
-                )),
-                const SizedBox(height: 22),
-
-                // 5. Section 3: Account & Session
-                _buildStaggered(0.55, 0.85, child: _buildSectionLabel('ACCOUNT & SESSION', isDark)),
-                const SizedBox(height: 10),
-                _buildStaggered(0.6, 0.9, child: _buildSettingTile(
-                  icon: Icons.logout_rounded,
-                  iconColor: const Color(0xFFEF4444),
-                  title: 'Log Out',
-                  subtitle: 'Sign out of your creator account',
-                  titleColor: const Color(0xFFEF4444),
-                  onTap: _handleLogout,
-                  isDark: isDark,
-                )),
-                const SizedBox(height: 32),
-
-                // 6. Footer Brand
-                _buildStaggered(
-                  0.65,
-                  0.95,
-                  child: Center(
+              body: AnimatedBuilder(
+                animation: _enterController,
+                builder: (context, _) {
+                  return SingleChildScrollView(
+                    padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
                     child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Image.asset(
-                          'assets/logo.png',
-                          height: 32,
-                          fit: BoxFit.contain,
-                          errorBuilder: (_, __, ___) => const Icon(Icons.auto_fix_high_rounded, color: Color(0xFF38BDF8), size: 28),
+                        // 1. User Profile & Pro Upgrade Banner
+                        _buildStaggered(0.0, 0.3, child: _buildUserProfileCard(isDark, isUserPro)),
+                        const SizedBox(height: 18),
+
+                        // 2. Real-time Credit Usage Card
+                        _buildStaggered(0.1, 0.4, child: _buildCreditBar(isDark, isUserPro)),
+                        const SizedBox(height: 22),
+
+                        // 3. Section 1: App Experience
+                        _buildStaggered(0.15, 0.45, child: _buildSectionLabel('APPLICATION & CREATOR', isDark)),
+                        const SizedBox(height: 10),
+
+                        // Theme Switcher Tile
+                        ValueListenableBuilder<ThemeMode>(
+                          valueListenable: ThemeService.themeModeNotifier,
+                          builder: (context, currentMode, _) {
+                            final icon = currentMode == ThemeMode.light
+                                ? Icons.light_mode_rounded
+                                : currentMode == ThemeMode.system
+                                    ? Icons.brightness_auto_rounded
+                                    : Icons.dark_mode_rounded;
+                            return _buildStaggered(0.17, 0.47, child: _buildSettingTile(
+                              icon: icon,
+                              iconColor: const Color(0xFF2563EB),
+                              title: 'Theme Mode',
+                              subtitle: ThemeService.getThemeName(currentMode),
+                              onTap: () => _showThemeSelectorDialog(context),
+                              isDark: isDark,
+                            ));
+                          },
                         ),
-                        const SizedBox(height: 8),
-                        Text(
-                          'CleanPixel AI v2.4.0 (Founder Edition)',
-                          style: TextStyle(
-                            color: isDark ? const Color(0xFF64748B) : const Color(0xFF94A3B8),
-                            fontSize: 12,
-                            fontWeight: FontWeight.w600,
+
+                        // Language Tile with Country Flags
+                        Builder(
+                          builder: (context) {
+                            final currentLang = LocaleService.getCurrentLanguage();
+                            return _buildStaggered(0.19, 0.49, child: _buildSettingTile(
+                              icon: Icons.translate_rounded,
+                              iconColor: const Color(0xFF0284C7),
+                              title: LocaleService.tr('language'),
+                              subtitle: '${currentLang.flag} ${currentLang.nativeName} (${currentLang.name})',
+                              onTap: () => LanguageSelectorDialog.show(context),
+                              isDark: isDark,
+                            ));
+                          },
+                        ),
+                        _buildStaggered(0.2, 0.5, child: _buildSettingTile(
+                          icon: Icons.star_rate_rounded,
+                          iconColor: const Color(0xFFF59E0B),
+                          title: 'Rate CleanPixel on Play Store',
+                          subtitle: 'Help us grow with a 5-star review',
+                          onTap: () => RatingDialog.show(context),
+                          isDark: isDark,
+                        )),
+                        _buildStaggered(0.25, 0.55, child: _buildSettingTile(
+                          icon: Icons.share_rounded,
+                          iconColor: const Color(0xFF2563EB),
+                          title: 'Share with Friends & Creators',
+                          subtitle: 'Spread the word about CleanPixel AI',
+                          onTap: () {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(
+                                behavior: SnackBarBehavior.floating,
+                                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                                margin: const EdgeInsets.all(16),
+                                backgroundColor: const Color(0xFF2563EB),
+                                content: const Row(
+                                  children: [
+                                    Icon(Icons.content_copy_rounded, color: Colors.white, size: 18),
+                                    SizedBox(width: 8),
+                                    Text('App share link copied to clipboard'),
+                                  ],
+                                ),
+                              ),
+                            );
+                          },
+                          isDark: isDark,
+                        )),
+                        _buildStaggered(0.3, 0.6, child: _buildSettingTile(
+                          icon: Icons.cleaning_services_rounded,
+                          iconColor: const Color(0xFF10B981),
+                          title: LocaleService.tr('clear_cache'),
+                          subtitle: 'Free up device memory',
+                          onTap: () {
+                            HapticFeedback.mediumImpact();
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(
+                                behavior: SnackBarBehavior.floating,
+                                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                                margin: const EdgeInsets.all(16),
+                                backgroundColor: const Color(0xFF10B981),
+                                content: const Row(
+                                  children: [
+                                    Icon(Icons.check_circle_outline_rounded, color: Colors.white, size: 18),
+                                    SizedBox(width: 8),
+                                    Text('Cache successfully cleared'),
+                                  ],
+                                ),
+                              ),
+                            );
+                          },
+                          isDark: isDark,
+                        )),
+                        _buildStaggered(0.32, 0.62, child: _buildSettingTile(
+                          icon: Icons.system_update_rounded,
+                          iconColor: const Color(0xFF8B5CF6),
+                          title: 'Check for Updates',
+                          subtitle: 'Current Version ${UpdateService.currentVersion} (Up to date)',
+                          onTap: () async {
+                            HapticFeedback.mediumImpact();
+                            final update = await UpdateService.checkForUpdate();
+                            if (context.mounted && update != null) {
+                              UpdateService.showUpdateDialog(context, update);
+                            }
+                          },
+                          isDark: isDark,
+                        )),
+                        const SizedBox(height: 22),
+
+                        // 4. Section 2: Privacy & Legal
+                        _buildStaggered(0.35, 0.65, child: _buildSectionLabel('PRIVACY & POLICIES', isDark)),
+                        const SizedBox(height: 10),
+                        _buildStaggered(0.4, 0.7, child: _buildSettingTile(
+                          icon: Icons.privacy_tip_rounded,
+                          iconColor: const Color(0xFF2563EB),
+                          title: LocaleService.tr('privacy_policy'),
+                          subtitle: 'How we securely handle your media',
+                          onTap: () {
+                            _showPolicyDialog(
+                              context,
+                              'Privacy Policy',
+                              'CleanPixel AI is committed to your privacy.\n\n1. Media Privacy: Uploaded photos and inpaint masks are processed exclusively in transient RAM buffers and are automatically wiped immediately after completion.\n\n2. No Model Training: We never use personal photos to train models without consent.\n\n3. Data Encryption: All network communications are encrypted with standard TLS 1.3 / SSL.',
+                            );
+                          },
+                          isDark: isDark,
+                        )),
+                        _buildStaggered(0.45, 0.75, child: _buildSettingTile(
+                          icon: Icons.description_rounded,
+                          iconColor: const Color(0xFF38BDF8),
+                          title: LocaleService.tr('terms_service'),
+                          subtitle: 'Read our service terms',
+                          onTap: () {
+                            _showPolicyDialog(
+                              context,
+                              'Terms of Service',
+                              '1. Acceptance: By using CleanPixel AI, you agree to these Terms.\n\n2. Prohibited Use: You agree not to upload illegal, abusive, or explicitly copyrighted materials.\n\n3. Subscription: Pro features are billed according to your chosen plan with instant cancelation support.',
+                            );
+                          },
+                          isDark: isDark,
+                        )),
+                        _buildStaggered(0.5, 0.8, child: _buildSettingTile(
+                          icon: Icons.verified_user_rounded,
+                          iconColor: const Color(0xFF10B981),
+                          title: 'Zero-Knowledge Privacy',
+                          subtitle: 'In-memory processing guarantee (Active)',
+                          trailing: const Icon(Icons.check_circle_rounded, color: Color(0xFF10B981), size: 18),
+                          onTap: () {},
+                          isDark: isDark,
+                        )),
+                        const SizedBox(height: 22),
+
+                        // 5. Section 3: Account & Session
+                        _buildStaggered(0.55, 0.85, child: _buildSectionLabel('ACCOUNT & SESSION', isDark)),
+                        const SizedBox(height: 10),
+                        _buildStaggered(0.6, 0.9, child: _buildSettingTile(
+                          icon: Icons.logout_rounded,
+                          iconColor: const Color(0xFFEF4444),
+                          title: LocaleService.tr('logout'),
+                          subtitle: 'Sign out of your creator account',
+                          titleColor: const Color(0xFFEF4444),
+                          onTap: _handleLogout,
+                          isDark: isDark,
+                        )),
+                        const SizedBox(height: 32),
+
+                        // 6. Footer Brand
+                        _buildStaggered(
+                          0.65,
+                          0.95,
+                          child: Center(
+                            child: Column(
+                              children: [
+                                Image.asset(
+                                  'assets/logo.png',
+                                  height: 32,
+                                  fit: BoxFit.contain,
+                                  errorBuilder: (_, __, ___) => const Icon(Icons.auto_fix_high_rounded, color: Color(0xFF38BDF8), size: 28),
+                                ),
+                                const SizedBox(height: 8),
+                                Text(
+                                  'CleanPixel AI v2.4.0 (Founder Edition)',
+                                  style: TextStyle(
+                                    color: isDark ? const Color(0xFF64748B) : const Color(0xFF94A3B8),
+                                    fontSize: 12,
+                                    fontWeight: FontWeight.w600,
+                                  ),
+                                ),
+                                const SizedBox(height: 24),
+                              ],
+                            ),
                           ),
                         ),
-                        const SizedBox(height: 24),
                       ],
                     ),
-                  ),
-                ),
-              ],
-            ),
-          );
-        },
-      ),
+                  );
+                },
+              ),
+            );
+          },
+        );
+      },
     );
   }
 
@@ -437,10 +447,9 @@ class _SettingsScreenState extends State<SettingsScreen> with SingleTickerProvid
     );
   }
 
-  Widget _buildUserProfileCard(bool isDark) {
+  Widget _buildUserProfileCard(bool isDark, bool isPro) {
     final name = _userProfile?.fullName ?? 'CleanPixel Creator';
     final email = _userProfile?.email ?? 'creator@cleanpixel.ai';
-    final isPro = _userProfile?.isPro ?? false;
 
     return Container(
       padding: const EdgeInsets.all(18),
@@ -545,14 +554,17 @@ class _SettingsScreenState extends State<SettingsScreen> with SingleTickerProvid
                 shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
                 padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
               ),
-              onPressed: () {
-                Navigator.push(
+              onPressed: () async {
+                final res = await Navigator.push(
                   context,
                   MaterialPageRoute(builder: (context) => const PremiumScreen()),
                 );
+                if (res == true) {
+                  _loadUserData();
+                }
               },
               child: Text(
-                isPro ? 'Manage' : 'Upgrade',
+                isPro ? 'Active PRO' : 'Upgrade',
                 style: const TextStyle(color: Colors.white, fontSize: 12, fontWeight: FontWeight.w800),
               ),
             ),
@@ -562,8 +574,9 @@ class _SettingsScreenState extends State<SettingsScreen> with SingleTickerProvid
     );
   }
 
-  Widget _buildCreditBar(bool isDark) {
-    final double fraction = (_credits / 3.0).clamp(0.0, 1.0);
+  Widget _buildCreditBar(bool isDark, bool isPro) {
+    final displayCredits = isPro ? 9999 : _credits;
+    final double fraction = isPro ? 1.0 : (_credits / 3.0).clamp(0.0, 1.0);
 
     return Container(
       padding: const EdgeInsets.all(16),
@@ -588,7 +601,7 @@ class _SettingsScreenState extends State<SettingsScreen> with SingleTickerProvid
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                'Free Neural Inpaint Credits',
+                LocaleService.tr('daily_credits'),
                 style: TextStyle(
                   color: isDark ? Colors.white : const Color(0xFF0F172A),
                   fontWeight: FontWeight.w800,
@@ -596,7 +609,7 @@ class _SettingsScreenState extends State<SettingsScreen> with SingleTickerProvid
                 ),
               ),
               Text(
-                '$_credits of 3 remaining',
+                isPro ? 'Unlimited 4K Credits' : '$_credits of 3 remaining',
                 style: const TextStyle(color: Color(0xFF2563EB), fontWeight: FontWeight.w700, fontSize: 12),
               ),
             ],
@@ -608,7 +621,7 @@ class _SettingsScreenState extends State<SettingsScreen> with SingleTickerProvid
               value: fraction,
               minHeight: 6,
               backgroundColor: isDark ? Colors.white.withValues(alpha: 0.08) : const Color(0xFFF0F9FF),
-              valueColor: const AlwaysStoppedAnimation<Color>(Color(0xFF2563EB)),
+              valueColor: AlwaysStoppedAnimation<Color>(isPro ? const Color(0xFF10B981) : const Color(0xFF2563EB)),
             ),
           ),
         ],

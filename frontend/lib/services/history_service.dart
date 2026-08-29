@@ -22,6 +22,9 @@ class HistoryItem {
     required this.sizeBytes,
   });
 
+  String get modeName => mode;
+  String get formattedDate => DateTime.fromMillisecondsSinceEpoch(timestamp).toString().substring(0, 16);
+
   Map<String, dynamic> toJson() => {
         'id': id,
         'title': title,

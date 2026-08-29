@@ -4,6 +4,7 @@ import 'package:cleanpixel_ai/screens/workspace_screen.dart';
 import 'package:cleanpixel_ai/screens/tools_hub_screen.dart';
 import 'package:cleanpixel_ai/screens/history_screen.dart';
 import 'package:cleanpixel_ai/screens/settings_screen.dart';
+import 'package:cleanpixel_ai/services/locale_service.dart';
 
 class HomeShellScreen extends StatefulWidget {
   const HomeShellScreen({Key? key}) : super(key: key);
@@ -31,44 +32,49 @@ class _HomeShellScreenState extends State<HomeShellScreen> {
       const SettingsScreen(),
     ];
 
-    return Scaffold(
-      backgroundColor: isDark ? const Color(0xFF0B0F19) : const Color(0xFFF8FAFC),
-      body: IndexedStack(
-        index: _currentIndex,
-        children: screens,
-      ),
-      bottomNavigationBar: Container(
-        decoration: BoxDecoration(
-          color: isDark ? const Color(0xFF131C2E) : Colors.white,
-          border: Border(
-            top: BorderSide(
-              color: isDark ? Colors.white.withValues(alpha: 0.06) : const Color(0xFFE2E8F0),
-              width: 1,
-            ),
+    return ValueListenableBuilder<String>(
+      valueListenable: LocaleService.currentLocale,
+      builder: (context, currentLang, _) {
+        return Scaffold(
+          backgroundColor: isDark ? const Color(0xFF0B0F19) : const Color(0xFFF8FAFC),
+          body: IndexedStack(
+            index: _currentIndex,
+            children: screens,
           ),
-          boxShadow: [
-            BoxShadow(
-              color: isDark ? Colors.black.withValues(alpha: 0.4) : const Color(0xFF2563EB).withValues(alpha: 0.08),
-              blurRadius: 20,
-              offset: const Offset(0, -4),
-            ),
-          ],
-        ),
-        child: SafeArea(
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                _buildNavItem(0, Icons.auto_fix_high_rounded, 'Studio'),
-                _buildNavItem(1, Icons.category_rounded, 'AI Suite'),
-                _buildNavItem(2, Icons.collections_rounded, 'Recents'),
-                _buildNavItem(3, Icons.person_rounded, 'Account'),
+          bottomNavigationBar: Container(
+            decoration: BoxDecoration(
+              color: isDark ? const Color(0xFF131C2E) : Colors.white,
+              border: Border(
+                top: BorderSide(
+                  color: isDark ? Colors.white.withValues(alpha: 0.06) : const Color(0xFFE2E8F0),
+                  width: 1,
+                ),
+              ),
+              boxShadow: [
+                BoxShadow(
+                  color: isDark ? Colors.black.withValues(alpha: 0.4) : const Color(0xFF2563EB).withValues(alpha: 0.08),
+                  blurRadius: 20,
+                  offset: const Offset(0, -4),
+                ),
               ],
             ),
+            child: SafeArea(
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    _buildNavItem(0, Icons.auto_fix_high_rounded, LocaleService.tr('studio')),
+                    _buildNavItem(1, Icons.category_rounded, LocaleService.tr('ai_suite')),
+                    _buildNavItem(2, Icons.collections_rounded, LocaleService.tr('recents')),
+                    _buildNavItem(3, Icons.person_rounded, LocaleService.tr('account')),
+                  ],
+                ),
+              ),
+            ),
           ),
-        ),
-      ),
+        );
+      },
     );
   }
 
