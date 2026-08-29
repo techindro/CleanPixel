@@ -95,13 +95,13 @@ class _InteractiveCanvasState extends State<InteractiveCanvas> {
                   decoration: BoxDecoration(
                     shape: BoxShape.circle,
                     border: Border.all(
-                      color: widget.isBrush ? const Color(0xFF38BDF8) : const Color(0xFFEF4444),
+                      color: widget.isBrush ? const Color(0xFFEC4899) : const Color(0xFFEF4444),
                       width: 2,
                     ),
-                    color: (widget.isBrush ? const Color(0xFF38BDF8) : const Color(0xFFEF4444)).withValues(alpha: 0.2),
+                    color: (widget.isBrush ? const Color(0xFFEC4899) : const Color(0xFFEF4444)).withValues(alpha: 0.2),
                     boxShadow: [
                       BoxShadow(
-                        color: (widget.isBrush ? const Color(0xFF38BDF8) : const Color(0xFFEF4444)).withValues(alpha: 0.4),
+                        color: (widget.isBrush ? const Color(0xFFEC4899) : const Color(0xFFEF4444)).withValues(alpha: 0.4),
                         blurRadius: 10,
                         spreadRadius: 1,
                       ),
@@ -121,11 +121,11 @@ class _InteractiveCanvasState extends State<InteractiveCanvas> {
                   height: 84,
                   decoration: BoxDecoration(
                     shape: BoxShape.circle,
-                    color: const Color(0xFF0F172A),
-                    border: Border.all(color: const Color(0xFF38BDF8), width: 2),
+                    color: const Color(0xFF0F0715),
+                    border: Border.all(color: const Color(0xFFEC4899), width: 2),
                     boxShadow: [
                       BoxShadow(
-                        color: const Color(0xFF38BDF8).withValues(alpha: 0.35),
+                        color: const Color(0xFFEC4899).withValues(alpha: 0.4),
                         blurRadius: 16,
                         spreadRadius: 2,
                       ),
@@ -147,8 +147,8 @@ class _InteractiveCanvasState extends State<InteractiveCanvas> {
                             height: widget.currentStrokeWidth * 0.8,
                             decoration: BoxDecoration(
                               shape: BoxShape.circle,
-                              border: Border.all(color: const Color(0xFF38BDF8), width: 1.5),
-                              color: const Color(0xFF38BDF8).withValues(alpha: 0.2),
+                              border: Border.all(color: const Color(0xFFEC4899), width: 1.5),
+                              color: const Color(0xFFEC4899).withValues(alpha: 0.25),
                             ),
                           ),
                         ),

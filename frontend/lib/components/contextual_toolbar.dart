@@ -53,7 +53,7 @@ class ContextualToolbar extends StatelessWidget {
               _ToolButton(
                 icon: isBrush ? Icons.brush_rounded : Icons.auto_fix_high_rounded,
                 isActive: true,
-                color: const Color(0xFF38BDF8),
+                color: const Color(0xFFEC4899),
                 onTap: onToggleTool,
                 tooltip: isBrush ? 'Brush' : 'Eraser',
               ),
@@ -66,12 +66,12 @@ class ContextualToolbar extends StatelessWidget {
                 width: 90,
                 child: SliderTheme(
                   data: SliderTheme.of(context).copyWith(
-                    activeTrackColor: const Color(0xFF38BDF8),
-                    inactiveTrackColor: Colors.white.withOpacity(0.1),
+                    activeTrackColor: const Color(0xFFEC4899),
+                    inactiveTrackColor: Colors.white.withOpacity(0.12),
                     thumbColor: Colors.white,
                     thumbShape: const RoundSliderThumbShape(enabledThumbRadius: 7),
                     overlayShape: const RoundSliderOverlayShape(overlayRadius: 14),
-                    overlayColor: const Color(0xFF38BDF8).withOpacity(0.15),
+                    overlayColor: const Color(0xFFEC4899).withOpacity(0.2),
                     trackHeight: 3,
                   ),
                   child: Slider(
