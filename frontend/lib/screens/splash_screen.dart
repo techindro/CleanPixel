@@ -207,7 +207,7 @@ class _SplashScreenState extends State<SplashScreen> with TickerProviderStateMix
                       colors: [Color(0xFF38BDF8), Color(0xFF2563EB), Color(0xFF60A5FA)],
                     ).createShader(bounds),
                     child: const Text(
-                      'Neural Watermark & Object Remover',
+                      'Smart Watermark & Object Remover',
                       style: TextStyle(
                         color: Colors.white,
                         fontSize: 14,

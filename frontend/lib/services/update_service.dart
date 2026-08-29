@@ -177,8 +177,8 @@ class UpdateService {
                   },
                   icon: const Icon(Icons.download_rounded, color: Colors.white),
                   label: const Text(
-                    '1-Tap Update Now',
-                    style: TextStyle(color: Colors.white, fontWeight: FontWeight.w700, fontSize: 15),
+                    'Update Now',
+                    style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 16),
                   ),
                 ),
               ),

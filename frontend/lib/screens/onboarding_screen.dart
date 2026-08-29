@@ -21,23 +21,23 @@ class _OnboardingScreenState extends State<OnboardingScreen> with TickerProvider
     {
       'icon': Icons.auto_fix_high_rounded,
       'gradient': const [Color(0xFF38BDF8), Color(0xFF2563EB)],
-      'title': 'AI Watermark Remover',
-      'subtitle': 'Brush over any text, copyright stamp or TikTok logo and watch it vanish in 1-tap.',
-      'badge': 'NEURAL INPAINTING'
+      'title': 'Erase Watermarks & Logos',
+      'subtitle': 'Brush over any logo, text, or date stamp and watch it disappear seamlessly.',
+      'badge': 'SMART AI'
     },
     {
       'icon': Icons.person_remove_rounded,
       'gradient': const [Color(0xFF0284C7), Color(0xFF0EA5E9)],
-      'title': 'Magic Object & People Eraser',
-      'subtitle': 'Erase photobombers, wires, power lines, and clutter with zero blur and pure clarity.',
-      'badge': 'DEEP DIFFUSION'
+      'title': 'Remove People & Objects',
+      'subtitle': 'Cleanly erase photobombers and unwanted clutter without leaving any blur or marks.',
+      'badge': 'OBJECT ERASER'
     },
     {
       'icon': Icons.hd_rounded,
       'gradient': const [Color(0xFF10B981), Color(0xFF059669)],
-      'title': 'Lossless 4K Ultra-HD Export',
-      'subtitle': 'Save your cleaned photos in original pristine resolution without compression loss.',
-      'badge': '4K MASTERWORK'
+      'title': 'Save in Original High Quality',
+      'subtitle': 'Export your clean photos in full HD and 4K resolution with zero loss.',
+      'badge': 'HD EXPORT'
     },
   ];
 

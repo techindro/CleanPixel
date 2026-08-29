@@ -85,7 +85,7 @@ class _ExportSheetDialogState extends State<ExportSheetDialog> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    'Export Cleaned Asset',
+                    'Save Clean Photo',
                     style: TextStyle(
                       color: isDark ? Colors.white : const Color(0xFF0F172A),
                       fontSize: 19,
@@ -95,7 +95,7 @@ class _ExportSheetDialogState extends State<ExportSheetDialog> {
                   ),
                   const SizedBox(height: 2),
                   Text(
-                    'Select output resolution & compression quality',
+                    'Choose format and export quality',
                     style: TextStyle(
                       color: isDark ? const Color(0xFF94A3B8) : const Color(0xFF64748B),
                       fontSize: 12,
@@ -125,7 +125,7 @@ class _ExportSheetDialogState extends State<ExportSheetDialog> {
 
           // Format selector
           Text(
-            'FILE FORMAT',
+            'FORMAT',
             style: TextStyle(
               color: isDark ? const Color(0xFF94A3B8) : const Color(0xFF64748B),
               fontSize: 11,
@@ -147,7 +147,7 @@ class _ExportSheetDialogState extends State<ExportSheetDialog> {
 
           // Resolution selector
           Text(
-            'OUTPUT RESOLUTION',
+            'RESOLUTION',
             style: TextStyle(
               color: isDark ? const Color(0xFF94A3B8) : const Color(0xFF64748B),
               fontSize: 11,
@@ -159,23 +159,23 @@ class _ExportSheetDialogState extends State<ExportSheetDialog> {
           Column(
             children: [
               _buildResolutionTile(
-                title: '4K Ultra HD (3840 x 2160)',
-                subtitle: 'Lossless studio masterwork resolution',
+                title: 'Original Ultra HD (3840 x 2160)',
+                subtitle: 'Full crystal-clear lossless quality',
                 resolution: ExportResolution.ultra4k,
-                badge: 'RECOMMENDED',
+                badge: 'BEST',
                 isDark: isDark,
               ),
               const SizedBox(height: 8),
               _buildResolutionTile(
-                title: '2K Quad HD (2560 x 1440)',
-                subtitle: 'Balanced for social media & web publishing',
+                title: 'High Quality 2K (2560 x 1440)',
+                subtitle: 'Ideal for social media sharing & posts',
                 resolution: ExportResolution.quad2k,
                 isDark: isDark,
               ),
               const SizedBox(height: 8),
               _buildResolutionTile(
-                title: '1080p Full HD (1920 x 1080)',
-                subtitle: 'Standard quick messaging export',
+                title: 'Standard HD (1920 x 1080)',
+                subtitle: 'Lightweight for quick messaging & email',
                 resolution: ExportResolution.hd1080,
                 isDark: isDark,
               ),
@@ -218,7 +218,7 @@ class _ExportSheetDialogState extends State<ExportSheetDialog> {
                     Icon(Icons.download_rounded, color: Colors.white, size: 20),
                     SizedBox(width: 8),
                     Text(
-                      'Save to Device Gallery',
+                      'Save to Gallery',
                       style: TextStyle(
                         color: Colors.white,
                         fontSize: 16,
