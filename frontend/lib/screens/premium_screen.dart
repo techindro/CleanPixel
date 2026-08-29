@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:cleanpixel_ai/services/purchase_service.dart';
 
 class PremiumScreen extends StatefulWidget {
   const PremiumScreen({Key? key}) : super(key: key);
@@ -386,8 +387,12 @@ class _PremiumScreenState extends State<PremiumScreen> with TickerProviderStateM
             shadowColor: Colors.transparent,
             shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
           ),
-          onPressed: () {
+          onPressed: () async {
             HapticFeedback.heavyImpact();
+            final planName = _selectedPlan == 0 ? "yearly" : _selectedPlan == 1 ? "monthly" : "lifetime";
+            await PurchaseService.processPurchase(planType: planName);
+            if (!mounted) return;
+
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(
                 backgroundColor: const Color(0xFF10B981),
@@ -398,12 +403,12 @@ class _PremiumScreenState extends State<PremiumScreen> with TickerProviderStateM
                   children: [
                     Icon(Icons.workspace_premium_rounded, color: Colors.white, size: 20),
                     SizedBox(width: 8),
-                    Text('Welcome to CleanPixel PRO!', style: TextStyle(fontWeight: FontWeight.bold)),
+                    Text('CleanPixel PRO Activated Successfully!', style: TextStyle(fontWeight: FontWeight.bold)),
                   ],
                 ),
               ),
             );
-            Navigator.pop(context);
+            Navigator.pop(context, true);
           },
           child: const Row(
             mainAxisAlignment: MainAxisAlignment.center,
