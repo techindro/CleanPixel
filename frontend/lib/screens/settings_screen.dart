@@ -62,22 +62,23 @@ class _SettingsScreenState extends State<SettingsScreen> with SingleTickerProvid
   }
 
   void _showPolicyDialog(BuildContext context, String title, String content) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        backgroundColor: const Color(0xFF1E293B),
+        backgroundColor: isDark ? const Color(0xFF1B0C24) : Colors.white,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-        title: Text(title, style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
+        title: Text(title, style: TextStyle(color: isDark ? Colors.white : const Color(0xFF1E293B), fontWeight: FontWeight.bold)),
         content: SingleChildScrollView(
           child: Text(
             content,
-            style: const TextStyle(color: Color(0xFF94A3B8), fontSize: 13, height: 1.6),
+            style: TextStyle(color: isDark ? const Color(0xFF94A3B8) : const Color(0xFF64748B), fontSize: 13, height: 1.6),
           ),
         ),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context),
-            child: const Text('Close', style: TextStyle(color: Color(0xFF38BDF8), fontWeight: FontWeight.w600)),
+            child: const Text('Close', style: TextStyle(color: Color(0xFFEC4899), fontWeight: FontWeight.w700)),
           ),
         ],
       ),
@@ -86,45 +87,53 @@ class _SettingsScreenState extends State<SettingsScreen> with SingleTickerProvid
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
     return Scaffold(
-      backgroundColor: const Color(0xFF0B0F19),
+      backgroundColor: isDark ? const Color(0xFF0F0715) : const Color(0xFFFAF5FF),
       appBar: AppBar(
-        backgroundColor: const Color(0xFF0B0F19),
+        backgroundColor: isDark ? const Color(0xFF0F0715) : Colors.white,
         elevation: 0,
-        title: const Text('Settings & Account', style: TextStyle(fontWeight: FontWeight.w800, fontSize: 20, color: Colors.white, letterSpacing: -0.3)),
-        leading: IconButton(
-          icon: Container(
-            padding: const EdgeInsets.all(6),
-            decoration: BoxDecoration(
-              color: Colors.white.withValues(alpha: 0.06),
-              borderRadius: BorderRadius.circular(10),
+        title: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              'Settings & Account',
+              style: TextStyle(
+                fontWeight: FontWeight.w800,
+                fontSize: 20,
+                color: isDark ? Colors.white : const Color(0xFF1E293B),
+                letterSpacing: -0.3,
+              ),
             ),
-            child: const Icon(Icons.arrow_back_ios_new_rounded, color: Colors.white, size: 18),
-          ),
-          onPressed: () => Navigator.pop(context),
+            const Text(
+              'Preferences & Workspace Configuration',
+              style: TextStyle(fontSize: 11, fontWeight: FontWeight.w600, color: Color(0xFFEC4899)),
+            ),
+          ],
         ),
       ),
       body: AnimatedBuilder(
         animation: _enterController,
         builder: (context, _) {
           return SingleChildScrollView(
-            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
+            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 // 1. User Profile & Pro Upgrade Banner
-                _buildStaggered(0.0, 0.3, child: _buildUserProfileCard()),
-                const SizedBox(height: 20),
+                _buildStaggered(0.0, 0.3, child: _buildUserProfileCard(isDark)),
+                const SizedBox(height: 18),
 
                 // 2. Real-time Credit Usage Card
-                _buildStaggered(0.1, 0.4, child: _buildCreditBar()),
-                const SizedBox(height: 24),
+                _buildStaggered(0.1, 0.4, child: _buildCreditBar(isDark)),
+                const SizedBox(height: 22),
 
                 // 3. Section 1: App Experience
-                _buildStaggered(0.15, 0.45, child: _buildSectionLabel('APPLICATION & CREATOR')),
+                _buildStaggered(0.15, 0.45, child: _buildSectionLabel('APPLICATION & CREATOR', isDark)),
                 const SizedBox(height: 10),
 
-                // Theme Switcher Tile (Dark OLED / Light / System)
+                // Theme Switcher Tile
                 ValueListenableBuilder<ThemeMode>(
                   valueListenable: ThemeService.themeModeNotifier,
                   builder: (context, currentMode, _) {
@@ -135,10 +144,11 @@ class _SettingsScreenState extends State<SettingsScreen> with SingleTickerProvid
                             : Icons.dark_mode_rounded;
                     return _buildStaggered(0.17, 0.47, child: _buildSettingTile(
                       icon: icon,
-                      iconColor: const Color(0xFF38BDF8),
+                      iconColor: const Color(0xFFEC4899),
                       title: 'Theme Mode',
                       subtitle: ThemeService.getThemeName(currentMode),
                       onTap: () => _showThemeSelectorDialog(context),
+                      isDark: isDark,
                     ));
                   },
                 ),
@@ -150,10 +160,11 @@ class _SettingsScreenState extends State<SettingsScreen> with SingleTickerProvid
                     final currentLang = LocaleService.getCurrentLanguage();
                     return _buildStaggered(0.19, 0.49, child: _buildSettingTile(
                       icon: Icons.translate_rounded,
-                      iconColor: const Color(0xFF38BDF8),
+                      iconColor: const Color(0xFFF43F5E),
                       title: 'App Language',
                       subtitle: '${currentLang.flag} ${currentLang.nativeName} (${currentLang.name})',
                       onTap: () => LanguageSelectorDialog.show(context),
+                      isDark: isDark,
                     ));
                   },
                 ),
@@ -163,10 +174,11 @@ class _SettingsScreenState extends State<SettingsScreen> with SingleTickerProvid
                   title: 'Rate CleanPixel on Play Store',
                   subtitle: 'Help us grow with a 5-star review',
                   onTap: () => RatingDialog.show(context),
+                  isDark: isDark,
                 )),
                 _buildStaggered(0.25, 0.55, child: _buildSettingTile(
                   icon: Icons.share_rounded,
-                  iconColor: const Color(0xFF38BDF8),
+                  iconColor: const Color(0xFFEC4899),
                   title: 'Share with Friends & Creators',
                   subtitle: 'Spread the word about CleanPixel AI',
                   onTap: () {
@@ -175,6 +187,7 @@ class _SettingsScreenState extends State<SettingsScreen> with SingleTickerProvid
                         behavior: SnackBarBehavior.floating,
                         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
                         margin: const EdgeInsets.all(16),
+                        backgroundColor: const Color(0xFFEC4899),
                         content: const Row(
                           children: [
                             Icon(Icons.content_copy_rounded, color: Colors.white, size: 18),
@@ -185,6 +198,7 @@ class _SettingsScreenState extends State<SettingsScreen> with SingleTickerProvid
                       ),
                     );
                   },
+                  isDark: isDark,
                 )),
                 _buildStaggered(0.3, 0.6, child: _buildSettingTile(
                   icon: Icons.cleaning_services_rounded,
@@ -209,10 +223,11 @@ class _SettingsScreenState extends State<SettingsScreen> with SingleTickerProvid
                       ),
                     );
                   },
+                  isDark: isDark,
                 )),
                 _buildStaggered(0.32, 0.62, child: _buildSettingTile(
                   icon: Icons.system_update_rounded,
-                  iconColor: const Color(0xFF8B5CF6),
+                  iconColor: const Color(0xFFA855F7),
                   title: 'Check for Updates',
                   subtitle: 'Current Version ${UpdateService.currentVersion} (Up to date)',
                   onTap: () async {
@@ -222,15 +237,16 @@ class _SettingsScreenState extends State<SettingsScreen> with SingleTickerProvid
                       UpdateService.showUpdateDialog(context, update);
                     }
                   },
+                  isDark: isDark,
                 )),
-                const SizedBox(height: 24),
+                const SizedBox(height: 22),
 
                 // 4. Section 2: Privacy & Legal
-                _buildStaggered(0.35, 0.65, child: _buildSectionLabel('PRIVACY & POLICIES')),
+                _buildStaggered(0.35, 0.65, child: _buildSectionLabel('PRIVACY & POLICIES', isDark)),
                 const SizedBox(height: 10),
                 _buildStaggered(0.4, 0.7, child: _buildSettingTile(
                   icon: Icons.privacy_tip_rounded,
-                  iconColor: const Color(0xFFA855F7),
+                  iconColor: const Color(0xFFEC4899),
                   title: 'Privacy Policy',
                   subtitle: 'How we securely handle your media',
                   onTap: () {
@@ -240,6 +256,7 @@ class _SettingsScreenState extends State<SettingsScreen> with SingleTickerProvid
                       'CleanPixel AI is committed to your privacy.\n\n1. Media Privacy: Uploaded photos and inpaint masks are processed exclusively in transient RAM buffers and are automatically wiped immediately after completion.\n\n2. No Model Training: We never use personal photos to train models without consent.\n\n3. Data Encryption: All network communications are encrypted with standard TLS 1.3 / SSL.',
                     );
                   },
+                  isDark: isDark,
                 )),
                 _buildStaggered(0.45, 0.75, child: _buildSettingTile(
                   icon: Icons.description_rounded,
@@ -250,99 +267,147 @@ class _SettingsScreenState extends State<SettingsScreen> with SingleTickerProvid
                     _showPolicyDialog(
                       context,
                       'Terms of Service',
-                      'By using CleanPixel AI, you agree that:\n\n1. You hold proper ownership or rights to the images you process.\n\n2. Subscriptions can be managed or cancelled anytime in Google Play settings.',
+                      '1. Acceptance: By using CleanPixel AI, you agree to these Terms.\n\n2. Prohibited Use: You agree not to upload illegal, abusive, or explicitly copyrighted materials.\n\n3. Subscription: Pro features are billed according to your chosen plan with instant cancelation support.',
                     );
                   },
+                  isDark: isDark,
                 )),
-                const SizedBox(height: 24),
+                _buildStaggered(0.5, 0.8, child: _buildSettingTile(
+                  icon: Icons.verified_user_rounded,
+                  iconColor: const Color(0xFF10B981),
+                  title: 'Zero-Knowledge Privacy',
+                  subtitle: 'In-memory processing guarantee (Active)',
+                  trailing: const Icon(Icons.check_circle_rounded, color: Color(0xFF10B981), size: 18),
+                  onTap: () {},
+                  isDark: isDark,
+                )),
+                const SizedBox(height: 22),
 
-                // 5. Account Management / Logout
-                _buildStaggered(0.5, 0.8, child: _buildSectionLabel('ACCOUNT SESSION')),
+                // 5. Section 3: Account & Session
+                _buildStaggered(0.55, 0.85, child: _buildSectionLabel('ACCOUNT & SESSION', isDark)),
                 const SizedBox(height: 10),
-                _buildStaggered(0.55, 0.85, child: Container(
-                  decoration: BoxDecoration(
-                    color: const Color(0xFF111827),
-                    borderRadius: BorderRadius.circular(14),
-                    border: Border.all(color: const Color(0xFFEF4444).withValues(alpha: 0.2)),
-                  ),
-                  child: Material(
-                    color: Colors.transparent,
-                    child: InkWell(
-                      borderRadius: BorderRadius.circular(14),
-                      onTap: _handleLogout,
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
-                        child: Row(
-                          children: [
-                            Container(
-                              padding: const EdgeInsets.all(9),
-                              decoration: BoxDecoration(
-                                color: const Color(0xFFEF4444).withValues(alpha: 0.1),
-                                borderRadius: BorderRadius.circular(11),
-                              ),
-                              child: const Icon(Icons.logout_rounded, color: Color(0xFFEF4444), size: 20),
-                            ),
-                            const SizedBox(width: 14),
-                            const Expanded(
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    'Log Out of Account',
-                                    style: TextStyle(color: Color(0xFFEF4444), fontSize: 14, fontWeight: FontWeight.w700),
-                                  ),
-                                  SizedBox(height: 2),
-                                  Text(
-                                    'Switch user or reset active session',
-                                    style: TextStyle(color: Color(0xFF64748B), fontSize: 12),
-                                  ),
-                                ],
-                              ),
-                            ),
-                            const Icon(Icons.chevron_right_rounded, color: Color(0xFFEF4444), size: 20),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ),
+                _buildStaggered(0.6, 0.9, child: _buildSettingTile(
+                  icon: Icons.logout_rounded,
+                  iconColor: const Color(0xFFEF4444),
+                  title: 'Log Out',
+                  subtitle: 'Sign out of your creator account',
+                  titleColor: const Color(0xFFEF4444),
+                  onTap: _handleLogout,
+                  isDark: isDark,
                 )),
-
                 const SizedBox(height: 32),
 
-                // App Version Footer
-                _buildStaggered(0.6, 0.9, child: Center(
-                  child: Column(
-                    children: [
-                      Container(
-                        width: 36,
-                        height: 36,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10),
-                          gradient: const LinearGradient(
-                            colors: [Color(0xFF1E293B), Color(0xFF111827)],
-                          ),
-                          border: Border.all(color: Colors.white.withValues(alpha: 0.06)),
+                // 6. Footer Brand
+                _buildStaggered(
+                  0.65,
+                  0.95,
+                  child: Center(
+                    child: Column(
+                      children: [
+                        Image.asset(
+                          'assets/logo.png',
+                          height: 32,
+                          fit: BoxFit.contain,
+                          errorBuilder: (_, __, ___) => const Icon(Icons.auto_fix_high_rounded, color: Color(0xFFEC4899), size: 28),
                         ),
-                        child: const Icon(Icons.auto_fix_high_rounded, color: Color(0xFF38BDF8), size: 18),
-                      ),
-                      const SizedBox(height: 10),
-                      const Text(
-                        'CleanPixel AI Studio',
-                        style: TextStyle(color: Colors.white, fontWeight: FontWeight.w700, fontSize: 14),
-                      ),
-                      const SizedBox(height: 2),
-                      const Text(
-                        'Version 2.5.0 (Build 102) • Production',
-                        style: TextStyle(color: Color(0xFF475569), fontSize: 11),
-                      ),
-                    ],
+                        const SizedBox(height: 8),
+                        Text(
+                          'CleanPixel AI v2.4.0 (Founder Edition)',
+                          style: TextStyle(
+                            color: isDark ? const Color(0xFF64748B) : const Color(0xFF94A3B8),
+                            fontSize: 12,
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                        const SizedBox(height: 24),
+                      ],
+                    ),
                   ),
-                )),
-                const SizedBox(height: 24),
+                ),
               ],
             ),
           );
         },
+      ),
+    );
+  }
+
+  void _showThemeSelectorDialog(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          backgroundColor: isDark ? const Color(0xFF1B0C24) : Colors.white,
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+          title: Row(
+            children: [
+              const Icon(Icons.palette_rounded, color: Color(0xFFEC4899), size: 24),
+              const SizedBox(width: 10),
+              Text(
+                'Select Theme',
+                style: TextStyle(color: isDark ? Colors.white : const Color(0xFF1E293B), fontWeight: FontWeight.bold, fontSize: 18),
+              ),
+            ],
+          ),
+          content: ValueListenableBuilder<ThemeMode>(
+            valueListenable: ThemeService.themeModeNotifier,
+            builder: (context, currentMode, _) {
+              return Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  _buildThemeRadioOption(context, ThemeMode.light, 'Light Mode (White & Pink)', Icons.light_mode_rounded, currentMode, isDark),
+                  _buildThemeRadioOption(context, ThemeMode.dark, 'Dark Mode (OLED)', Icons.dark_mode_rounded, currentMode, isDark),
+                  _buildThemeRadioOption(context, ThemeMode.system, 'System Default', Icons.brightness_auto_rounded, currentMode, isDark),
+                ],
+              );
+            },
+          ),
+        );
+      },
+    );
+  }
+
+  Widget _buildThemeRadioOption(BuildContext context, ThemeMode mode, String title, IconData icon, ThemeMode currentMode, bool isDark) {
+    final isSelected = currentMode == mode;
+    return InkWell(
+      onTap: () {
+        ThemeService.setThemeMode(mode);
+        Navigator.pop(context);
+      },
+      borderRadius: BorderRadius.circular(12),
+      child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 12),
+        margin: const EdgeInsets.symmetric(vertical: 4),
+        decoration: BoxDecoration(
+          color: isSelected
+              ? const Color(0xFFEC4899).withValues(alpha: 0.12)
+              : Colors.transparent,
+          borderRadius: BorderRadius.circular(12),
+          border: isSelected
+              ? Border.all(color: const Color(0xFFEC4899).withValues(alpha: 0.4))
+              : null,
+        ),
+        child: Row(
+          children: [
+            Icon(icon, color: isSelected ? const Color(0xFFEC4899) : (isDark ? Colors.white60 : const Color(0xFF64748B)), size: 20),
+            const SizedBox(width: 12),
+            Expanded(
+              child: Text(
+                title,
+                style: TextStyle(
+                  color: isSelected
+                      ? const Color(0xFFEC4899)
+                      : (isDark ? Colors.white : const Color(0xFF1E293B)),
+                  fontWeight: isSelected ? FontWeight.w800 : FontWeight.w600,
+                  fontSize: 14,
+                ),
+              ),
+            ),
+            if (isSelected)
+              const Icon(Icons.check_circle_rounded, color: Color(0xFFEC4899), size: 18),
+          ],
+        ),
       ),
     );
   }
@@ -360,19 +425,19 @@ class _SettingsScreenState extends State<SettingsScreen> with SingleTickerProvid
     );
   }
 
-  Widget _buildSectionLabel(String label) {
+  Widget _buildSectionLabel(String label, bool isDark) {
     return Text(
       label,
-      style: const TextStyle(
-        color: Color(0xFF475569),
+      style: TextStyle(
+        color: isDark ? const Color(0xFF94A3B8) : const Color(0xFF64748B),
         fontSize: 11,
         fontWeight: FontWeight.w800,
-        letterSpacing: 1.4,
+        letterSpacing: 1.2,
       ),
     );
   }
 
-  Widget _buildUserProfileCard() {
+  Widget _buildUserProfileCard(bool isDark) {
     final name = _userProfile?.fullName ?? 'CleanPixel Creator';
     final email = _userProfile?.email ?? 'creator@cleanpixel.ai';
     final isPro = _userProfile?.isPro ?? false;
@@ -380,18 +445,18 @@ class _SettingsScreenState extends State<SettingsScreen> with SingleTickerProvid
     return Container(
       padding: const EdgeInsets.all(18),
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(18),
-        gradient: const LinearGradient(
-          colors: [Color(0xFF1E293B), Color(0xFF111827)],
-        ),
-        border: Border.all(color: const Color(0xFF38BDF8).withValues(alpha: 0.2)),
-        boxShadow: [
-          BoxShadow(
-            color: const Color(0xFF38BDF8).withValues(alpha: 0.06),
-            blurRadius: 20,
-            spreadRadius: 2,
-          ),
-        ],
+        color: isDark ? const Color(0xFF1B0C24) : Colors.white,
+        borderRadius: BorderRadius.circular(20),
+        border: Border.all(color: isDark ? Colors.white.withValues(alpha: 0.06) : const Color(0xFFFCE7F3)),
+        boxShadow: isDark
+            ? []
+            : [
+                BoxShadow(
+                  color: const Color(0xFFEC4899).withValues(alpha: 0.08),
+                  blurRadius: 16,
+                  offset: const Offset(0, 4),
+                ),
+              ],
       ),
       child: Row(
         children: [
@@ -401,7 +466,7 @@ class _SettingsScreenState extends State<SettingsScreen> with SingleTickerProvid
               gradient: LinearGradient(
                 colors: isPro
                     ? [const Color(0xFFF59E0B), const Color(0xFFEC4899)]
-                    : [const Color(0xFF38BDF8), const Color(0xFF2563EB)],
+                    : [const Color(0xFFEC4899), const Color(0xFFF43F5E)],
               ),
               shape: BoxShape.circle,
             ),
@@ -422,7 +487,11 @@ class _SettingsScreenState extends State<SettingsScreen> with SingleTickerProvid
                       child: Text(
                         name,
                         overflow: TextOverflow.ellipsis,
-                        style: const TextStyle(color: Colors.white, fontWeight: FontWeight.w700, fontSize: 15),
+                        style: TextStyle(
+                          color: isDark ? Colors.white : const Color(0xFF1E293B),
+                          fontWeight: FontWeight.w800,
+                          fontSize: 15,
+                        ),
                       ),
                     ),
                     const SizedBox(width: 6),
@@ -432,12 +501,16 @@ class _SettingsScreenState extends State<SettingsScreen> with SingleTickerProvid
                         gradient: isPro
                             ? const LinearGradient(colors: [Color(0xFFF59E0B), Color(0xFFEC4899)])
                             : null,
-                        color: isPro ? null : Colors.white.withValues(alpha: 0.08),
-                        borderRadius: BorderRadius.circular(4),
+                        color: isPro ? null : const Color(0xFFEC4899).withValues(alpha: 0.12),
+                        borderRadius: BorderRadius.circular(6),
                       ),
                       child: Text(
                         isPro ? 'PRO' : 'FREE',
-                        style: const TextStyle(color: Colors.white, fontSize: 9, fontWeight: FontWeight.w900),
+                        style: TextStyle(
+                          color: isPro ? Colors.white : const Color(0xFFEC4899),
+                          fontSize: 9,
+                          fontWeight: FontWeight.w900,
+                        ),
                       ),
                     ),
                   ],
@@ -446,7 +519,7 @@ class _SettingsScreenState extends State<SettingsScreen> with SingleTickerProvid
                 Text(
                   email,
                   overflow: TextOverflow.ellipsis,
-                  style: const TextStyle(color: Color(0xFF64748B), fontSize: 12),
+                  style: TextStyle(color: isDark ? const Color(0xFF94A3B8) : const Color(0xFF64748B), fontSize: 12),
                 ),
               ],
             ),
@@ -454,12 +527,12 @@ class _SettingsScreenState extends State<SettingsScreen> with SingleTickerProvid
           Container(
             decoration: BoxDecoration(
               gradient: const LinearGradient(
-                colors: [Color(0xFF38BDF8), Color(0xFF2563EB)],
+                colors: [Color(0xFFEC4899), Color(0xFFF43F5E)],
               ),
-              borderRadius: BorderRadius.circular(10),
+              borderRadius: BorderRadius.circular(12),
               boxShadow: [
                 BoxShadow(
-                  color: const Color(0xFF2563EB).withValues(alpha: 0.3),
+                  color: const Color(0xFFEC4899).withValues(alpha: 0.3),
                   blurRadius: 8,
                   offset: const Offset(0, 2),
                 ),
@@ -469,7 +542,7 @@ class _SettingsScreenState extends State<SettingsScreen> with SingleTickerProvid
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.transparent,
                 shadowColor: Colors.transparent,
-                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
                 padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
               ),
               onPressed: () {
@@ -478,7 +551,10 @@ class _SettingsScreenState extends State<SettingsScreen> with SingleTickerProvid
                   MaterialPageRoute(builder: (context) => const PremiumScreen()),
                 );
               },
-              child: Text(isPro ? 'Manage' : 'Upgrade', style: const TextStyle(color: Colors.white, fontSize: 12, fontWeight: FontWeight.w700)),
+              child: Text(
+                isPro ? 'Manage' : 'Upgrade',
+                style: const TextStyle(color: Colors.white, fontSize: 12, fontWeight: FontWeight.w800),
+              ),
             ),
           ),
         ],
@@ -486,15 +562,24 @@ class _SettingsScreenState extends State<SettingsScreen> with SingleTickerProvid
     );
   }
 
-  Widget _buildCreditBar() {
+  Widget _buildCreditBar(bool isDark) {
     final double fraction = (_credits / 3.0).clamp(0.0, 1.0);
 
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: const Color(0xFF111827),
-        borderRadius: BorderRadius.circular(14),
-        border: Border.all(color: Colors.white.withValues(alpha: 0.04)),
+        color: isDark ? const Color(0xFF1B0C24) : Colors.white,
+        borderRadius: BorderRadius.circular(16),
+        border: Border.all(color: isDark ? Colors.white.withValues(alpha: 0.06) : const Color(0xFFFCE7F3)),
+        boxShadow: isDark
+            ? []
+            : [
+                BoxShadow(
+                  color: const Color(0xFFEC4899).withValues(alpha: 0.06),
+                  blurRadius: 12,
+                  offset: const Offset(0, 4),
+                ),
+              ],
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -502,8 +587,18 @@ class _SettingsScreenState extends State<SettingsScreen> with SingleTickerProvid
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              const Text('Daily AI Credits', style: TextStyle(color: Colors.white, fontWeight: FontWeight.w600, fontSize: 14)),
-              Text('$_credits / 3 Remaining', style: const TextStyle(color: Color(0xFF10B981), fontWeight: FontWeight.w800, fontSize: 13)),
+              Text(
+                'Free Neural Inpaint Credits',
+                style: TextStyle(
+                  color: isDark ? Colors.white : const Color(0xFF1E293B),
+                  fontWeight: FontWeight.w800,
+                  fontSize: 13,
+                ),
+              ),
+              Text(
+                '$_credits of 3 remaining',
+                style: const TextStyle(color: Color(0xFFEC4899), fontWeight: FontWeight.w700, fontSize: 12),
+              ),
             ],
           ),
           const SizedBox(height: 10),
@@ -511,17 +606,10 @@ class _SettingsScreenState extends State<SettingsScreen> with SingleTickerProvid
             borderRadius: BorderRadius.circular(6),
             child: LinearProgressIndicator(
               value: fraction,
-              minHeight: 8,
-              backgroundColor: Colors.white.withValues(alpha: 0.06),
-              valueColor: AlwaysStoppedAnimation<Color>(
-                fraction > 0.3 ? const Color(0xFF10B981) : const Color(0xFFEF4444),
-              ),
+              minHeight: 6,
+              backgroundColor: isDark ? Colors.white.withValues(alpha: 0.08) : const Color(0xFFFDF2F8),
+              valueColor: const AlwaysStoppedAnimation<Color>(Color(0xFFEC4899)),
             ),
-          ),
-          const SizedBox(height: 6),
-          const Text(
-            'Credits reset daily at midnight • Unlimited in Pro Tier',
-            style: TextStyle(color: Color(0xFF475569), fontSize: 11),
           ),
         ],
       ),
@@ -534,206 +622,60 @@ class _SettingsScreenState extends State<SettingsScreen> with SingleTickerProvid
     required String title,
     required String subtitle,
     required VoidCallback onTap,
+    required bool isDark,
+    Color? titleColor,
+    Widget? trailing,
   }) {
     return Container(
-      margin: const EdgeInsets.only(bottom: 10),
+      margin: const EdgeInsets.only(bottom: 8),
       decoration: BoxDecoration(
-        color: const Color(0xFF111827),
-        borderRadius: BorderRadius.circular(14),
-        border: Border.all(color: Colors.white.withValues(alpha: 0.04)),
-      ),
-      child: Material(
-        color: Colors.transparent,
-        child: InkWell(
-          onTap: () {
-            HapticFeedback.selectionClick();
-            onTap();
-          },
-          borderRadius: BorderRadius.circular(14),
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
-            child: Row(
-              children: [
-                Container(
-                  padding: const EdgeInsets.all(9),
-                  decoration: BoxDecoration(
-                    color: iconColor.withValues(alpha: 0.1),
-                    borderRadius: BorderRadius.circular(11),
-                  ),
-                  child: Icon(icon, color: iconColor, size: 20),
+        color: isDark ? const Color(0xFF1B0C24) : Colors.white,
+        borderRadius: BorderRadius.circular(16),
+        border: Border.all(color: isDark ? Colors.white.withValues(alpha: 0.06) : const Color(0xFFFCE7F3)),
+        boxShadow: isDark
+            ? []
+            : [
+                BoxShadow(
+                  color: const Color(0xFFEC4899).withValues(alpha: 0.04),
+                  blurRadius: 8,
+                  offset: const Offset(0, 2),
                 ),
-                const SizedBox(width: 14),
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        title,
-                        style: const TextStyle(color: Colors.white, fontSize: 14, fontWeight: FontWeight.w600),
-                      ),
-                      const SizedBox(height: 2),
-                      Text(
-                        subtitle,
-                        style: const TextStyle(color: Color(0xFF64748B), fontSize: 12),
-                      ),
-                    ],
-                  ),
-                ),
-                Icon(Icons.chevron_right_rounded, color: Colors.white.withValues(alpha: 0.15), size: 20),
               ],
-            ),
+      ),
+      child: ListTile(
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+        leading: Container(
+          padding: const EdgeInsets.all(8),
+          decoration: BoxDecoration(
+            color: iconColor.withValues(alpha: 0.12),
+            borderRadius: BorderRadius.circular(10),
+          ),
+          child: Icon(icon, color: iconColor, size: 20),
+        ),
+        title: Text(
+          title,
+          style: TextStyle(
+            color: titleColor ?? (isDark ? Colors.white : const Color(0xFF1E293B)),
+            fontWeight: FontWeight.w700,
+            fontSize: 14,
           ),
         ),
-      ),
-    );
-  }
-
-  void _showThemeSelectorDialog(BuildContext context) {
-    showModalBottomSheet(
-      context: context,
-      backgroundColor: Colors.transparent,
-      builder: (ctx) => ValueListenableBuilder<ThemeMode>(
-        valueListenable: ThemeService.themeModeNotifier,
-        builder: (context, currentMode, _) {
-          return Container(
-            padding: const EdgeInsets.fromLTRB(20, 16, 20, 24),
-            decoration: const BoxDecoration(
-              color: Color(0xFF1E293B),
-              borderRadius: BorderRadius.vertical(top: Radius.circular(28)),
-              boxShadow: [
-                BoxShadow(color: Colors.black54, blurRadius: 32, offset: Offset(0, -8)),
-              ],
-            ),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Center(
-                  child: Container(
-                    width: 40,
-                    height: 4,
-                    decoration: BoxDecoration(
-                      color: Colors.white.withValues(alpha: 0.15),
-                      borderRadius: BorderRadius.circular(2),
-                    ),
-                  ),
-                ),
-                const SizedBox(height: 18),
-                const Row(
-                  children: [
-                    Icon(Icons.palette_rounded, color: Color(0xFF38BDF8), size: 24),
-                    SizedBox(width: 10),
-                    Text(
-                      'Choose Theme Mode',
-                      style: TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.w800),
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 16),
-                _buildThemeOption(
-                  icon: Icons.dark_mode_rounded,
-                  title: 'Dark Mode (OLED)',
-                  subtitle: 'Deep pitch black, saves battery',
-                  isSelected: currentMode == ThemeMode.dark,
-                  onTap: () {
-                    ThemeService.setThemeMode(ThemeMode.dark);
-                    Navigator.pop(ctx);
-                  },
-                ),
-                const SizedBox(height: 8),
-                _buildThemeOption(
-                  icon: Icons.light_mode_rounded,
-                  title: 'Light Mode',
-                  subtitle: 'Clean, bright & high contrast',
-                  isSelected: currentMode == ThemeMode.light,
-                  onTap: () {
-                    ThemeService.setThemeMode(ThemeMode.light);
-                    Navigator.pop(ctx);
-                  },
-                ),
-                const SizedBox(height: 8),
-                _buildThemeOption(
-                  icon: Icons.brightness_auto_rounded,
-                  title: 'System Default',
-                  subtitle: 'Match device system appearance',
-                  isSelected: currentMode == ThemeMode.system,
-                  onTap: () {
-                    ThemeService.setThemeMode(ThemeMode.system);
-                    Navigator.pop(ctx);
-                  },
-                ),
-              ],
-            ),
-          );
-        },
-      ),
-    );
-  }
-
-  Widget _buildThemeOption({
-    required IconData icon,
-    required String title,
-    required String subtitle,
-    required bool isSelected,
-    required VoidCallback onTap,
-  }) {
-    return Material(
-      color: isSelected ? const Color(0xFF2563EB).withValues(alpha: 0.15) : const Color(0xFF111827),
-      borderRadius: BorderRadius.circular(14),
-      child: InkWell(
-        borderRadius: BorderRadius.circular(14),
+        subtitle: Text(
+          subtitle,
+          style: TextStyle(
+            color: isDark ? const Color(0xFF94A3B8) : const Color(0xFF64748B),
+            fontSize: 12,
+          ),
+        ),
+        trailing: trailing ?? Icon(
+          Icons.arrow_forward_ios_rounded,
+          color: isDark ? Colors.white24 : const Color(0xFFCBD5E1),
+          size: 14,
+        ),
         onTap: () {
-          HapticFeedback.mediumImpact();
+          HapticFeedback.selectionClick();
           onTap();
         },
-        child: Container(
-          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(14),
-            border: Border.all(
-              color: isSelected ? const Color(0xFF38BDF8) : Colors.white.withValues(alpha: 0.04),
-              width: isSelected ? 1.5 : 1,
-            ),
-          ),
-          child: Row(
-            children: [
-              Container(
-                padding: const EdgeInsets.all(8),
-                decoration: BoxDecoration(
-                  color: (isSelected ? const Color(0xFF38BDF8) : Colors.white).withValues(alpha: 0.1),
-                  borderRadius: BorderRadius.circular(10),
-                ),
-                child: Icon(icon, color: isSelected ? const Color(0xFF38BDF8) : Colors.white, size: 20),
-              ),
-              const SizedBox(width: 14),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      title,
-                      style: TextStyle(
-                        color: isSelected ? const Color(0xFF38BDF8) : Colors.white,
-                        fontWeight: FontWeight.w700,
-                        fontSize: 15,
-                      ),
-                    ),
-                    Text(
-                      subtitle,
-                      style: const TextStyle(color: Color(0xFF64748B), fontSize: 12),
-                    ),
-                  ],
-                ),
-              ),
-              if (isSelected)
-                Container(
-                  padding: const EdgeInsets.all(4),
-                  decoration: const BoxDecoration(shape: BoxShape.circle, color: Color(0xFF38BDF8)),
-                  child: const Icon(Icons.check_rounded, color: Colors.black, size: 14),
-                ),
-            ],
-          ),
-        ),
       ),
     );
   }
