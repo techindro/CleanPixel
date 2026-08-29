@@ -407,171 +407,156 @@ class _WorkspaceScreenState extends State<WorkspaceScreen> with TickerProviderSt
         ? MemoryImage(_cleanedImageBytes!)
         : activeImageProvider;
 
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
     return Scaffold(
-      backgroundColor: const Color(0xFF0B0F19),
-      extendBodyBehindAppBar: true,
-      appBar: PreferredSize(
-        preferredSize: const Size.fromHeight(64),
-        child: ClipRRect(
-          child: BackdropFilter(
-            filter: ImageFilter.blur(sigmaX: 20, sigmaY: 20),
-            child: AppBar(
-              backgroundColor: const Color(0xFF0B0F19).withValues(alpha: 0.75),
-              elevation: 0,
-              flexibleSpace: Container(
-                decoration: BoxDecoration(
-                  border: Border(
-                    bottom: BorderSide(
-                      color: const Color(0xFF38BDF8).withValues(alpha: 0.08),
-                      width: 1,
-                    ),
-                  ),
-                ),
-              ),
-              title: Row(
-                children: [
-                  Container(
-                    width: 34,
-                    height: 34,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10),
-                      gradient: const LinearGradient(
-                        colors: [Color(0xFFEC4899), Color(0xFFF43F5E)],
-                      ),
-                      boxShadow: [
-                        BoxShadow(
-                          color: const Color(0xFFEC4899).withValues(alpha: 0.3),
-                          blurRadius: 8,
-                          offset: const Offset(0, 2),
-                        ),
-                      ],
-                    ),
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.circular(10),
-                      child: Image.asset(
-                        'assets/logo.png',
-                        fit: BoxFit.contain,
-                        errorBuilder: (_, __, ___) =>
-                            const Icon(Icons.auto_fix_high_rounded, size: 18, color: Colors.white),
-                      ),
-                    ),
-                  ),
-                  const SizedBox(width: 10),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Text(
-                        'CleanPixel AI',
-                        style: TextStyle(
-                          fontSize: 17,
-                          fontWeight: FontWeight.w800,
-                          color: Theme.of(context).brightness == Brightness.dark ? Colors.white : const Color(0xFF1E293B),
-                          letterSpacing: -0.3,
-                        ),
-                      ),
-                      const Text(
-                        'Neural Inpaint Studio',
-                        style: TextStyle(fontSize: 10, fontWeight: FontWeight.w600, color: Color(0xFFEC4899)),
-                      ),
-                    ],
+      backgroundColor: isDark ? const Color(0xFF0F0715) : const Color(0xFFFAF5FF),
+      appBar: AppBar(
+        backgroundColor: isDark ? const Color(0xFF0F0715) : Colors.white,
+        elevation: 0,
+        title: Row(
+          children: [
+            Container(
+              width: 36,
+              height: 36,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(12),
+                boxShadow: [
+                  BoxShadow(
+                    color: const Color(0xFF2563EB).withValues(alpha: 0.3),
+                    blurRadius: 8,
+                    offset: const Offset(0, 2),
                   ),
                 ],
               ),
-              actions: [
-                IconButton(
-                  tooltip: 'PixelAgent Copilot',
-                  icon: Container(
-                    padding: const EdgeInsets.all(6),
-                    decoration: BoxDecoration(
-                      gradient: const LinearGradient(
-                        colors: [Color(0xFF38BDF8), Color(0xFF8B5CF6)],
-                      ),
-                      borderRadius: BorderRadius.circular(10),
-                      boxShadow: [
-                        BoxShadow(
-                          color: const Color(0xFF8B5CF6).withValues(alpha: 0.4),
-                          blurRadius: 8,
-                        ),
-                      ],
-                    ),
-                    child: const Icon(Icons.auto_awesome_rounded, color: Colors.white, size: 18),
-                  ),
-                  onPressed: () {
-                    final size = MediaQuery.of(context).size;
-                    PixelAgentSheet.show(
-                      context,
-                      canvasSize: Size(size.width - 28, size.height * 0.55),
-                      onAgentAction: (targetBoxes, msg) {
-                        _saveHistory();
-                        setState(() {
-                          _state = StudioState.drawing;
-                          for (final box in targetBoxes) {
-                            final paint = Paint()
-                              ..color = const Color(0xFF38BDF8).withValues(alpha: 0.65)
-                              ..strokeCap = StrokeCap.round
-                              ..strokeWidth = 32.0;
-
-                            for (double y = box.top + 8; y <= box.bottom - 8; y += 14) {
-                              for (double x = box.left + 8; x <= box.right - 8; x += 14) {
-                                _points.add(DrawingPoint(offset: Offset(x, y), paint: paint));
-                              }
-                              _points.add(null);
-                            }
-                          }
-                        });
-                        _toolbarRevealController.forward(from: 0);
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(
-                            backgroundColor: const Color(0xFF8B5CF6),
-                            behavior: SnackBarBehavior.floating,
-                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-                            margin: const EdgeInsets.all(16),
-                            content: Row(
-                              children: [
-                                const Icon(Icons.auto_awesome_rounded, color: Colors.white, size: 18),
-                                const SizedBox(width: 10),
-                                Expanded(child: Text(msg, style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 12))),
-                              ],
-                            ),
-                          ),
-                        );
-                      },
-                    );
-                  },
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(12),
+                child: Image.asset(
+                  'assets/logo.png',
+                  fit: BoxFit.contain,
+                  errorBuilder: (_, __, ___) =>
+                      const Icon(Icons.auto_fix_high_rounded, size: 18, color: Color(0xFF38BDF8)),
                 ),
-                Padding(
-                  padding: const EdgeInsets.only(right: 4),
-                  child: PaywallBadge(
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => const PremiumScreen()),
-                      );
-                    },
+              ),
+            ),
+            const SizedBox(width: 10),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Text(
+                  'CleanPixel AI',
+                  style: TextStyle(
+                    fontSize: 17,
+                    fontWeight: FontWeight.w800,
+                    color: isDark ? Colors.white : const Color(0xFF1E293B),
+                    letterSpacing: -0.3,
                   ),
                 ),
-                IconButton(
-                  icon: Container(
-                    padding: const EdgeInsets.all(6),
-                    decoration: BoxDecoration(
-                      color: Colors.white.withValues(alpha: 0.06),
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    child: const Icon(Icons.settings_outlined, color: Colors.white70, size: 20),
-                  ),
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => const SettingsScreen()),
-                    );
-                  },
+                const Text(
+                  'Neural Inpaint Studio',
+                  style: TextStyle(fontSize: 10, fontWeight: FontWeight.w600, color: Color(0xFFEC4899)),
                 ),
-                const SizedBox(width: 4),
               ],
             ),
-          ),
+          ],
         ),
+        actions: [
+          IconButton(
+            tooltip: 'PixelAgent Copilot',
+            icon: Container(
+              padding: const EdgeInsets.all(6),
+              decoration: BoxDecoration(
+                gradient: const LinearGradient(
+                  colors: [Color(0xFF38BDF8), Color(0xFF8B5CF6)],
+                ),
+                borderRadius: BorderRadius.circular(10),
+                boxShadow: [
+                  BoxShadow(
+                    color: const Color(0xFF8B5CF6).withValues(alpha: 0.4),
+                    blurRadius: 8,
+                  ),
+                ],
+              ),
+              child: const Icon(Icons.auto_awesome_rounded, color: Colors.white, size: 18),
+            ),
+            onPressed: () {
+              final size = MediaQuery.of(context).size;
+              PixelAgentSheet.show(
+                context,
+                canvasSize: Size(size.width - 28, size.height * 0.55),
+                onAgentAction: (targetBoxes, msg) {
+                  _saveHistory();
+                  setState(() {
+                    _state = StudioState.drawing;
+                    for (final box in targetBoxes) {
+                      final paint = Paint()
+                        ..color = const Color(0xFFEC4899).withValues(alpha: 0.65)
+                        ..strokeCap = StrokeCap.round
+                        ..strokeWidth = 32.0;
+
+                      for (double y = box.top + 8; y <= box.bottom - 8; y += 14) {
+                        for (double x = box.left + 8; x <= box.right - 8; x += 14) {
+                          _points.add(DrawingPoint(offset: Offset(x, y), paint: paint));
+                        }
+                        _points.add(null);
+                      }
+                    }
+                  });
+                  _toolbarRevealController.forward(from: 0);
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      backgroundColor: const Color(0xFF8B5CF6),
+                      behavior: SnackBarBehavior.floating,
+                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                      margin: const EdgeInsets.all(16),
+                      content: Row(
+                        children: [
+                          const Icon(Icons.auto_awesome_rounded, color: Colors.white, size: 18),
+                          const SizedBox(width: 10),
+                          Expanded(child: Text(msg, style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 12))),
+                        ],
+                      ),
+                    ),
+                  );
+                },
+              );
+            },
+          ),
+          Padding(
+            padding: const EdgeInsets.only(right: 4),
+            child: PaywallBadge(
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const PremiumScreen()),
+                );
+              },
+            ),
+          ),
+          IconButton(
+            icon: Container(
+              padding: const EdgeInsets.all(6),
+              decoration: BoxDecoration(
+                color: isDark ? Colors.white.withValues(alpha: 0.08) : const Color(0xFFFDF2F8),
+                borderRadius: BorderRadius.circular(10),
+                border: Border.all(color: isDark ? Colors.transparent : const Color(0xFFFCE7F3)),
+              ),
+              child: Icon(
+                Icons.settings_outlined,
+                color: isDark ? Colors.white70 : const Color(0xFF64748B),
+                size: 20,
+              ),
+            ),
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const SettingsScreen()),
+              );
+            },
+          ),
+          const SizedBox(width: 4),
+        ],
       ),
       body: SafeArea(
         child: Padding(
@@ -586,24 +571,22 @@ class _WorkspaceScreenState extends State<WorkspaceScreen> with TickerProviderSt
               Expanded(
                 child: LayoutBuilder(
                   builder: (context, constraints) {
-                    final canvasSize = Size(constraints.maxWidth, constraints.maxHeight);
-
                     return Container(
                       decoration: BoxDecoration(
-                        color: const Color(0xFF111827),
+                        color: isDark ? const Color(0xFF1B0C24) : Colors.white,
                         borderRadius: BorderRadius.circular(20),
                         border: Border.all(
-                          color: _state == StudioState.processing
-                              ? const Color(0xFF38BDF8).withValues(alpha: 0.2)
-                              : Colors.white.withValues(alpha: 0.06),
+                          color: isDark ? Colors.white.withValues(alpha: 0.06) : const Color(0xFFFCE7F3),
                         ),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.black.withValues(alpha: 0.3),
-                            blurRadius: 24,
-                            offset: const Offset(0, 8),
-                          ),
-                        ],
+                        boxShadow: isDark
+                            ? []
+                            : [
+                                BoxShadow(
+                                  color: const Color(0xFFEC4899).withValues(alpha: 0.08),
+                                  blurRadius: 18,
+                                  offset: const Offset(0, 6),
+                                ),
+                              ],
                       ),
                       child: ClipRRect(
                         borderRadius: BorderRadius.circular(20),
@@ -959,6 +942,8 @@ class _WorkspaceScreenState extends State<WorkspaceScreen> with TickerProviderSt
   }
 
   Widget _buildIdleView() {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
     return AnimatedBuilder(
       animation: _idlePulseController,
       builder: (context, _) {
@@ -1012,20 +997,23 @@ class _WorkspaceScreenState extends State<WorkspaceScreen> with TickerProviderSt
                     ),
                     const SizedBox(height: 20),
 
-                    const Text(
+                    Text(
                       'Clean Any Photo',
                       style: TextStyle(
-                        color: Colors.white,
+                        color: isDark ? Colors.white : const Color(0xFF1E293B),
                         fontSize: 22,
                         fontWeight: FontWeight.w800,
                         letterSpacing: -0.4,
                       ),
                     ),
                     const SizedBox(height: 6),
-                    const Text(
+                    Text(
                       'Remove watermarks, logos & people in 1 tap',
                       textAlign: TextAlign.center,
-                      style: TextStyle(color: Color(0xFF94A3B8), fontSize: 13),
+                      style: TextStyle(
+                        color: isDark ? const Color(0xFF94A3B8) : const Color(0xFF64748B),
+                        fontSize: 13,
+                      ),
                     ),
                     const SizedBox(height: 24),
 
@@ -1037,12 +1025,14 @@ class _WorkspaceScreenState extends State<WorkspaceScreen> with TickerProviderSt
                           icon: Icons.photo_library_rounded,
                           label: 'Gallery',
                           onTap: () => _handleImageSourceDirect(MediaPickSource.gallery),
+                          isDark: isDark,
                         ),
                         const SizedBox(width: 8),
                         _buildQuickActionPill(
                           icon: Icons.camera_alt_rounded,
                           label: 'Camera',
                           onTap: () => _handleImageSourceDirect(MediaPickSource.camera),
+                          isDark: isDark,
                         ),
                         const SizedBox(width: 8),
                         _buildQuickActionPill(
@@ -1050,6 +1040,7 @@ class _WorkspaceScreenState extends State<WorkspaceScreen> with TickerProviderSt
                           label: 'Try Sample',
                           isAccent: true,
                           onTap: () => _handleImageSourceDirect(MediaPickSource.demo),
+                          isDark: isDark,
                         ),
                       ],
                     ),
@@ -1068,6 +1059,7 @@ class _WorkspaceScreenState extends State<WorkspaceScreen> with TickerProviderSt
     required String label,
     bool isAccent = false,
     required VoidCallback onTap,
+    required bool isDark,
   }) {
     return Material(
       color: Colors.transparent,
@@ -1081,13 +1073,13 @@ class _WorkspaceScreenState extends State<WorkspaceScreen> with TickerProviderSt
           padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
           decoration: BoxDecoration(
             color: isAccent
-                ? const Color(0xFF38BDF8).withValues(alpha: 0.15)
-                : const Color(0xFF1E293B).withValues(alpha: 0.8),
+                ? const Color(0xFFEC4899).withValues(alpha: isDark ? 0.2 : 0.12)
+                : (isDark ? const Color(0xFF1E293B).withValues(alpha: 0.8) : const Color(0xFFFDF2F8)),
             borderRadius: BorderRadius.circular(12),
             border: Border.all(
               color: isAccent
-                  ? const Color(0xFF38BDF8).withValues(alpha: 0.4)
-                  : Colors.white.withValues(alpha: 0.08),
+                  ? const Color(0xFFEC4899).withValues(alpha: 0.4)
+                  : (isDark ? Colors.white.withValues(alpha: 0.08) : const Color(0xFFFCE7F3)),
             ),
           ),
           child: Row(
@@ -1096,13 +1088,13 @@ class _WorkspaceScreenState extends State<WorkspaceScreen> with TickerProviderSt
               Icon(
                 icon,
                 size: 16,
-                color: isAccent ? const Color(0xFF38BDF8) : Colors.white,
+                color: isAccent ? const Color(0xFFEC4899) : (isDark ? Colors.white : const Color(0xFF1E293B)),
               ),
               const SizedBox(width: 6),
               Text(
                 label,
                 style: TextStyle(
-                  color: isAccent ? const Color(0xFF38BDF8) : Colors.white,
+                  color: isAccent ? const Color(0xFFEC4899) : (isDark ? Colors.white : const Color(0xFF1E293B)),
                   fontWeight: FontWeight.w700,
                   fontSize: 12,
                 ),
