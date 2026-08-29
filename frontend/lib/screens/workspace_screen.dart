@@ -416,28 +416,13 @@ class _WorkspaceScreenState extends State<WorkspaceScreen> with TickerProviderSt
         elevation: 0,
         title: Row(
           children: [
-            Container(
-              width: 36,
-              height: 36,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(12),
-                boxShadow: [
-                  BoxShadow(
-                    color: const Color(0xFF2563EB).withValues(alpha: 0.3),
-                    blurRadius: 8,
-                    offset: const Offset(0, 2),
-                  ),
-                ],
-              ),
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(12),
-                child: Image.asset(
-                  'assets/logo.png',
-                  fit: BoxFit.contain,
-                  errorBuilder: (_, __, ___) =>
-                      const Icon(Icons.auto_fix_high_rounded, size: 18, color: Color(0xFF38BDF8)),
-                ),
-              ),
+            Image.asset(
+              'assets/logo.png',
+              width: 34,
+              height: 34,
+              fit: BoxFit.contain,
+              errorBuilder: (_, __, ___) =>
+                  const Icon(Icons.auto_fix_high_rounded, size: 24, color: Color(0xFF38BDF8)),
             ),
             const SizedBox(width: 10),
             Column(
