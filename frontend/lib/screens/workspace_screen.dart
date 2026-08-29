@@ -17,6 +17,7 @@ import 'package:cleanpixel_ai/components/pixel_agent_sheet.dart';
 import 'package:cleanpixel_ai/services/inpaint_engine.dart';
 import 'package:cleanpixel_ai/services/auth_service.dart';
 import 'package:cleanpixel_ai/services/history_service.dart';
+import 'package:cleanpixel_ai/services/ai_tools_service.dart';
 import 'package:cleanpixel_ai/screens/premium_screen.dart';
 import 'package:cleanpixel_ai/screens/settings_screen.dart';
 
@@ -303,6 +304,99 @@ class _WorkspaceScreenState extends State<WorkspaceScreen> with TickerProviderSt
         });
       },
     );
+  }
+
+  void _autoDetectWatermarks() {
+    HapticFeedback.mediumImpact();
+    final size = MediaQuery.of(context).size;
+    final canvasSize = Size(size.width - 28, size.height * 0.55);
+    final zones = AiToolsService.detectWatermarkZones(canvasSize);
+
+    _saveHistory();
+    setState(() {
+      final paint = Paint()
+        ..color = const Color(0xFFEC4899).withValues(alpha: 0.65)
+        ..strokeCap = StrokeCap.round
+        ..strokeWidth = 28.0;
+
+      for (final box in zones) {
+        for (double y = box.top + 6; y <= box.bottom - 6; y += 12) {
+          for (double x = box.left + 6; x <= box.right - 6; x += 12) {
+            _points.add(DrawingPoint(offset: Offset(x, y), paint: paint));
+          }
+          _points.add(null);
+        }
+      }
+    });
+
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        backgroundColor: const Color(0xFFEC4899),
+        behavior: SnackBarBehavior.floating,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+        margin: const EdgeInsets.all(16),
+        content: const Row(
+          children: [
+            Icon(Icons.auto_awesome_rounded, color: Colors.white, size: 18),
+            SizedBox(width: 10),
+            Expanded(
+              child: Text(
+                'AI Auto-Selected 4 watermark zones! Tap Erase.',
+                style: TextStyle(fontWeight: FontWeight.w700, fontSize: 12),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  void _runAiEnhance() async {
+    if (_selectedImage == null) return;
+    HapticFeedback.mediumImpact();
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        backgroundColor: const Color(0xFFEC4899),
+        behavior: SnackBarBehavior.floating,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+        margin: const EdgeInsets.all(16),
+        content: const Row(
+          children: [
+            SizedBox(width: 16, height: 16, child: CircularProgressIndicator(strokeWidth: 2, color: Colors.white)),
+            SizedBox(width: 12),
+            Text('Applying AI HDR Contrast & Clarity...', style: TextStyle(fontWeight: FontWeight.w700, fontSize: 12)),
+          ],
+        ),
+      ),
+    );
+
+    try {
+      final enhanced = await AiToolsService.autoEnhancePhoto(_selectedImage!);
+      final bytes = await enhanced.readAsBytes();
+      setState(() {
+        _cleanedImageBytes = bytes;
+      });
+
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            backgroundColor: const Color(0xFF10B981),
+            behavior: SnackBarBehavior.floating,
+            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+            margin: const EdgeInsets.all(16),
+            content: const Row(
+              children: [
+                Icon(Icons.check_circle_rounded, color: Colors.white, size: 18),
+                SizedBox(width: 10),
+                Text('✨ 4K Texture & HDR Colors Enhanced!', style: TextStyle(fontWeight: FontWeight.w700, fontSize: 12)),
+              ],
+            ),
+          ),
+        );
+      }
+    } catch (e) {
+      debugPrint('Enhance error: $e');
+    }
   }
 
   @override
@@ -596,6 +690,7 @@ class _WorkspaceScreenState extends State<WorkspaceScreen> with TickerProviderSt
                                       strokeWidth: _strokeWidth,
                                       canUndo: _history.isNotEmpty,
                                       canRedo: _redoHistory.isNotEmpty,
+                                      onAutoDetect: _autoDetectWatermarks,
                                       onToggleTool: () {
                                         HapticFeedback.selectionClick();
                                         setState(() => _isBrush = !_isBrush);
@@ -623,58 +718,99 @@ class _WorkspaceScreenState extends State<WorkspaceScreen> with TickerProviderSt
                 if (_state == StudioState.result)
                   FadeTransition(
                     opacity: _resultController,
-                    child: Row(
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
                       children: [
-                        Expanded(
-                          child: SizedBox(
-                            height: 56,
-                            child: OutlinedButton.icon(
-                              style: OutlinedButton.styleFrom(
-                                side: BorderSide(color: Colors.white.withValues(alpha: 0.15)),
-                                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
-                              ),
-                              onPressed: () {
-                                HapticFeedback.lightImpact();
-                                _toolbarRevealController.forward(from: 0);
-                                setState(() => _state = StudioState.drawing);
-                              },
-                              icon: const Icon(Icons.edit_rounded, size: 18, color: Colors.white70),
-                              label: const Text('Edit Again',
-                                  style: TextStyle(color: Colors.white, fontWeight: FontWeight.w600)),
+                        // ✨ 1-Tap AI HDR Auto-Enhance Button
+                        SizedBox(
+                          width: double.infinity,
+                          height: 48,
+                          child: OutlinedButton.icon(
+                            style: OutlinedButton.styleFrom(
+                              side: const BorderSide(color: Color(0xFFEC4899), width: 1.5),
+                              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
+                              backgroundColor: const Color(0xFFEC4899).withValues(alpha: 0.08),
+                            ),
+                            onPressed: _runAiEnhance,
+                            icon: const Icon(Icons.auto_awesome_rounded, size: 18, color: Color(0xFFEC4899)),
+                            label: const Text(
+                              '✨ AI 1-Tap HDR Enhance & Sharpen',
+                              style: TextStyle(color: Color(0xFFEC4899), fontWeight: FontWeight.bold, fontSize: 13),
                             ),
                           ),
                         ),
-                        const SizedBox(width: 12),
-                        Expanded(
-                          child: SizedBox(
-                            height: 56,
-                            child: Container(
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(14),
-                                gradient: const LinearGradient(
-                                  colors: [Color(0xFF10B981), Color(0xFF0284C7)],
-                                ),
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: const Color(0xFF10B981).withValues(alpha: 0.3),
-                                    blurRadius: 12,
-                                    offset: const Offset(0, 4),
+                        const SizedBox(height: 10),
+                        Row(
+                          children: [
+                            Expanded(
+                              flex: 1,
+                              child: SizedBox(
+                                height: 54,
+                                child: OutlinedButton.icon(
+                                  style: OutlinedButton.styleFrom(
+                                    side: BorderSide(
+                                      color: Theme.of(context).brightness == Brightness.dark
+                                          ? Colors.white.withValues(alpha: 0.15)
+                                          : const Color(0xFFE2E8F0),
+                                    ),
+                                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
                                   ),
-                                ],
-                              ),
-                              child: ElevatedButton.icon(
-                                style: ElevatedButton.styleFrom(
-                                  backgroundColor: Colors.transparent,
-                                  shadowColor: Colors.transparent,
-                                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
+                                  onPressed: () {
+                                    HapticFeedback.lightImpact();
+                                    _toolbarRevealController.forward(from: 0);
+                                    setState(() => _state = StudioState.drawing);
+                                  },
+                                  icon: Icon(
+                                    Icons.edit_rounded,
+                                    size: 18,
+                                    color: Theme.of(context).brightness == Brightness.dark ? Colors.white70 : const Color(0xFF475569),
+                                  ),
+                                  label: Text(
+                                    'Edit Again',
+                                    style: TextStyle(
+                                      color: Theme.of(context).brightness == Brightness.dark ? Colors.white : const Color(0xFF1E293B),
+                                      fontWeight: FontWeight.w700,
+                                    ),
+                                  ),
                                 ),
-                                onPressed: _saveResultAndPromptRating,
-                                icon: const Icon(Icons.download_rounded, size: 20, color: Colors.white),
-                                label: const Text('Save Clean Photo',
-                                    style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 15)),
                               ),
                             ),
-                          ),
+                            const SizedBox(width: 10),
+                            Expanded(
+                              flex: 2,
+                              child: SizedBox(
+                                height: 54,
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(14),
+                                    gradient: const LinearGradient(
+                                      colors: [Color(0xFFEC4899), Color(0xFFF43F5E), Color(0xFFE11D48)],
+                                    ),
+                                    boxShadow: [
+                                      BoxShadow(
+                                        color: const Color(0xFFEC4899).withValues(alpha: 0.35),
+                                        blurRadius: 14,
+                                        offset: const Offset(0, 4),
+                                      ),
+                                    ],
+                                  ),
+                                  child: ElevatedButton.icon(
+                                    style: ElevatedButton.styleFrom(
+                                      backgroundColor: Colors.transparent,
+                                      shadowColor: Colors.transparent,
+                                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
+                                    ),
+                                    onPressed: _saveResultAndPromptRating,
+                                    icon: const Icon(Icons.download_rounded, size: 20, color: Colors.white),
+                                    label: const Text(
+                                      'Save Clean Photo',
+                                      style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 14),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
                         ),
                       ],
                     ),

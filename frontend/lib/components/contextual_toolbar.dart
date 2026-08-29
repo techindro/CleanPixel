@@ -12,6 +12,7 @@ class ContextualToolbar extends StatelessWidget {
   final VoidCallback onUndo;
   final VoidCallback onRedo;
   final VoidCallback onClear;
+  final VoidCallback? onAutoDetect;
 
   const ContextualToolbar({
     Key? key,
@@ -24,10 +25,13 @@ class ContextualToolbar extends StatelessWidget {
     required this.onUndo,
     required this.onRedo,
     required this.onClear,
+    this.onAutoDetect,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
     return ClipRRect(
       borderRadius: BorderRadius.circular(999),
       child: BackdropFilter(
@@ -35,12 +39,18 @@ class ContextualToolbar extends StatelessWidget {
         child: Container(
           padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
           decoration: BoxDecoration(
-            color: const Color(0xFF0B0F19).withOpacity(0.8),
+            color: isDark
+                ? const Color(0xFF0F0715).withOpacity(0.85)
+                : Colors.white.withOpacity(0.92),
             borderRadius: BorderRadius.circular(999),
-            border: Border.all(color: Colors.white.withOpacity(0.1)),
+            border: Border.all(
+              color: isDark ? Colors.white.withOpacity(0.1) : const Color(0xFFFCE7F3),
+            ),
             boxShadow: [
               BoxShadow(
-                color: Colors.black.withOpacity(0.4),
+                color: isDark
+                    ? Colors.black.withOpacity(0.4)
+                    : const Color(0xFFEC4899).withOpacity(0.12),
                 blurRadius: 24,
                 offset: const Offset(0, 10),
               ),
@@ -49,6 +59,20 @@ class ContextualToolbar extends StatelessWidget {
           child: Row(
             mainAxisSize: MainAxisSize.min,
             children: [
+              // 🪄 1-Tap Auto Detect
+              if (onAutoDetect != null) ...[
+                _ToolButton(
+                  icon: Icons.auto_awesome_rounded,
+                  isActive: true,
+                  color: const Color(0xFFEC4899),
+                  onTap: onAutoDetect!,
+                  tooltip: 'Auto Detect',
+                ),
+                const SizedBox(width: 4),
+                _Divider(isDark: isDark),
+                const SizedBox(width: 4),
+              ],
+
               // Brush / Eraser Toggle
               _ToolButton(
                 icon: isBrush ? Icons.brush_rounded : Icons.auto_fix_high_rounded,
@@ -58,19 +82,21 @@ class ContextualToolbar extends StatelessWidget {
                 tooltip: isBrush ? 'Brush' : 'Eraser',
               ),
               const SizedBox(width: 4),
-              _Divider(),
+              _Divider(isDark: isDark),
               const SizedBox(width: 4),
 
               // Stroke Size Slider
               SizedBox(
-                width: 90,
+                width: 80,
                 child: SliderTheme(
                   data: SliderTheme.of(context).copyWith(
                     activeTrackColor: const Color(0xFFEC4899),
-                    inactiveTrackColor: Colors.white.withOpacity(0.12),
-                    thumbColor: Colors.white,
-                    thumbShape: const RoundSliderThumbShape(enabledThumbRadius: 7),
-                    overlayShape: const RoundSliderOverlayShape(overlayRadius: 14),
+                    inactiveTrackColor: isDark
+                        ? Colors.white.withOpacity(0.12)
+                        : const Color(0xFFFCE7F3),
+                    thumbColor: isDark ? Colors.white : const Color(0xFFEC4899),
+                    thumbShape: const RoundSliderThumbShape(enabledThumbRadius: 6),
+                    overlayShape: const RoundSliderOverlayShape(overlayRadius: 12),
                     overlayColor: const Color(0xFFEC4899).withOpacity(0.2),
                     trackHeight: 3,
                   ),
@@ -86,37 +112,52 @@ class ContextualToolbar extends StatelessWidget {
                 ),
               ),
               Container(
-                width: 36,
+                width: 32,
                 alignment: Alignment.center,
                 child: Text(
-                  '${strokeWidth.toInt()}',
-                  style: const TextStyle(color: Colors.white54, fontSize: 11, fontWeight: FontWeight.w700, fontFamily: 'monospace'),
+                  '${strokeWidth.round()}px',
+                  style: TextStyle(
+                    fontSize: 10,
+                    fontWeight: FontWeight.w700,
+                    color: isDark ? Colors.white70 : const Color(0xFF64748B),
+                    fontFeatures: const [FontFeature.tabularFigures()],
+                  ),
                 ),
               ),
-              _Divider(),
-              const SizedBox(width: 2),
+              const SizedBox(width: 4),
+              _Divider(isDark: isDark),
+              const SizedBox(width: 4),
 
-              // Undo / Redo / Clear
-              _ToolButton(
+              // Undo
+              _ActionButton(
                 icon: Icons.undo_rounded,
-                isActive: canUndo,
-                color: Colors.white,
-                onTap: canUndo ? onUndo : null,
+                isEnabled: canUndo,
+                onTap: onUndo,
                 tooltip: 'Undo',
+                isDark: isDark,
               ),
-              _ToolButton(
+
+              // Redo
+              _ActionButton(
                 icon: Icons.redo_rounded,
-                isActive: canRedo,
-                color: Colors.white,
-                onTap: canRedo ? onRedo : null,
+                isEnabled: canRedo,
+                onTap: onRedo,
                 tooltip: 'Redo',
+                isDark: isDark,
               ),
-              _ToolButton(
+
+              const SizedBox(width: 4),
+              _Divider(isDark: isDark),
+              const SizedBox(width: 4),
+
+              // Clear
+              _ActionButton(
                 icon: Icons.delete_outline_rounded,
-                isActive: true,
-                color: const Color(0xFFEF4444),
+                isEnabled: true,
                 onTap: onClear,
-                tooltip: 'Clear',
+                tooltip: 'Clear All',
+                color: const Color(0xFFEF4444),
+                isDark: isDark,
               ),
             ],
           ),
@@ -130,36 +171,76 @@ class _ToolButton extends StatelessWidget {
   final IconData icon;
   final bool isActive;
   final Color color;
-  final VoidCallback? onTap;
+  final VoidCallback onTap;
   final String tooltip;
 
   const _ToolButton({
+    Key? key,
     required this.icon,
     required this.isActive,
     required this.color,
-    this.onTap,
+    required this.onTap,
     required this.tooltip,
-  });
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Tooltip(
       message: tooltip,
-      child: SizedBox(
-        width: 36,
-        height: 36,
-        child: Material(
+      child: GestureDetector(
+        onTap: onTap,
+        child: Container(
+          width: 34,
+          height: 34,
+          decoration: BoxDecoration(
+            shape: BoxShape.circle,
+            color: isActive ? color.withOpacity(0.18) : Colors.transparent,
+          ),
+          child: Icon(
+            icon,
+            size: 18,
+            color: isActive ? color : Colors.white60,
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class _ActionButton extends StatelessWidget {
+  final IconData icon;
+  final bool isEnabled;
+  final VoidCallback onTap;
+  final String tooltip;
+  final Color? color;
+  final bool isDark;
+
+  const _ActionButton({
+    Key? key,
+    required this.icon,
+    required this.isEnabled,
+    required this.onTap,
+    required this.tooltip,
+    this.color,
+    required this.isDark,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Tooltip(
+      message: tooltip,
+      child: GestureDetector(
+        onTap: isEnabled ? onTap : null,
+        child: Container(
+          width: 32,
+          height: 32,
           color: Colors.transparent,
-          child: InkWell(
-            borderRadius: BorderRadius.circular(10),
-            onTap: onTap,
-            child: Center(
-              child: Icon(
-                icon,
-                color: isActive ? color : Colors.white.withOpacity(0.2),
-                size: 20,
-              ),
-            ),
+          child: Icon(
+            icon,
+            size: 18,
+            color: isEnabled
+                ? (color ?? (isDark ? Colors.white : const Color(0xFF1E293B)))
+                : (isDark ? Colors.white24 : const Color(0xFFCBD5E1)),
           ),
         ),
       ),
@@ -168,13 +249,15 @@ class _ToolButton extends StatelessWidget {
 }
 
 class _Divider extends StatelessWidget {
+  final bool isDark;
+  const _Divider({Key? key, required this.isDark}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Container(
       width: 1,
-      height: 22,
-      margin: const EdgeInsets.symmetric(horizontal: 2),
-      color: Colors.white.withOpacity(0.08),
+      height: 20,
+      color: isDark ? Colors.white12 : const Color(0xFFFCE7F3),
     );
   }
 }
