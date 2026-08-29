@@ -344,11 +344,11 @@ class _WorkspaceScreenState extends State<WorkspaceScreen> with TickerProviderSt
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(10),
                       gradient: const LinearGradient(
-                        colors: [Color(0xFF38BDF8), Color(0xFF2563EB)],
+                        colors: [Color(0xFFEC4899), Color(0xFFF43F5E)],
                       ),
                       boxShadow: [
                         BoxShadow(
-                          color: const Color(0xFF2563EB).withValues(alpha: 0.3),
+                          color: const Color(0xFFEC4899).withValues(alpha: 0.3),
                           blurRadius: 8,
                           offset: const Offset(0, 2),
                         ),
@@ -358,23 +358,29 @@ class _WorkspaceScreenState extends State<WorkspaceScreen> with TickerProviderSt
                       borderRadius: BorderRadius.circular(10),
                       child: Image.asset(
                         'assets/logo.png',
+                        fit: BoxFit.contain,
                         errorBuilder: (_, __, ___) =>
                             const Icon(Icons.auto_fix_high_rounded, size: 18, color: Colors.white),
                       ),
                     ),
                   ),
                   const SizedBox(width: 10),
-                  const Column(
+                  Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       Text(
                         'CleanPixel AI',
-                        style: TextStyle(fontSize: 17, fontWeight: FontWeight.w800, color: Colors.white, letterSpacing: -0.3),
+                        style: TextStyle(
+                          fontSize: 17,
+                          fontWeight: FontWeight.w800,
+                          color: Theme.of(context).brightness == Brightness.dark ? Colors.white : const Color(0xFF1E293B),
+                          letterSpacing: -0.3,
+                        ),
                       ),
-                      Text(
+                      const Text(
                         'Neural Inpaint Studio',
-                        style: TextStyle(fontSize: 10, fontWeight: FontWeight.w500, color: Color(0xFF64748B)),
+                        style: TextStyle(fontSize: 10, fontWeight: FontWeight.w600, color: Color(0xFFEC4899)),
                       ),
                     ],
                   ),
@@ -724,12 +730,25 @@ class _WorkspaceScreenState extends State<WorkspaceScreen> with TickerProviderSt
   }
 
   Widget _buildModeSwitcher() {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
     return Container(
       padding: const EdgeInsets.all(4),
       decoration: BoxDecoration(
-        color: const Color(0xFF111827),
+        color: isDark ? const Color(0xFF1B0C24) : Colors.white,
         borderRadius: BorderRadius.circular(14),
-        border: Border.all(color: Colors.white.withValues(alpha: 0.04)),
+        border: Border.all(
+          color: isDark ? Colors.white.withValues(alpha: 0.04) : const Color(0xFFFCE7F3),
+          width: 1,
+        ),
+        boxShadow: isDark
+            ? []
+            : [
+                BoxShadow(
+                  color: const Color(0xFFEC4899).withValues(alpha: 0.06),
+                  blurRadius: 10,
+                  offset: const Offset(0, 2),
+                ),
+              ],
       ),
       child: Row(
         children: [
@@ -743,6 +762,8 @@ class _WorkspaceScreenState extends State<WorkspaceScreen> with TickerProviderSt
 
   Widget _buildModeTab(String label, IconData icon, StudioMode mode, {String? badge}) {
     final isSelected = _mode == mode;
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
     return Expanded(
       child: GestureDetector(
         onTap: () {
@@ -753,9 +774,13 @@ class _WorkspaceScreenState extends State<WorkspaceScreen> with TickerProviderSt
           duration: const Duration(milliseconds: 250),
           padding: const EdgeInsets.symmetric(vertical: 8),
           decoration: BoxDecoration(
-            color: isSelected ? const Color(0xFF1E293B) : Colors.transparent,
+            color: isSelected
+                ? const Color(0xFFEC4899).withValues(alpha: isDark ? 0.25 : 0.12)
+                : Colors.transparent,
             borderRadius: BorderRadius.circular(10),
-            border: isSelected ? Border.all(color: const Color(0xFF38BDF8).withValues(alpha: 0.3)) : null,
+            border: isSelected
+                ? Border.all(color: const Color(0xFFEC4899).withValues(alpha: 0.4))
+                : null,
           ),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -763,14 +788,18 @@ class _WorkspaceScreenState extends State<WorkspaceScreen> with TickerProviderSt
               Icon(
                 icon,
                 size: 15,
-                color: isSelected ? const Color(0xFF38BDF8) : const Color(0xFF94A3B8),
+                color: isSelected
+                    ? const Color(0xFFEC4899)
+                    : (isDark ? const Color(0xFF94A3B8) : const Color(0xFF64748B)),
               ),
               const SizedBox(width: 5),
               Text(
                 label,
                 style: TextStyle(
-                  color: isSelected ? Colors.white : const Color(0xFF94A3B8),
-                  fontWeight: FontWeight.w700,
+                  color: isSelected
+                      ? const Color(0xFFEC4899)
+                      : (isDark ? const Color(0xFF94A3B8) : const Color(0xFF64748B)),
+                  fontWeight: isSelected ? FontWeight.w800 : FontWeight.w600,
                   fontSize: 12,
                 ),
               ),
@@ -779,16 +808,12 @@ class _WorkspaceScreenState extends State<WorkspaceScreen> with TickerProviderSt
                 Container(
                   padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 1),
                   decoration: BoxDecoration(
-                    color: const Color(0xFFF59E0B),
+                    color: const Color(0xFFEC4899),
                     borderRadius: BorderRadius.circular(4),
                   ),
                   child: Text(
                     badge,
-                    style: const TextStyle(
-                      color: Colors.black,
-                      fontWeight: FontWeight.w900,
-                      fontSize: 8,
-                    ),
+                    style: const TextStyle(color: Colors.white, fontSize: 8, fontWeight: FontWeight.w900),
                   ),
                 ),
               ],

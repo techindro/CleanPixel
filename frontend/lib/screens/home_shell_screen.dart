@@ -21,6 +21,7 @@ class _HomeShellScreenState extends State<HomeShellScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
     final List<Widget> screens = [
       const WorkspaceScreen(),
       ToolsHubScreen(onSelectTool: (mode) {
@@ -31,23 +32,23 @@ class _HomeShellScreenState extends State<HomeShellScreen> {
     ];
 
     return Scaffold(
-      backgroundColor: const Color(0xFF0B0F19),
+      backgroundColor: isDark ? const Color(0xFF0F0715) : const Color(0xFFFAF5FF),
       body: IndexedStack(
         index: _currentIndex,
         children: screens,
       ),
       bottomNavigationBar: Container(
         decoration: BoxDecoration(
-          color: const Color(0xFF0F172A),
+          color: isDark ? const Color(0xFF1B0C24) : Colors.white,
           border: Border(
             top: BorderSide(
-              color: Colors.white.withValues(alpha: 0.06),
+              color: isDark ? Colors.white.withValues(alpha: 0.06) : const Color(0xFFFCE7F3),
               width: 1,
             ),
           ),
           boxShadow: [
             BoxShadow(
-              color: Colors.black.withValues(alpha: 0.4),
+              color: isDark ? Colors.black.withValues(alpha: 0.4) : const Color(0xFFEC4899).withValues(alpha: 0.08),
               blurRadius: 20,
               offset: const Offset(0, -4),
             ),
@@ -73,6 +74,8 @@ class _HomeShellScreenState extends State<HomeShellScreen> {
 
   Widget _buildNavItem(int index, IconData icon, String label) {
     final isSelected = _currentIndex == index;
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
     return GestureDetector(
       onTap: () {
         HapticFeedback.selectionClick();
@@ -82,8 +85,13 @@ class _HomeShellScreenState extends State<HomeShellScreen> {
         duration: const Duration(milliseconds: 200),
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 6),
         decoration: BoxDecoration(
-          color: isSelected ? const Color(0xFFEC4899).withValues(alpha: 0.15) : Colors.transparent,
-          borderRadius: BorderRadius.circular(12),
+          color: isSelected
+              ? const Color(0xFFEC4899).withValues(alpha: isDark ? 0.2 : 0.12)
+              : Colors.transparent,
+          borderRadius: BorderRadius.circular(14),
+          border: isSelected && !isDark
+              ? Border.all(color: const Color(0xFFFCE7F3), width: 1)
+              : null,
         ),
         child: Column(
           mainAxisSize: MainAxisSize.min,
@@ -97,9 +105,11 @@ class _HomeShellScreenState extends State<HomeShellScreen> {
             Text(
               label,
               style: TextStyle(
-                color: isSelected ? const Color(0xFFEC4899) : const Color(0xFF94A3B8),
+                color: isSelected
+                    ? const Color(0xFFEC4899)
+                    : (isDark ? const Color(0xFF94A3B8) : const Color(0xFF64748B)),
                 fontSize: 11,
-                fontWeight: isSelected ? FontWeight.w800 : FontWeight.w500,
+                fontWeight: isSelected ? FontWeight.w800 : FontWeight.w600,
               ),
             ),
           ],
