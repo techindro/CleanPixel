@@ -5,19 +5,19 @@ import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:cleanpixel_ai/screens/splash_screen.dart';
 import 'package:cleanpixel_ai/services/locale_service.dart';
+import 'package:cleanpixel_ai/services/theme_service.dart';
 
 void main() async {
-  // Global Unhandled Async Error Zone (Prevents any crash from escaping to the OS)
   runZonedGuarded(() async {
     WidgetsFlutterBinding.ensureInitialized();
 
-    // 1. Crash Interceptor for Flutter UI Errors
+    // Crash Interceptor for Flutter UI Errors
     FlutterError.onError = (FlutterErrorDetails details) {
       FlutterError.presentError(details);
       debugPrint('ZeroCrash Interceptor caught UI error: ${details.exception}');
     };
 
-    // 2. Custom Graceful Error Widget (Never show red crash screen to user)
+    // Custom Graceful Error Widget
     ErrorWidget.builder = (FlutterErrorDetails details) {
       return Material(
         color: const Color(0xFF0F172A),
@@ -47,8 +47,9 @@ void main() async {
       );
     };
 
-    // Initialize locale service
+    // Initialize services
     await LocaleService.init();
+    await ThemeService.init();
 
     // Immersive system UI overlay
     SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
@@ -69,33 +70,59 @@ class CleanPixelApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ValueListenableBuilder<String>(
-      valueListenable: LocaleService.currentLocale,
-      builder: (context, localeCode, _) {
-        return MaterialApp(
-          title: 'CleanPixel AI',
-          debugShowCheckedModeBanner: false,
-          theme: ThemeData(
-            brightness: Brightness.dark,
-            scaffoldBackgroundColor: const Color(0xFF0F172A),
-            textTheme: GoogleFonts.plusJakartaSansTextTheme(
-              ThemeData(brightness: Brightness.dark).textTheme,
-            ),
-            colorScheme: const ColorScheme.dark(
-              primary: Color(0xFF38BDF8),
-              secondary: Color(0xFF2563EB),
-              surface: Color(0xFF1E293B),
-            ),
-            splashColor: const Color(0xFF38BDF8).withValues(alpha: 0.12),
-            highlightColor: const Color(0xFF38BDF8).withValues(alpha: 0.06),
-            pageTransitionsTheme: const PageTransitionsTheme(
-              builders: {
-                TargetPlatform.android: _CleanPixelPageTransition(),
-                TargetPlatform.iOS: _CleanPixelPageTransition(),
-              },
-            ),
-          ),
-          home: const SplashScreen(),
+    return ValueListenableBuilder<ThemeMode>(
+      valueListenable: ThemeService.themeModeNotifier,
+      builder: (context, themeMode, _) {
+        return ValueListenableBuilder<String>(
+          valueListenable: LocaleService.currentLocale,
+          builder: (context, localeCode, _) {
+            return MaterialApp(
+              title: 'CleanPixel AI',
+              debugShowCheckedModeBanner: false,
+              themeMode: themeMode,
+              // Light Theme
+              theme: ThemeData(
+                brightness: Brightness.light,
+                scaffoldBackgroundColor: const Color(0xFFF8FAFC),
+                cardColor: Colors.white,
+                textTheme: GoogleFonts.plusJakartaSansTextTheme(
+                  ThemeData(brightness: Brightness.light).textTheme,
+                ),
+                colorScheme: const ColorScheme.light(
+                  primary: Color(0xFF0284C7),
+                  secondary: Color(0xFF2563EB),
+                  surface: Colors.white,
+                ),
+                pageTransitionsTheme: const PageTransitionsTheme(
+                  builders: {
+                    TargetPlatform.android: _CleanPixelPageTransition(),
+                    TargetPlatform.iOS: _CleanPixelPageTransition(),
+                  },
+                ),
+              ),
+              // Dark Theme (OLED)
+              darkTheme: ThemeData(
+                brightness: Brightness.dark,
+                scaffoldBackgroundColor: const Color(0xFF0F172A),
+                cardColor: const Color(0xFF1E293B),
+                textTheme: GoogleFonts.plusJakartaSansTextTheme(
+                  ThemeData(brightness: Brightness.dark).textTheme,
+                ),
+                colorScheme: const ColorScheme.dark(
+                  primary: Color(0xFF38BDF8),
+                  secondary: Color(0xFF2563EB),
+                  surface: Color(0xFF1E293B),
+                ),
+                pageTransitionsTheme: const PageTransitionsTheme(
+                  builders: {
+                    TargetPlatform.android: _CleanPixelPageTransition(),
+                    TargetPlatform.iOS: _CleanPixelPageTransition(),
+                  },
+                ),
+              ),
+              home: const SplashScreen(),
+            );
+          },
         );
       },
     );

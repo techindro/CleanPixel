@@ -6,6 +6,7 @@ import 'package:cleanpixel_ai/components/rating_dialog.dart';
 import 'package:cleanpixel_ai/components/language_selector_dialog.dart';
 import 'package:cleanpixel_ai/services/auth_service.dart';
 import 'package:cleanpixel_ai/services/locale_service.dart';
+import 'package:cleanpixel_ai/services/theme_service.dart';
 import 'package:cleanpixel_ai/services/update_service.dart';
 
 class SettingsScreen extends StatefulWidget {
@@ -122,15 +123,36 @@ class _SettingsScreenState extends State<SettingsScreen> with SingleTickerProvid
                 // 3. Section 1: App Experience
                 _buildStaggered(0.15, 0.45, child: _buildSectionLabel('APPLICATION & CREATOR')),
                 const SizedBox(height: 10),
+
+                // Theme Switcher Tile (Dark OLED / Light / System)
+                ValueListenableBuilder<ThemeMode>(
+                  valueListenable: ThemeService.themeModeNotifier,
+                  builder: (context, currentMode, _) {
+                    final icon = currentMode == ThemeMode.light
+                        ? Icons.light_mode_rounded
+                        : currentMode == ThemeMode.system
+                            ? Icons.brightness_auto_rounded
+                            : Icons.dark_mode_rounded;
+                    return _buildStaggered(0.17, 0.47, child: _buildSettingTile(
+                      icon: icon,
+                      iconColor: const Color(0xFF38BDF8),
+                      title: 'Theme Mode',
+                      subtitle: ThemeService.getThemeName(currentMode),
+                      onTap: () => _showThemeSelectorDialog(context),
+                    ));
+                  },
+                ),
+
+                // Language Tile with Country Flags
                 ValueListenableBuilder<String>(
                   valueListenable: LocaleService.currentLocale,
                   builder: (context, _, __) {
                     final currentLang = LocaleService.getCurrentLanguage();
-                    return _buildStaggered(0.18, 0.48, child: _buildSettingTile(
+                    return _buildStaggered(0.19, 0.49, child: _buildSettingTile(
                       icon: Icons.translate_rounded,
                       iconColor: const Color(0xFF38BDF8),
                       title: 'App Language',
-                      subtitle: '[${currentLang.tag}] ${currentLang.nativeName} (${currentLang.name})',
+                      subtitle: '${currentLang.flag} ${currentLang.nativeName} (${currentLang.name})',
                       onTap: () => LanguageSelectorDialog.show(context),
                     ));
                   },
@@ -560,6 +582,156 @@ class _SettingsScreenState extends State<SettingsScreen> with SingleTickerProvid
                 Icon(Icons.chevron_right_rounded, color: Colors.white.withValues(alpha: 0.15), size: 20),
               ],
             ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  void _showThemeSelectorDialog(BuildContext context) {
+    showModalBottomSheet(
+      context: context,
+      backgroundColor: Colors.transparent,
+      builder: (ctx) => ValueListenableBuilder<ThemeMode>(
+        valueListenable: ThemeService.themeModeNotifier,
+        builder: (context, currentMode, _) {
+          return Container(
+            padding: const EdgeInsets.fromLTRB(20, 16, 20, 24),
+            decoration: const BoxDecoration(
+              color: Color(0xFF1E293B),
+              borderRadius: BorderRadius.vertical(top: Radius.circular(28)),
+              boxShadow: [
+                BoxShadow(color: Colors.black54, blurRadius: 32, offset: Offset(0, -8)),
+              ],
+            ),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Center(
+                  child: Container(
+                    width: 40,
+                    height: 4,
+                    decoration: BoxDecoration(
+                      color: Colors.white.withValues(alpha: 0.15),
+                      borderRadius: BorderRadius.circular(2),
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 18),
+                const Row(
+                  children: [
+                    Icon(Icons.palette_rounded, color: Color(0xFF38BDF8), size: 24),
+                    SizedBox(width: 10),
+                    Text(
+                      'Choose Theme Mode',
+                      style: TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.w800),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 16),
+                _buildThemeOption(
+                  icon: Icons.dark_mode_rounded,
+                  title: 'Dark Mode (OLED)',
+                  subtitle: 'Deep pitch black, saves battery',
+                  isSelected: currentMode == ThemeMode.dark,
+                  onTap: () {
+                    ThemeService.setThemeMode(ThemeMode.dark);
+                    Navigator.pop(ctx);
+                  },
+                ),
+                const SizedBox(height: 8),
+                _buildThemeOption(
+                  icon: Icons.light_mode_rounded,
+                  title: 'Light Mode',
+                  subtitle: 'Clean, bright & high contrast',
+                  isSelected: currentMode == ThemeMode.light,
+                  onTap: () {
+                    ThemeService.setThemeMode(ThemeMode.light);
+                    Navigator.pop(ctx);
+                  },
+                ),
+                const SizedBox(height: 8),
+                _buildThemeOption(
+                  icon: Icons.brightness_auto_rounded,
+                  title: 'System Default',
+                  subtitle: 'Match device system appearance',
+                  isSelected: currentMode == ThemeMode.system,
+                  onTap: () {
+                    ThemeService.setThemeMode(ThemeMode.system);
+                    Navigator.pop(ctx);
+                  },
+                ),
+              ],
+            ),
+          );
+        },
+      ),
+    );
+  }
+
+  Widget _buildThemeOption({
+    required IconData icon,
+    required String title,
+    required String subtitle,
+    required bool isSelected,
+    required VoidCallback onTap,
+  }) {
+    return Material(
+      color: isSelected ? const Color(0xFF2563EB).withValues(alpha: 0.15) : const Color(0xFF111827),
+      borderRadius: BorderRadius.circular(14),
+      child: InkWell(
+        borderRadius: BorderRadius.circular(14),
+        onTap: () {
+          HapticFeedback.mediumImpact();
+          onTap();
+        },
+        child: Container(
+          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(14),
+            border: Border.all(
+              color: isSelected ? const Color(0xFF38BDF8) : Colors.white.withValues(alpha: 0.04),
+              width: isSelected ? 1.5 : 1,
+            ),
+          ),
+          child: Row(
+            children: [
+              Container(
+                padding: const EdgeInsets.all(8),
+                decoration: BoxDecoration(
+                  color: (isSelected ? const Color(0xFF38BDF8) : Colors.white).withValues(alpha: 0.1),
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                child: Icon(icon, color: isSelected ? const Color(0xFF38BDF8) : Colors.white, size: 20),
+              ),
+              const SizedBox(width: 14),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      title,
+                      style: TextStyle(
+                        color: isSelected ? const Color(0xFF38BDF8) : Colors.white,
+                        fontWeight: FontWeight.w700,
+                        fontSize: 15,
+                      ),
+                    ),
+                    Text(
+                      subtitle,
+                      style: const TextStyle(color: Color(0xFF64748B), fontSize: 12),
+                    ),
+                  ],
+                ),
+              ),
+              if (isSelected)
+                Container(
+                  padding: const EdgeInsets.all(4),
+                  decoration: const BoxDecoration(shape: BoxShape.circle, color: Color(0xFF38BDF8)),
+                  child: const Icon(Icons.check_rounded, color: Colors.black, size: 14),
+                ),
+            ],
           ),
         ),
       ),

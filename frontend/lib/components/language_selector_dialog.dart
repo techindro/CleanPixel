@@ -159,8 +159,8 @@ class _LanguageSelectorDialogState extends State<LanguageSelectorDialog> {
                         child: Row(
                           children: [
                             Container(
-                              width: 36,
-                              height: 36,
+                              width: 38,
+                              height: 38,
                               decoration: BoxDecoration(
                                 color: isSelected
                                     ? const Color(0xFF38BDF8).withValues(alpha: 0.2)
@@ -174,12 +174,8 @@ class _LanguageSelectorDialogState extends State<LanguageSelectorDialog> {
                               ),
                               alignment: Alignment.center,
                               child: Text(
-                                lang.tag,
-                                style: TextStyle(
-                                  color: isSelected ? const Color(0xFF38BDF8) : Colors.white70,
-                                  fontWeight: FontWeight.w800,
-                                  fontSize: 12,
-                                ),
+                                lang.flag,
+                                style: const TextStyle(fontSize: 20),
                               ),
                             ),
                             const SizedBox(width: 14),
